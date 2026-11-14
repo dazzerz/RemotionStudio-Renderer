@@ -1,0 +1,60 @@
+name: Remotion 4-vCPU Cloud Renderer
+
+on:
+  workflow_dispatch:
+    inputs:
+      composition_id:
+        description: 'ID Komposisi Remotion (contoh: SudutGanjilShort1, SudutGanjilEp1)'
+        required: true
+        default: 'SudutGanjilShort1'
+      output_filename:
+        description: 'Nama file output MP4'
+        required: true
+        default: 'render-output.mp4'
+      concurrency:
+        description: 'Worker core render (4 untuk Public Repo 4-vCPU)'
+        required: true
+        default: '4'
+
+jobs:
+  render:
+    name: Render ${{ github.event.inputs.composition_id }} (4-vCPU)
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+
+    steps:
+      - name: Checkout Private RemotionStudio
+        uses: actions/checkout@v4
+        with:
+          repository: dazzerz/RemotionStudio
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          lfs: true
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'npm'
+
+      - name: Install System Dependencies & FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-noto-color-emoji fonts-dejavu-core libnss3 libatk1.0-0 libatk-bridge2.0-0 libcups2 libgbm1 libasound2t64 libpangocairo-1.0-0 libxss1
+
+      - name: Install Project Dependencies
+        run: npm ci || npm install
+
+      - name: Render Remotion Video (4-vCPU)
+        run: |
+          mkdir -p renders
+          npx remotion render "${{ github.event.inputs.composition_id }}" "renders/${{ github.event.inputs.output_filename }}" \
+            --concurrency="${{ github.event.inputs.concurrency }}" \
+            --log=info \
+            --gl=angle
+
+      - name: Upload Video Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.inputs.output_filename }}
+          path: renders/${{ github.event.inputs.output_filename }}
+          retention-days: 3
