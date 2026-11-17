@@ -664,6 +664,8 @@ export const TrafficLightCycleExplainer: React.FC = () =>
 
 export const AIRCRAFT_TIRE_CONFIG: ExplainerConfig = {
   id: "AircraftTireExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
   audioPath: "audio/aircraft-tire/vo_riko.mp3",
   durationSec: 46,
   hookLine1: "KENAPA BAN PESAWAT",
@@ -702,6 +704,8 @@ export const AIRCRAFT_TIRE_CONFIG: ExplainerConfig = {
 
 export const TRAIN_TRACK_GAP_CONFIG: ExplainerConfig = {
   id: "TrainTrackGapExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Fast Fact",
   audioPath: "audio/train-track-gap/vo_sami.mp3",
   durationSec: 54.5,
   hookLine1: "KENAPA REL KERETA API",

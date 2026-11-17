@@ -58,6 +58,8 @@ export interface CtaBannerConfig {
 
 export interface ExplainerConfig {
   id: string;
+  theme?: "default" | "editorial_toon";
+  channelBadge?: string;
   audioPath: string;
   durationSec: number;
   hookLine1: string;
@@ -622,9 +624,10 @@ export const Explainer3DReel: React.FC<{ config: ExplainerConfig }> = ({
   config,
 }) => {
   const { fps } = useVideoConfig();
+  const isEditorial = config.theme === "editorial_toon";
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "#090D16" }}>
+    <AbsoluteFill style={{ backgroundColor: isEditorial ? "#F4F2EC" : "#090D16" }}>
       <Audio src={staticFile(config.audioPath)} />
 
       {config.scenes.map((scene, idx) => {
@@ -637,18 +640,134 @@ export const Explainer3DReel: React.FC<{ config: ExplainerConfig }> = ({
         );
       })}
 
-      <HookHeader
-        line1={config.hookLine1}
-        line1Color={config.hookLine1Color}
-        line2={config.hookLine2}
-        line2Color={config.hookLine2Color}
-      />
-
-      {config.bottomBadge ? <BottomPunchBadge text={config.bottomBadge} /> : null}
+      {isEditorial ? (
+        <>
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              height: 430,
+              background:
+                "linear-gradient(180deg, rgba(244,242,236,0.98) 0%, rgba(244,242,236,0.92) 55%, rgba(244,242,236,0) 100%)",
+              pointerEvents: "none",
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              top: 135,
+              left: 72,
+              right: 310,
+              pointerEvents: "none",
+            }}
+          >
+            <div
+              style={{
+                fontFamily: "Inter, Montserrat, Arial, sans-serif",
+                fontSize: 24,
+                fontWeight: 700,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "#525852",
+                marginBottom: 8,
+              }}
+            >
+              {config.hookLine1}
+            </div>
+            <div
+              style={{
+                fontFamily: "Inter, Montserrat, Arial, sans-serif",
+                fontSize: 48,
+                fontWeight: 900,
+                lineHeight: 1.12,
+                color: "#1E2421",
+              }}
+            >
+              {config.hookLine2.split(" ").map((w, i, arr) => (
+                <span
+                  key={i}
+                  style={{
+                    color: i >= Math.floor(arr.length / 2) ? "#2A6F4E" : "#1E2421",
+                  }}
+                >
+                  {w}{" "}
+                </span>
+              ))}
+            </div>
+          </div>
+          {config.channelBadge ? (
+            <div
+              style={{
+                position: "absolute",
+                top: 135,
+                right: 70,
+                backgroundColor: "#24352D",
+                color: "#FFFFFF",
+                padding: "10px 20px",
+                borderRadius: 10,
+                fontFamily: "Inter, Montserrat, Arial, sans-serif",
+                fontSize: 22,
+                fontWeight: 800,
+                letterSpacing: "0.02em",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.12)",
+                pointerEvents: "none",
+              }}
+            >
+              {config.channelBadge}
+            </div>
+          ) : null}
+        </>
+      ) : (
+        <>
+          <HookHeader
+            line1={config.hookLine1}
+            line1Color={config.hookLine1Color}
+            line2={config.hookLine2}
+            line2Color={config.hookLine2Color}
+          />
+          {config.bottomBadge ? <BottomPunchBadge text={config.bottomBadge} /> : null}
+        </>
+      )}
 
       {config.subtitles.map((cue, idx) => {
         const from = Math.round(cue.startSec * fps);
         const dur = Math.max(1, Math.round((cue.endSec - cue.startSec) * fps));
+        if (isEditorial) {
+          return (
+            <Sequence key={idx} from={from} durationInFrames={dur}>
+              <div
+                style={{
+                  position: "absolute",
+                  bottom: 245,
+                  left: 72,
+                  right: 72,
+                  display: "flex",
+                  justifyContent: "center",
+                  pointerEvents: "none",
+                }}
+              >
+                <div
+                  style={{
+                    backgroundColor: "#24352D",
+                    color: "#FFFFFF",
+                    padding: "14px 28px",
+                    borderRadius: 14,
+                    fontFamily: "Inter, Montserrat, Arial, sans-serif",
+                    fontSize: 38,
+                    fontWeight: 800,
+                    lineHeight: 1.28,
+                    textAlign: "center",
+                    boxShadow: "0 8px 24px rgba(0,0,0,0.28)",
+                  }}
+                >
+                  {cue.text}
+                </div>
+              </div>
+            </Sequence>
+          );
+        }
         return (
           <Sequence key={idx} from={from} durationInFrames={dur}>
             <KineticSubtitle cue={cue} />
