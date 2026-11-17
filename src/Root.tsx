@@ -1022,7 +1022,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="AircraftTireExplainer"
           component={AircraftTireExplainer}
-          durationInFrames={1380}
+          durationInFrames={1545}
           fps={30}
           width={1080}
           height={1920}
@@ -1030,7 +1030,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="TrainTrackGapExplainer"
           component={TrainTrackGapExplainer}
-          durationInFrames={1635}
+          durationInFrames={1470}
           fps={30}
           width={1080}
           height={1920}
