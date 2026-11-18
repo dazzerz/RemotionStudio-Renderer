@@ -60,6 +60,9 @@ import { EP6_TOTAL_FRAMES as SUDUT_GANJIL_EP6_FRAMES } from "./projects/educatio
 import { SudutGanjilA1 } from "./projects/educational/sudut-ganjil/a1/SudutGanjilA1";
 import { SudutGanjilA1Thumbnail } from "./projects/educational/sudut-ganjil/a1/SudutGanjilA1Thumbnail";
 import { A1_TOTAL_FRAMES as SUDUT_GANJIL_A1_FRAMES } from "./projects/educational/sudut-ganjil/a1/a1_scenes";
+import { SudutGanjilA2 } from "./projects/educational/sudut-ganjil/a2/SudutGanjilA2";
+import { SudutGanjilA2Thumbnail } from "./projects/educational/sudut-ganjil/a2/SudutGanjilA2Thumbnail";
+import { A2_TOTAL_FRAMES as SUDUT_GANJIL_A2_FRAMES } from "./projects/educational/sudut-ganjil/a2/a2_scenes";
 import { Gaji5JutaNikahGedung } from "./projects/educational/sudut-ganjil/special/Gaji5JutaNikahGedung";
 import { Gaji5JutaReksaDana } from "./projects/educational/sudut-ganjil/special/Gaji5JutaReksaDana";
 import { Gaji6JutaKreditMobil } from "./projects/educational/sudut-ganjil/special/Gaji6JutaKreditMobil";
@@ -122,6 +125,8 @@ import {
   TrafficLightCycleExplainer,
   AircraftTireExplainer,
   TrainTrackGapExplainer,
+  BlackBoxUnderwaterExplainer,
+  SubseaCableSharkExplainer,
 } from "./projects/educational/explainer-reels/explainerData";
 
 // Each <Composition> is an entry in the sidebar!
@@ -586,6 +591,22 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
         />
         <Composition
+          id="SudutGanjilA2"
+          component={SudutGanjilA2}
+          durationInFrames={SUDUT_GANJIL_A2_FRAMES}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
+          id="ThumbnailA2"
+          component={SudutGanjilA2Thumbnail}
+          durationInFrames={1}
+          fps={30}
+          width={1920}
+          height={1080}
+        />
+        <Composition
           id="SudutGanjilNikahGedung"
           component={Gaji5JutaNikahGedung}
           durationInFrames={NIKAH_TOTAL_FRAMES}
@@ -1031,6 +1052,22 @@ export const RemotionRoot: React.FC = () => {
           id="TrainTrackGapExplainer"
           component={TrainTrackGapExplainer}
           durationInFrames={1470}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="BlackBoxUnderwaterExplainer"
+          component={BlackBoxUnderwaterExplainer}
+          durationInFrames={1506}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SubseaCableSharkExplainer"
+          component={SubseaCableSharkExplainer}
+          durationInFrames={1551}
           fps={30}
           width={1080}
           height={1920}

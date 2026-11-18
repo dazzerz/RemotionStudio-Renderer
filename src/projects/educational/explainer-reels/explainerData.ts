@@ -745,3 +745,87 @@ export const AircraftTireExplainer: React.FC = () =>
 
 export const TrainTrackGapExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: TRAIN_TRACK_GAP_CONFIG });
+
+export const BLACK_BOX_UNDERWATER_CONFIG: ExplainerConfig = {
+  id: "BlackBoxUnderwaterExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/black-box-underwater/vo_riko.mp3",
+  durationSec: 50.2,
+  hookLine1: "BLACK BOX PESAWAT",
+  hookLine1Color: "#1E2421",
+  hookLine2: "Ditemukan Di Dasar Laut?",
+  hookLine2Color: "#2A6F4E",
+  sourceText: "FAA TSO-C121b & NTSB Flight Recorder Handbook",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Bagian pesawat apa lagi yang bikin penasaran?",
+    startSec: 44.5,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/black-box-underwater/scene1.jpg", startSec: 0.0, endSec: 6.5, panDirection: "in", callouts: [{ label: "Warna Asli Oranye Terang", labelX: 38, labelY: 42, anchorX: 50, anchorY: 66, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/black-box-underwater/scene2.jpg", startSec: 6.5, endSec: 13.0, panDirection: "right", callouts: [{ label: "Casing Baja Titanium", labelX: 64, labelY: 38, anchorX: 52, anchorY: 56, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/black-box-underwater/scene3.jpg", startSec: 13.0, endSec: 19.5, panDirection: "in", callouts: [{ label: "Tahan 3.400 G & 1.100 C", labelX: 35, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/black-box-underwater/scene4.jpg", startSec: 19.5, endSec: 26.0, panDirection: "left", callouts: [{ label: "Underwater Locator Beacon", labelX: 62, labelY: 38, anchorX: 48, anchorY: 58, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/black-box-underwater/scene5.jpg", startSec: 26.0, endSec: 32.5, panDirection: "in", callouts: [{ label: "Sensor Aktif Kena Air Laut", labelX: 36, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#70FF00" }] },
+    { imagePath: "images/black-box-underwater/scene6.jpg", startSec: 32.5, endSec: 39.0, panDirection: "right", callouts: [{ label: "Sinyal 37,5 kHz / 90 Hari", labelX: 64, labelY: 38, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/black-box-underwater/scene7.jpg", startSec: 39.0, endSec: 44.5, panDirection: "in", callouts: [{ label: "Dilacak Kapal Sonar SAR", labelX: 36, labelY: 38, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/black-box-underwater/scene8.jpg", startSec: 44.5, endSec: 50.2, panDirection: "left", callouts: [{ label: "Diangkat Robot ROV", labelX: 62, labelY: 38, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0.0, endSec: 6.5, text: "Kenapa Black Box bisa ditemukan di dasar laut terdalam?", highlight: "dasar laut" },
+    { startSec: 6.5, endSec: 12.5, text: "Warnanya oranye terang agar mudah terlihat tim SAR.", highlight: "oranye terang" },
+    { startSec: 12.5, endSec: 19.5, text: "Lapisan baja titanium tahan 3.400 G dan panas 1.100 C.", highlight: "3.400 G" },
+    { startSec: 19.5, endSec: 25.5, text: "Di moncongnya ada alat Underwater Locator Beacon.", highlight: "Locator Beacon" },
+    { startSec: 25.5, endSec: 32.5, text: "Begitu menyentuh air laut, sinyal ultrasonik langsung aktif.", highlight: "ultrasonik" },
+    { startSec: 32.5, endSec: 39.0, text: "Memancar 90 hari nonstop hingga kedalaman 6.000 meter.", highlight: "90 hari" },
+    { startSec: 39.0, endSec: 44.5, text: "Tim SAR tinggal melacak gemanya lewat sonar permukaan.", highlight: "sonar" },
+    { startSec: 44.5, endSec: 50.2, text: "Bagian pesawat apa lagi yang canggih? Like, komen & follow!", highlight: "Like, komen" },
+  ],
+};
+
+export const SUBSEA_CABLE_SHARK_CONFIG: ExplainerConfig = {
+  id: "SubseaCableSharkExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Fast Fact",
+  audioPath: "audio/subsea-cable-shark/vo_sami.mp3",
+  durationSec: 51.7,
+  hookLine1: "KABEL INTERNET BAWAH LAUT",
+  hookLine1Color: "#1E2421",
+  hookLine2: "Kenapa Digigit Hiu?",
+  hookLine2Color: "#2A6F4E",
+  sourceText: "TeleGeography & International Cable Protection Committee",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Fakta teknik apa lagi yang bikin penasaran?",
+    startSec: 45.5,
+    accentColor: "#00F2FE",
+  },
+  scenes: [
+    { imagePath: "images/subsea-cable-shark/scene1.jpg", startSec: 0.0, endSec: 6.5, panDirection: "in", callouts: [{ label: "99% Internet Lewat Dasar Laut", labelX: 38, labelY: 36, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/subsea-cable-shark/scene2.jpg", startSec: 6.5, endSec: 13.0, panDirection: "right", callouts: [{ label: "Serat Optik Setebal Selang", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/subsea-cable-shark/scene3.jpg", startSec: 13.0, endSec: 19.5, panDirection: "in", callouts: [{ label: "Medan Elektromagnetik Kabel", labelX: 36, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/subsea-cable-shark/scene4.jpg", startSec: 19.5, endSec: 26.5, panDirection: "left", callouts: [{ label: "Sensor Ampullae of Lorenzini", labelX: 62, labelY: 38, anchorX: 48, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/subsea-cable-shark/scene5.jpg", startSec: 26.5, endSec: 33.0, panDirection: "in", callouts: [{ label: "Disangka Detak Jantung Mangsa", labelX: 38, labelY: 38, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FF6B6B" }] },
+    { imagePath: "images/subsea-cable-shark/scene6.jpg", startSec: 33.0, endSec: 39.5, panDirection: "right", callouts: [{ label: "Pelindung Baja & Serat Kevlar", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#70FF00" }] },
+    { imagePath: "images/subsea-cable-shark/scene7.jpg", startSec: 39.5, endSec: 45.5, panDirection: "in", callouts: [{ label: "Dikubur di Bawah Pasir Pantai", labelX: 36, labelY: 38, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/subsea-cable-shark/scene8.jpg", startSec: 45.5, endSec: 51.7, panDirection: "left", callouts: [{ label: "Jaringan Serat Optik Global", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0.0, endSec: 6.5, text: "Hampir 99% internet HP lewat kabel di dasar laut.", highlight: "99% internet" },
+    { startSec: 6.5, endSec: 13.0, text: "Kabel setebal selang ini sering jadi sasaran gigitan hiu!", highlight: "gigitan hiu" },
+    { startSec: 13.0, endSec: 19.5, text: "Arus listrik kabel memancarkan medan elektromagnetik tipis.", highlight: "elektromagnetik" },
+    { startSec: 19.5, endSec: 26.5, text: "Sensor ampullae of Lorenzini hiu mengira itu ikan mangsa.", highlight: "ikan mangsa" },
+    { startSec: 26.5, endSec: 33.0, text: "Hiu menggigit kabel karena menyangka ada mangsa tersembunyi.", highlight: "menggigit" },
+    { startSec: 33.0, endSec: 39.5, text: "Insinyur melapisi kabelnya dengan kawat baja dan serat Kevlar.", highlight: "baja dan serat Kevlar" },
+    { startSec: 39.5, endSec: 45.5, text: "Lalu menguburnya aman di bawah pasir dekat pantai.", highlight: "pasir" },
+    { startSec: 45.5, endSec: 51.7, text: "Fakta teknik apa lagi yang bikin penasaran? Like, komen & follow!", highlight: "Like, komen" },
+  ],
+};
+
+export const BlackBoxUnderwaterExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: BLACK_BOX_UNDERWATER_CONFIG });
+
+export const SubseaCableSharkExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: SUBSEA_CABLE_SHARK_CONFIG });
