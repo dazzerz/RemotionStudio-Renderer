@@ -412,7 +412,7 @@
 
     async function readControlJson(path) {
       try {
-        const data = await ghFetch(`https://api.github.com/repos/${CONTROL_REPO}/contents/${path}?ref=${CONTROL_BRANCH}`);
+        const data = await ghFetch(`https://api.github.com/repos/${CONTROL_REPO}/contents/${path}?ref=${CONTROL_BRANCH}&_t=${Date.now()}`);
         return { json: JSON.parse(b64DecodeUtf8(data.content)), sha: data.sha };
       } catch {
         return null;
@@ -581,7 +581,7 @@
     renderMessages();
     if (!getToken()) openSettings();
     else refreshAll();
-    setInterval(() => { if (getToken()) refreshAll(); }, 15000);
+    setInterval(() => { if (getToken()) refreshAll(); }, 5000);
   </script>
 </body>
 </html>
