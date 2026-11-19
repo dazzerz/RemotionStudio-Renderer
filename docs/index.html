@@ -384,9 +384,23 @@
       if (!ts) return "-";
       return new Date(ts * 1000).toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
     }
-    function renderMd(txt) {
-      if (window.marked) return marked.parse(txt || "");
-      return (txt || "").replace(/</g, "&lt;").replace(/\n/g, "<br>");
+    function formatAssistantText(txt) {
+      if (!txt) return "";
+      let s = String(txt).trim();
+      // If text is already multi-line markdown, keep it as-is
+      if ((s.match(/\n/g) || []).length >= 3) return s;
+      // Auto-break ALL-CAPS section labels into clean Markdown headings/bullets
+      s = s.replace(/\s+([A-Z][A-Z0-9 /_-]{3,}:)\s*/g, "\n\n**$1**\n");
+      // Auto-break numbered items like "1) ... 2) ..."
+      s = s.replace(/\s+(\d+\))\s+/g, "\n- **$1** ");
+      // Auto-break per-VM mentions like "muse-1: ... muse-2: ..."
+      s = s.replace(/\s+((?:muse-[1-3]|instabox-1|cue-1):)\s*/gi, "\n- **`$1`** ");
+      return s;
+    }
+    function renderMd(txt, isAssistant = false) {
+      const prepared = isAssistant ? formatAssistantText(txt) : (txt || "");
+      if (window.marked) return marked.parse(prepared);
+      return prepared.replace(/</g, "&lt;").replace(/\n/g, "<br>");
     }
 
     async function ghFetch(url, opts = {}) {
@@ -426,7 +440,7 @@
       const payload = {
         id: taskId,
         dari: "coordinator",
-        instruksi,
+        instruksi: `${instruksi}\n\n[Format balasan rapi menggunakan Markdown: heading singkat dan bullet list, hindari 1 paragraf panjang.]`,
         butuh_persetujuan: false
       };
       const body = {
@@ -457,7 +471,7 @@
             <span>${m.role === "user" ? `Anda -> ${m.target}` : m.sender}</span>
             <span>${fmtTime(m.timestamp)}</span>
           </div>
-          <div class="msg-body">${renderMd(m.text)}</div>
+          <div class="msg-body">${renderMd(m.text, m.role === "assistant")}</div>
         </div>
       `).join("");
       box.scrollTop = box.scrollHeight;
@@ -466,18 +480,30 @@
     async function refreshVms() {
       const list = document.getElementById("vm-list");
       const now = Math.floor(Date.now() / 1000);
-      const results = await Promise.all(VMS.map(async vm => ({ vm, data: await readControlJson(`heartbeats/${vm}.json`) })));
+      const [quotaFile, ...results] = await Promise.all([
+        readControlJson("quota.json"),
+        ...VMS.map(async vm => ({ vm, data: await readControlJson(`heartbeats/${vm}.json`) }))
+      ]);
+      const quotaMap = quotaFile?.json || {};
       list.innerHTML = results.map(({ vm, data }) => {
         const hb = data?.json;
         if (!hb) return `<div class="card"><div class="vm-row"><strong>${vm}</strong><span class="badge off">Offline</span></div></div>`;
         const age = Math.max(0, now - (hb.timestamp || 0));
         const cls = hb.busy ? "busy" : (age < 600 ? "ok" : "off");
         const lbl = hb.busy ? "Busy" : (age < 600 ? "Online" : `Stale ${Math.floor(age/60)}m`);
+        const agyBadge = hb.agy_ready
+          ? `<span class="badge ok">AGY Ready</span>`
+          : `<span class="badge off">AGY Off</span>`;
+        const qInfo = hb.quota || quotaMap[vm] || "N/A (no API)";
         return `
           <div class="card">
-            <div class="vm-row"><strong>${vm}</strong><span class="badge ${cls}">${lbl}</span></div>
+            <div class="vm-row">
+              <strong>${vm}</strong>
+              <div style="display:flex;gap:4px;">${agyBadge}<span class="badge ${cls}">${lbl}</span></div>
+            </div>
             <div class="meta">
               Model: <code>${hb.agy_model || "-"}</code><br>
+              Kuota: <strong>${qInfo}</strong><br>
               RAM: ${hb.ram_free_mb ?? "?"}/${hb.ram_total_mb ?? "?"} MB | Disk: ${hb.disk_free || "?"}<br>
               Head: <code>${hb.git_head || "?"}</code>
             </div>
