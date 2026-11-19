@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Jarvis Personal Assistant</title>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <style>
+    :root {
+      --bg: #0c0f16;
+      --panel: #141925;
+      --panel-2: #1b2233;
+      --border: #28324a;
+      --text: #e8ecf5;
+      --muted: #8d99b2;
+      --accent: #3b82f6;
+      --accent-2: #2563eb;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --red: #ef4444;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .app {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      height: 100dvh;
+      overflow: hidden;
+    }
+    aside {
+      background: var(--panel);
+      border-right: 1px solid var(--border);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      overflow-y: auto;
+    }
+    .brand {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      font-size: 15px;
+    }
+    .sec-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--muted);
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+    .card {
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 12.5px;
+    }
+    .vm-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .badge {
+      font-size: 10.5px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-weight: 600;
+    }
+    .badge.ok { background: rgba(34, 197, 94, 0.16); color: var(--green); }
+    .badge.busy { background: rgba(245, 158, 11, 0.16); color: var(--amber); }
+    .badge.off { background: rgba(239, 68, 68, 0.16); color: var(--red); }
+    .meta { color: var(--muted); font-size: 11.5px; line-height: 1.45; }
+    .btn {
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .btn:hover { border-color: var(--accent); }
+    .quick-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+    }
+    .quick-btn {
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px;
+      font-size: 11.5px;
+      text-align: left;
+      cursor: pointer;
+      line-height: 1.3;
+    }
+    .quick-btn:hover { border-color: var(--accent); }
+    .run-item {
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .run-item:last-child { border-bottom: none; }
+    .run-item a { color: var(--accent); text-decoration: none; font-size: 12px; }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      height: 100dvh;
+      min-width: 0;
+    }
+    header {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      background: var(--panel);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+    .header-left { display: flex; align-items: center; gap: 10px; }
+    .menu-btn { display: none; }
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .msg {
+      max-width: 88%;
+      padding: 11px 14px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+      border: 1px solid var(--border);
+      word-wrap: break-word;
+    }
+    .msg.user {
+      align-self: flex-end;
+      background: #1b2f54;
+      border-color: #2f5191;
+    }
+    .msg.assistant {
+      align-self: flex-start;
+      background: var(--panel);
+    }
+    .msg-head {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 5px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .msg-body pre {
+      background: #090b10;
+      padding: 9px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 12px;
+    }
+    .msg-body code {
+      background: #090b10;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .msg-body p { margin: 0 0 8px 0; }
+    .msg-body p:last-child { margin-bottom: 0; }
+    .composer {
+      padding: 10px 14px;
+      border-top: 1px solid var(--border);
+      background: var(--panel);
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+    }
+    select, input[type="password"] {
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 10px;
+      font-size: 13px;
+    }
+    textarea {
+      flex: 1;
+      background: var(--panel-2);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 11px;
+      font-size: 14px;
+      font-family: inherit;
+      resize: none;
+      min-height: 42px;
+      max-height: 140px;
+    }
+    button.send {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 15px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    button.send:hover { background: var(--accent-2); }
+    button.send:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .modal-bg {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.72);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 50;
+    }
+    .modal-bg.open { display: flex; }
+    .modal {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    @media (max-width: 820px) {
+      .app { grid-template-columns: 1fr; }
+      aside {
+        position: fixed;
+        inset: 0 auto 0 0;
+        width: 85vw;
+        max-width: 330px;
+        z-index: 40;
+        transform: translateX(-100%);
+        transition: transform 0.2s ease;
+      }
+      aside.open { transform: translateX(0); }
+      .menu-btn { display: inline-block; }
+      .msg { max-width: 94%; }
+      .composer { flex-wrap: wrap; }
+      #target { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside id="sidebar">
+      <div class="brand">
+        <span>Jarvis Assistant</span>
+        <div style="display:flex;gap:6px;">
+          <button class="btn" onclick="refreshAll()">Sync</button>
+          <button class="btn" onclick="openSettings()">Token</button>
+          <button class="btn menu-btn" onclick="toggleSidebar()">Tutup</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="sec-title">Quick Actions</div>
+        <div class="quick-grid">
+          <button class="quick-btn" onclick="quickSend('muse-1-main', 'Laporkan status kesehatan semua VM (muse-1, muse-2, muse-3, instabox-1, cue-1) termasuk RAM, disk, dan service yang aktif.')">Status Semua VM</button>
+          <button class="quick-btn" onclick="quickSend('muse-1-main', 'Cek sisa kuota dan status akun untuk muse-1, muse-2, dan muse-3 saat ini.')">Kuota Muse 1/2/3</button>
+          <button class="quick-btn" onclick="quickSend('muse-1-main', 'Cek sisa kuota Antigravity dan model aktif saat ini di semua VM.')">Kuota Antigravity</button>
+          <button class="quick-btn" onclick="quickSend('muse-1-main', 'Cek status produksi video terakhir, antrean instabox-1, dan daftar file terbaru di renders/jarvis/.')">Status Produksi</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="sec-title">Live VM Heartbeats</div>
+        <div id="vm-list" style="display:flex;flex-direction:column;gap:8px;"></div>
+      </div>
+
+      <div>
+        <div class="sec-title">Render GitHub Actions Terbaru</div>
+        <div class="card" id="render-list"><span class="meta">Memuat...</span></div>
+      </div>
+    </aside>
+
+    <main>
+      <header>
+        <div class="header-left">
+          <button class="btn menu-btn" onclick="toggleSidebar()">Menu</button>
+          <div>
+            <strong style="font-size:14px;">Asisten Muse</strong>
+            <div class="meta" id="sync-status">Belum terhubung</div>
+          </div>
+        </div>
+        <button class="btn" onclick="refreshAll()">Refresh</button>
+      </header>
+
+      <div id="messages"></div>
+
+      <div class="composer">
+        <select id="target">
+          <option value="muse-1-main">muse-1 (Asisten Utama)</option>
+          <option value="muse-2-main">muse-2</option>
+          <option value="muse-3-main">muse-3</option>
+          <option value="instabox-1">instabox-1 (Worker)</option>
+          <option value="cue-1">cue-1</option>
+        </select>
+        <textarea id="input" rows="2" placeholder="Tulis perintah ke asisten (bikin video, cek kuota, cek VM)..."></textarea>
+        <button class="send" id="send-btn" onclick="sendMessage()">Kirim</button>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-bg" id="settings-modal">
+    <div class="modal">
+      <strong>GitHub Token (Disimpan Lokal di HP)</strong>
+      <div class="meta">
+        Masukkan GitHub Personal Access Token dengan akses repo <code>dazzerz/RemotionStudio</code> (untuk baca/tulis branch <code>vm-control</code>). Token hanya disimpan di <code>localStorage</code> browser Anda.
+      </div>
+      <input type="password" id="token-input" placeholder="ghp_... atau github_pat_..." />
+      <div style="display:flex;justify-content:flex-end;gap:8px;">
+        <button class="btn" onclick="closeSettings()">Batal</button>
+        <button class="send" onclick="saveToken()">Simpan</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const CONTROL_REPO = "dazzerz/RemotionStudio";
+    const CONTROL_BRANCH = "vm-control";
+    const RENDER_REPO = "dazzerz/RemotionStudio-Renderer";
+    const VMS = ["muse-1", "muse-2", "muse-3", "instabox-1", "cue-1"];
+    const RESULT_TARGETS = ["muse-1-main", "muse-2-main", "muse-3-main", "instabox-1", "cue-1"];
+
+    function getToken() { return localStorage.getItem("jarvis_gh_token") || ""; }
+    function loadHistory() {
+      try { return JSON.parse(localStorage.getItem("jarvis_chat_history") || "[]"); }
+      catch { return []; }
+    }
+    function saveHistory(arr) {
+      localStorage.setItem("jarvis_chat_history", JSON.stringify(arr.slice(-150)));
+    }
+    function appendHistory(item) {
+      const arr = loadHistory();
+      if (arr.some(x => x.id === item.id && x.role === item.role)) return false;
+      arr.push(item);
+      saveHistory(arr);
+      return true;
+    }
+
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("open");
+    }
+    function openSettings() {
+      document.getElementById("token-input").value = getToken();
+      document.getElementById("settings-modal").classList.add("open");
+    }
+    function closeSettings() {
+      document.getElementById("settings-modal").classList.remove("open");
+    }
+    function saveToken() {
+      const val = document.getElementById("token-input").value.trim();
+      if (!val) return;
+      localStorage.setItem("jarvis_gh_token", val);
+      closeSettings();
+      refreshAll();
+    }
+
+    function fmtTime(ts) {
+      if (!ts) return "-";
+      return new Date(ts * 1000).toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
+    }
+    function renderMd(txt) {
+      if (window.marked) return marked.parse(txt || "");
+      return (txt || "").replace(/</g, "&lt;").replace(/\n/g, "<br>");
+    }
+
+    async function ghFetch(url, opts = {}) {
+      const token = getToken();
+      const headers = Object.assign({ "Accept": "application/vnd.github+json" }, opts.headers || {});
+      if (token) headers["Authorization"] = `Bearer ${token}`;
+      const res = await fetch(url, Object.assign({}, opts, { headers, cache: "no-store" }));
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    }
+
+    function b64DecodeUtf8(str) {
+      const bin = atob(str.replace(/\n/g, ""));
+      const bytes = Uint8Array.from(bin, c => c.charCodeAt(0));
+      return new TextDecoder("utf-8").decode(bytes);
+    }
+    function b64EncodeUtf8(str) {
+      const bytes = new TextEncoder().encode(str);
+      let bin = "";
+      bytes.forEach(b => bin += String.fromCharCode(b));
+      return btoa(bin);
+    }
+
+    async function readControlJson(path) {
+      try {
+        const data = await ghFetch(`https://api.github.com/repos/${CONTROL_REPO}/contents/${path}?ref=${CONTROL_BRANCH}`);
+        return { json: JSON.parse(b64DecodeUtf8(data.content)), sha: data.sha };
+      } catch {
+        return null;
+      }
+    }
+
+    async function writeControlTask(target, instruksi) {
+      const path = `tasks/${target}.json`;
+      const existing = await readControlJson(path);
+      const taskId = `web-${target}-${Math.floor(Date.now() / 1000)}`;
+      const payload = {
+        id: taskId,
+        dari: "coordinator",
+        instruksi,
+        butuh_persetujuan: false
+      };
+      const body = {
+        message: `webchat(${target}): ${taskId}`,
+        branch: CONTROL_BRANCH,
+        content: b64EncodeUtf8(JSON.stringify(payload, null, 2) + "\n")
+      };
+      if (existing?.sha) body.sha = existing.sha;
+
+      await ghFetch(`https://api.github.com/repos/${CONTROL_REPO}/contents/${path}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      });
+      return taskId;
+    }
+
+    function renderMessages() {
+      const box = document.getElementById("messages");
+      const arr = loadHistory();
+      if (!arr.length) {
+        box.innerHTML = `<div class="msg assistant"><div class="msg-head"><span>Jarvis Assistant</span><span>Siap</span></div><div class="msg-body">Halo! Klik <strong>Token</strong> di menu kiri untuk memasukkan GitHub Token Anda, lalu kirim perintah ke <code>muse-1</code> (bikin video, cek status VM, atau cek kuota).</div></div>`;
+        return;
+      }
+      box.innerHTML = arr.map(m => `
+        <div class="msg ${m.role}">
+          <div class="msg-head">
+            <span>${m.role === "user" ? `Anda -> ${m.target}` : m.sender}</span>
+            <span>${fmtTime(m.timestamp)}</span>
+          </div>
+          <div class="msg-body">${renderMd(m.text)}</div>
+        </div>
+      `).join("");
+      box.scrollTop = box.scrollHeight;
+    }
+
+    async function refreshVms() {
+      const list = document.getElementById("vm-list");
+      const now = Math.floor(Date.now() / 1000);
+      const results = await Promise.all(VMS.map(async vm => ({ vm, data: await readControlJson(`heartbeats/${vm}.json`) })));
+      list.innerHTML = results.map(({ vm, data }) => {
+        const hb = data?.json;
+        if (!hb) return `<div class="card"><div class="vm-row"><strong>${vm}</strong><span class="badge off">Offline</span></div></div>`;
+        const age = Math.max(0, now - (hb.timestamp || 0));
+        const cls = hb.busy ? "busy" : (age < 600 ? "ok" : "off");
+        const lbl = hb.busy ? "Busy" : (age < 600 ? "Online" : `Stale ${Math.floor(age/60)}m`);
+        return `
+          <div class="card">
+            <div class="vm-row"><strong>${vm}</strong><span class="badge ${cls}">${lbl}</span></div>
+            <div class="meta">
+              Model: <code>${hb.agy_model || "-"}</code><br>
+              RAM: ${hb.ram_free_mb ?? "?"}/${hb.ram_total_mb ?? "?"} MB | Disk: ${hb.disk_free || "?"}<br>
+              Head: <code>${hb.git_head || "?"}</code>
+            </div>
+          </div>`;
+      }).join("");
+    }
+
+    async function refreshResults() {
+      let changed = false;
+      const items = await Promise.all(RESULT_TARGETS.map(async t => ({ t, data: await readControlJson(`results/${t}.json`) })));
+      for (const { t, data } of items) {
+        const r = data?.json;
+        if (!r) continue;
+        const rid = String(r.id || r.task_id || "");
+        if (!rid) continue;
+        const text = r.output || r.hasil || r.message || JSON.stringify(r, null, 2);
+        const added = appendHistory({
+          id: `res-${t}-${rid}`,
+          role: "assistant",
+          sender: t,
+          text: String(text),
+          timestamp: r.finished_at || r.timestamp || Math.floor(Date.now() / 1000)
+        });
+        if (added) changed = true;
+      }
+      if (changed) renderMessages();
+    }
+
+    async function refreshRenders() {
+      const box = document.getElementById("render-list");
+      try {
+        const data = await ghFetch(`https://api.github.com/repos/${RENDER_REPO}/actions/runs?per_page=5`);
+        const runs = data.workflow_runs || [];
+        if (!runs.length) {
+          box.innerHTML = `<span class="meta">Belum ada riwayat render.</span>`;
+          return;
+        }
+        box.innerHTML = runs.map(r => `
+          <div class="run-item">
+            <a href="${r.html_url}" target="_blank">${r.name} #${r.run_number}</a>
+            <div class="meta">${r.status} / ${r.conclusion || "running"}</div>
+          </div>
+        `).join("");
+      } catch {
+        box.innerHTML = `<span class="meta">Gagal memuat daftar render.</span>`;
+      }
+    }
+
+    async function refreshAll() {
+      const st = document.getElementById("sync-status");
+      if (!getToken()) {
+        st.textContent = "Perlu GitHub Token";
+        renderMessages();
+        return;
+      }
+      st.textContent = "Menyinkronkan...";
+      try {
+        await Promise.all([refreshVms(), refreshResults(), refreshRenders()]);
+        st.textContent = `Terhubung (${fmtTime(Math.floor(Date.now() / 1000))})`;
+      } catch (e) {
+        st.textContent = "Gagal sync (cek Token)";
+      }
+    }
+
+    async function sendMessage(overrideTarget, overrideMsg) {
+      if (!getToken()) { openSettings(); return; }
+      const input = document.getElementById("input");
+      const btn = document.getElementById("send-btn");
+      const target = overrideTarget || document.getElementById("target").value;
+      const message = (overrideMsg !== undefined ? overrideMsg : input.value).trim();
+      if (!message) return;
+
+      btn.disabled = true;
+      try {
+        const taskId = await writeControlTask(target, message);
+        appendHistory({
+          id: `user-${taskId}`,
+          role: "user",
+          target,
+          text: message,
+          timestamp: Math.floor(Date.now() / 1000)
+        });
+        if (overrideMsg === undefined) input.value = "";
+        renderMessages();
+      } catch (e) {
+        alert("Gagal kirim task ke GitHub: " + e.message);
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function quickSend(target, prompt) {
+      if (window.innerWidth <= 820) toggleSidebar();
+      sendMessage(target, prompt);
+    }
+
+    document.getElementById("input").addEventListener("keydown", e => {
+      if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) sendMessage();
+    });
+
+    renderMessages();
+    if (!getToken()) openSettings();
+    else refreshAll();
+    setInterval(() => { if (getToken()) refreshAll(); }, 15000);
+  </script>
+</body>
+</html>
