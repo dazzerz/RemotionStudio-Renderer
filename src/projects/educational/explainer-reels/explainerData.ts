@@ -829,3 +829,261 @@ export const BlackBoxUnderwaterExplainer: React.FC = () =>
 
 export const SubseaCableSharkExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: SUBSEA_CABLE_SHARK_CONFIG });
+
+export const JENDELA_BULAT_CONFIG: ExplainerConfig = {
+  id: "JendelaBulatExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/jendela-bulat/vo_riko.mp3",
+  durationSec: 54.5,
+  hookLine1: "KENAPA JENDELA PESAWAT",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "DIBUAT BULAT, BUKAN KOTAK?",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "TEGANGAN 3X DI SUDUT KOTAK!",
+  sourceText: "RAE Farnborough / Court of Inquiry 1954",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo tim jendela bulat aman atau desain kotak lebih cakep?",
+    startSec: 48.5,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/jendela-bulat/scene1.jpg", startSec: 0, endSec: 6.81, panDirection: "in", callouts: [{ label: "Jendela Kotak Comet 1954", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/jendela-bulat/scene2.jpg", startSec: 6.81, endSec: 13.62, panDirection: "right", callouts: [{ label: "Dua Comet Hancur di Udara", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/jendela-bulat/scene3.jpg", startSec: 13.62, endSec: 20.44, panDirection: "in", callouts: [{ label: "Uji Tangki Air Farnborough", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/jendela-bulat/scene4.jpg", startSec: 20.44, endSec: 27.25, panDirection: "left", callouts: [{ label: "Retak dari Sudut Kotak", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/jendela-bulat/scene5.jpg", startSec: 27.25, endSec: 34.06, panDirection: "in", callouts: [{ label: "Tegangan 3x di Sudut Tajam", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+    { imagePath: "images/jendela-bulat/scene6.jpg", startSec: 34.06, endSec: 40.88, panDirection: "right", callouts: [{ label: "Retak Lelah Tumbuh Diam-diam", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FF6B6B" }] },
+    { imagePath: "images/jendela-bulat/scene7.jpg", startSec: 40.88, endSec: 47.69, panDirection: "in", callouts: [{ label: "Jendela Bulat Sebar Tekanan", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/jendela-bulat/scene8.jpg", startSec: 47.69, endSec: 54.5, panDirection: "left", callouts: [{ label: "Standar Keselamatan Modern", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 6.81, text: "Jendela kotak pernah bikin pesawat jatuh.", highlight: "kotak" },
+    { startSec: 6.81, endSec: 13.62, text: "Tahun 1954, dua Comet hancur di udara, 56 orang tewas.", highlight: "56 orang" },
+    { startSec: 13.62, endSec: 20.44, text: "Penyelidik merendam badan pesawat di tangki air dan memompanya.", highlight: "tangki air" },
+    { startSec: 20.44, endSec: 27.25, text: "Sekitar 3.000 siklus tekanan, badannya pecah dari sudut kotak.", highlight: "3.000 siklus" },
+    { startSec: 27.25, endSec: 34.06, text: "Di sudut tajam, tegangan menumpuk sampai tiga kali lipat.", highlight: "tiga kali lipat" },
+    { startSec: 34.06, endSec: 40.88, text: "Retak halus tumbuh diam-diam tiap penerbangan.", highlight: "diam-diam" },
+    { startSec: 40.88, endSec: 47.69, text: "Jendela bulat menyebar tekanan merata, tanpa sudut retak.", highlight: "bulat" },
+    { startSec: 47.69, endSec: 54.5, text: "Tim bulat aman atau kotak lebih cakep? Like, komen & follow!", highlight: "Like, komen" },
+  ],
+};
+
+export const JendelaBulatExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: JENDELA_BULAT_CONFIG });
+
+export const SAYAP_MELENTUR_CONFIG: ExplainerConfig = {
+  id: "SayapMelenturExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/sayap-melentur/vo_riko.mp3",
+  durationSec: 50,
+  hookLine1: "SAYAP PATAH KALAU KAKU,",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "LENTUR ITU YANG NYELAMETIN",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "UJUNG SAYAP NAIK 7,6 METER!",
+  sourceText: "Boeing 787 Ultimate Load Test 2010 / FAA 14 CFR 25.305",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Pernah lihat sayap goyang pas turbulensi? Ceritain rasanya",
+    startSec: 44,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/sayap-melentur/scene1.jpg", startSec: 0, endSec: 6.25, panDirection: "in", callouts: [{ label: "Sayap Melentur Saat Turbulensi", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/sayap-melentur/scene2.jpg", startSec: 6.25, endSec: 12.5, panDirection: "right", callouts: [{ label: "Uji Statik Boeing 787 (2010)", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/sayap-melentur/scene3.jpg", startSec: 12.5, endSec: 18.75, panDirection: "in", callouts: [{ label: "Ujung Sayap Naik 7,6 Meter", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/sayap-melentur/scene4.jpg", startSec: 18.75, endSec: 25, panDirection: "left", callouts: [{ label: "Beban Angin Diserap & Disebar", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/sayap-melentur/scene5.jpg", startSec: 25, endSec: 31.25, panDirection: "in", callouts: [{ label: "Sayap Kaku: Retak di Pangkal", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+    { imagePath: "images/sayap-melentur/scene6.jpg", startSec: 31.25, endSec: 37.5, panDirection: "right", callouts: [{ label: "Kaku = Jauh Lebih Berat", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FF6B6B" }] },
+    { imagePath: "images/sayap-melentur/scene7.jpg", startSec: 37.5, endSec: 43.75, panDirection: "in", callouts: [{ label: "Normal: Cuma Bergerak 0,5 Meter", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/sayap-melentur/scene8.jpg", startSec: 43.75, endSec: 50, panDirection: "left", callouts: [{ label: "Lentur = Perlindungan", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 6.25, text: "Sayap patah kalau kaku, lentur itu yang nyelametin.", highlight: "kaku" },
+    { startSec: 6.25, endSec: 12.5, text: "Pas turbulensi, ujung sayap naik-turun. Itu desain, bukan kerusakan.", highlight: "desain" },
+    { startSec: 12.5, endSec: 18.75, text: "Tahun 2010, Boeing menarik sayap 787 sampai ujungnya naik 7,6 meter.", highlight: "7,6 meter" },
+    { startSec: 18.75, endSec: 25, text: "Bebannya 150 persen gaya paling ekstrem seumur hidup pesawat. Tidak patah.", highlight: "150 persen" },
+    { startSec: 25, endSec: 31.25, text: "Sayap lentur menyerap hantaman angin dan menyebar bebannya.", highlight: "menyerap" },
+    { startSec: 31.25, endSec: 37.5, text: "Sayap kaku menumpuk semua beban di pangkal, di situlah retak lahir.", highlight: "pangkal" },
+    { startSec: 37.5, endSec: 43.75, text: "Di penerbangan normal, ujung sayap cuma bergerak sekitar setengah meter.", highlight: "setengah meter" },
+    { startSec: 43.75, endSec: 50, text: "Simpan buat nenangin teman yang panik turbulensi! Like, komen & follow!", highlight: "Like, komen" },
+  ],
+};
+
+export const SayapMelenturExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: SAYAP_MELENTUR_CONFIG });
+
+export const LAMPU_KABIN_CONFIG: ExplainerConfig = {
+  id: "LampuKabinExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/lampu-kabin/vo_riko.mp3",
+  durationSec: 52,
+  hookLine1: "LAMPU KABIN DIMATIKAN",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "BUKAN BUAT TIDUR",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "PERSIAPAN EVAKUASI 90 DETIK!",
+  sourceText: "FAA 14 CFR 25.803 / Simple Flying",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo lebih tenang kabin gelap atau terang pas takeoff?",
+    startSec: 46,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/lampu-kabin/scene1.jpg", startSec: 0, endSec: 6.5, panDirection: "in", callouts: [{ label: "Lampu Mati Bukan Buat Tidur", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/lampu-kabin/scene2.jpg", startSec: 6.5, endSec: 13, panDirection: "right", callouts: [{ label: "Fase Paling Kritis: Takeoff", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/lampu-kabin/scene3.jpg", startSec: 13, endSec: 19.5, panDirection: "in", callouts: [{ label: "Evakuasi Darurat di Landasan Gelap", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/lampu-kabin/scene4.jpg", startSec: 19.5, endSec: 26, panDirection: "left", callouts: [{ label: "Mata Adaptasi Gelap 5-10 Menit", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/lampu-kabin/scene5.jpg", startSec: 26, endSec: 32.5, panDirection: "in", callouts: [{ label: "Lampu Jalur Lantai Menyala", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+    { imagePath: "images/lampu-kabin/scene6.jpg", startSec: 32.5, endSec: 39, panDirection: "right", callouts: [{ label: "Kru Cek Api & Puing di Luar", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FF6B6B" }] },
+    { imagePath: "images/lampu-kabin/scene7.jpg", startSec: 39, endSec: 45.5, panDirection: "in", callouts: [{ label: "Tirai Jendela Wajib Dibuka", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/lampu-kabin/scene8.jpg", startSec: 45.5, endSec: 52, panDirection: "left", callouts: [{ label: "Terbang Malam dengan Aman", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 6.5, text: "Lampu mati bukan buat tidur.", highlight: "bukan buat tidur" },
+    { startSec: 6.5, endSec: 13, text: "Itu persiapan evakuasi kalau darurat saat lepas landas.", highlight: "evakuasi" },
+    { startSec: 13, endSec: 19.5, text: "Takeoff dan landing adalah fase paling kritis penerbangan.", highlight: "paling kritis" },
+    { startSec: 19.5, endSec: 26, text: "Evakuasi penuh wajib tuntas dalam 90 detik.", highlight: "90 detik" },
+    { startSec: 26, endSec: 32.5, text: "Mata butuh 5 sampai 10 menit beradaptasi dari terang ke gelap.", highlight: "5 sampai 10 menit" },
+    { startSec: 32.5, endSec: 39, text: "Kabin redup bikin tanda EXIT dan lampu jalur lantai jelas terlihat.", highlight: "jelas terlihat" },
+    { startSec: 39, endSec: 45.5, text: "Kru bisa mengintip keluar: ada api atau puing di sisi pesawat?", highlight: "api atau puing" },
+    { startSec: 45.5, endSec: 52, text: "Tirai jendela dibuka biar kondisi luar kelihatan. Like, komen & follow!", highlight: "Like, komen" },
+  ],
+};
+
+export const LampuKabinExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: LAMPU_KABIN_CONFIG });
+
+export const MASKER_OKSIGEN_CONFIG: ExplainerConfig = {
+  id: "MaskerOksigenExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Fast Fact",
+  audioPath: "audio/masker-oksigen/vo_sami.mp3",
+  durationSec: 56.5,
+  hookLine1: "MASKER OKSIGEN CUMA 12 MENIT",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "ITU SENGAJA, BUKAN PELIT",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "CUKUP BUAT TURUN KE 10.000 KAKI!",
+  sourceText: "FAA CAMI 2021 / 14 CFR 121.333",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Kalau masker turun, pasang dulu ke diri sendiri atau ke anak?",
+    startSec: 50.5,
+    accentColor: "#00F2FE",
+  },
+  scenes: [
+    { imagePath: "images/masker-oksigen/scene1.jpg", startSec: 0, endSec: 7.06, panDirection: "in", callouts: [{ label: "Masker Turun Otomatis", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/masker-oksigen/scene2.jpg", startSec: 7.06, endSec: 14.12, panDirection: "right", callouts: [{ label: "Generator Oksigen Kimia", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/masker-oksigen/scene3.jpg", startSec: 14.12, endSec: 21.19, panDirection: "in", callouts: [{ label: "Pin Pemicu Memulai Reaksi", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/masker-oksigen/scene4.jpg", startSec: 21.19, endSec: 28.25, panDirection: "left", callouts: [{ label: "Suplai 12-20 Menit", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/masker-oksigen/scene5.jpg", startSec: 28.25, endSec: 35.31, panDirection: "in", callouts: [{ label: "Turun Darurat ke 10.000 Kaki", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+    { imagePath: "images/masker-oksigen/scene6.jpg", startSec: 35.31, endSec: 42.38, panDirection: "right", callouts: [{ label: "Target Turun: 10 Menit", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FF6B6B" }] },
+    { imagePath: "images/masker-oksigen/scene7.jpg", startSec: 42.38, endSec: 49.44, panDirection: "in", callouts: [{ label: "Pasang Masker Sendiri Dulu", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/masker-oksigen/scene8.jpg", startSec: 49.44, endSec: 56.5, panDirection: "left", callouts: [{ label: "Lalu Bantu Anak di Sebelah", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 7.06, text: "12 menit itu sengaja, bukan pelit.", highlight: "sengaja" },
+    { startSec: 7.06, endSec: 14.12, text: "Oksigen masker bukan dari tangki raksasa, tapi generator kimia.", highlight: "generator kimia" },
+    { startSec: 14.12, endSec: 21.19, text: "Masker ditarik, pin lepas, reaksi kimia menghasilkan oksigen.", highlight: "reaksi kimia" },
+    { startSec: 21.19, endSec: 28.25, text: "Suplai sekitar 12 sampai 20 menit, tergantung tipe pesawat.", highlight: "12 sampai 20 menit" },
+    { startSec: 28.25, endSec: 35.31, text: "Cukup untuk turun darurat ke 10.000 kaki, udara bisa dihirup lagi.", highlight: "10.000 kaki" },
+    { startSec: 35.31, endSec: 42.38, text: "Penurunan itu targetnya sekitar 10 menit saja.", highlight: "10 menit" },
+    { startSec: 42.38, endSec: 49.44, text: "Pasang masker lo dulu: waktu sadar di ketinggian cuma 15-30 detik.", highlight: "15-30 detik" },
+    { startSec: 49.44, endSec: 56.5, text: "Baru bantu anak di sebelah lo. Like, komen & follow!", highlight: "Like, komen" },
+  ],
+};
+
+export const MaskerOksigenExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: MASKER_OKSIGEN_CONFIG });
+
+export const TOILET_PESAWAT_CONFIG: ExplainerConfig = {
+  id: "ToiletPesawatExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Fast Fact",
+  audioPath: "audio/toilet-pesawat/vo_sami.mp3",
+  durationSec: 59,
+  hookLine1: "FLUSH PESAWAT BUKAN",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "SEDOT AIR BIASA",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "AIR CUMA 200 ML PER FLUSH!",
+  sourceText: "Simple Flying / Airways Magazine",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo pernah kaget sama suara flush pesawat?",
+    startSec: 53,
+    accentColor: "#00F2FE",
+  },
+  scenes: [
+    { imagePath: "images/toilet-pesawat/scene1.jpg", startSec: 0, endSec: 7.38, panDirection: "in", callouts: [{ label: "Flush Vakum Bikin Kaget", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/toilet-pesawat/scene2.jpg", startSec: 7.38, endSec: 14.75, panDirection: "right", callouts: [{ label: "Beda Tekanan Kabin vs Luar", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/toilet-pesawat/scene3.jpg", startSec: 14.75, endSec: 22.12, panDirection: "in", callouts: [{ label: "Katup Membuka, Udara Melesat", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/toilet-pesawat/scene4.jpg", startSec: 22.12, endSec: 29.5, panDirection: "left", callouts: [{ label: "Air Cuma 200 mL + Cairan Biru", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/toilet-pesawat/scene5.jpg", startSec: 29.5, endSec: 36.88, panDirection: "in", callouts: [{ label: "Pompa Vakum Saat di Darat", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+    { imagePath: "images/toilet-pesawat/scene6.jpg", startSec: 36.88, endSec: 44.25, panDirection: "right", callouts: [{ label: "Tangki Limbah Tertutup", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FF6B6B" }] },
+    { imagePath: "images/toilet-pesawat/scene7.jpg", startSec: 44.25, endSec: 51.62, panDirection: "in", callouts: [{ label: "Disedot Honey Truck", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/toilet-pesawat/scene8.jpg", startSec: 51.62, endSec: 59, panDirection: "left", callouts: [{ label: "Tidak Pernah Dibuang di Udara", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 7.38, text: "Flush pesawat bukan sedot air biasa.", highlight: "bukan sedot air" },
+    { startSec: 7.38, endSec: 14.75, text: "Yang menyedot bukan air, tapi perbedaan tekanan udara.", highlight: "perbedaan tekanan" },
+    { startSec: 14.75, endSec: 22.12, text: "Udara kabin melesat keluar lewat pipa sempit. Itulah suara whoosh-nya!", highlight: "whoosh" },
+    { startSec: 22.12, endSec: 29.5, text: "Air bilas cuma sekitar 200 mililiter per flush, plus disinfektan biru.", highlight: "200 mililiter" },
+    { startSec: 29.5, endSec: 36.88, text: "Toilet rumah butuh 6 liter sekali siram. Beda jauh!", highlight: "6 liter" },
+    { startSec: 36.88, endSec: 44.25, text: "Di darat, pompa vakum listrik yang mengambil alih sedotannya.", highlight: "pompa vakum" },
+    { startSec: 44.25, endSec: 51.62, text: "Limbah ditampung di tangki tertutup, disedot truk setelah mendarat.", highlight: "tangki tertutup" },
+    { startSec: 51.62, endSec: 59, text: "Tidak pernah dibuang di udara! Like, komen & follow!", highlight: "Like, komen" },
+  ],
+};
+
+export const ToiletPesawatExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: TOILET_PESAWAT_CONFIG });
+
+export const MODE_PESAWAT_CONFIG: ExplainerConfig = {
+  id: "ModePesawatExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Fast Fact",
+  audioPath: "audio/mode-pesawat/vo_sami.mp3",
+  durationSec: 59,
+  hookLine1: "SATU SINYAL BISA",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "GANGGU KOKPIT",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "DENGUNG KAYAK NYAMUK DI HEADSET!",
+  sourceText: "FAA AC 91.21-1D / AD 2022-05-04",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo tim mode pesawat selalu on atau pernah lupa?",
+    startSec: 53,
+    accentColor: "#00F2FE",
+  },
+  scenes: [
+    { imagePath: "images/mode-pesawat/scene1.jpg", startSec: 0, endSec: 7.38, panDirection: "in", callouts: [{ label: "Dengung Masuk Headset Pilot", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/mode-pesawat/scene2.jpg", startSec: 7.38, endSec: 14.75, panDirection: "right", callouts: [{ label: "HP Terus Mencari Sinyal", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/mode-pesawat/scene3.jpg", startSec: 14.75, endSec: 22.12, panDirection: "in", callouts: [{ label: "150 HP Barengan Saat Takeoff", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/mode-pesawat/scene4.jpg", startSec: 22.12, endSec: 29.5, panDirection: "left", callouts: [{ label: "Fase Paling Kritis Penerbangan", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/mode-pesawat/scene5.jpg", startSec: 29.5, endSec: 36.88, panDirection: "in", callouts: [{ label: "Dengung Kayak Nyamuk", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+    { imagePath: "images/mode-pesawat/scene6.jpg", startSec: 36.88, endSec: 44.25, panDirection: "right", callouts: [{ label: "Tower 5G di Dekat Bandara", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FF6B6B" }] },
+    { imagePath: "images/mode-pesawat/scene7.jpg", startSec: 44.25, endSec: 51.62, panDirection: "in", callouts: [{ label: "Radio Altimeter Pengukur Ketinggian", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/mode-pesawat/scene8.jpg", startSec: 51.62, endSec: 59, panDirection: "left", callouts: [{ label: "Mode Pesawat: Aman Duluan", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 7.38, text: "Satu sinyal bisa ganggu kokpit.", highlight: "ganggu kokpit" },
+    { startSec: 7.38, endSec: 14.75, text: "HP yang nyari sinyal bisa jadi dengung nyaring di headset pilot.", highlight: "dengung" },
+    { startSec: 14.75, endSec: 22.12, text: "Kayak nyamuk nempel di kuping, kata-kata menara bisa ketutup.", highlight: "nyamuk" },
+    { startSec: 22.12, endSec: 29.5, text: "Satu HP kecil efeknya, tapi 150 HP barengan pas takeoff?", highlight: "150 HP" },
+    { startSec: 29.5, endSec: 36.88, text: "Makanya FAA dan FCC tegas: aman duluan, sebelum ada kejadian.", highlight: "aman duluan" },
+    { startSec: 36.88, endSec: 44.25, text: "Heboh 5G 2022 biangnya tower di darat, bukan HP penumpang.", highlight: "tower di darat" },
+    { startSec: 44.25, endSec: 51.62, text: "Frekuensinya mepet radio altimeter, pengukur ketinggian pesawat.", highlight: "radio altimeter" },
+    { startSec: 51.62, endSec: 59, text: "Belum ada kecelakaan terbukti karena HP. Like, komen & follow!", highlight: "Like, komen" },
+  ],
+};
+
+export const ModePesawatExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: MODE_PESAWAT_CONFIG });

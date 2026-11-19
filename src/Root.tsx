@@ -127,6 +127,12 @@ import {
   TrainTrackGapExplainer,
   BlackBoxUnderwaterExplainer,
   SubseaCableSharkExplainer,
+  ModePesawatExplainer,
+  ToiletPesawatExplainer,
+  MaskerOksigenExplainer,
+  LampuKabinExplainer,
+  SayapMelenturExplainer,
+  JendelaBulatExplainer,
 } from "./projects/educational/explainer-reels/explainerData";
 
 // Each <Composition> is an entry in the sidebar!
@@ -1068,6 +1074,54 @@ export const RemotionRoot: React.FC = () => {
           id="SubseaCableSharkExplainer"
           component={SubseaCableSharkExplainer}
           durationInFrames={1551}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="ModePesawatExplainer"
+          component={ModePesawatExplainer}
+          durationInFrames={1770}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="ToiletPesawatExplainer"
+          component={ToiletPesawatExplainer}
+          durationInFrames={1770}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="MaskerOksigenExplainer"
+          component={MaskerOksigenExplainer}
+          durationInFrames={1695}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="LampuKabinExplainer"
+          component={LampuKabinExplainer}
+          durationInFrames={1560}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SayapMelenturExplainer"
+          component={SayapMelenturExplainer}
+          durationInFrames={1500}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="JendelaBulatExplainer"
+          component={JendelaBulatExplainer}
+          durationInFrames={1635}
           fps={30}
           width={1080}
           height={1920}
