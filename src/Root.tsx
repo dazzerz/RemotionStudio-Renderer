@@ -136,6 +136,12 @@ import {
   CatPutihExplainer,
   LubangJendelaExplainer,
 } from "./projects/educational/explainer-reels/explainerData";
+import { JembatanCelahExplainer } from "./projects/educational/video-3d-github/JembatanCelahExplainer";
+import { KeretaBelokExplainer } from "./projects/educational/video-3d-github/KeretaBelokExplainer";
+import { TolMiringExplainer } from "./projects/educational/video-3d-github/TolMiringExplainer";
+import { KaliMalangExplainer } from "./projects/educational/video-bekasi-3/KaliMalangExplainer";
+import { KemangPratamaExplainer } from "./projects/educational/video-bekasi-3/KemangPratamaExplainer";
+import { KrlListrikExplainer } from "./projects/educational/video-bekasi-3/KrlListrikExplainer";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -1140,6 +1146,54 @@ export const RemotionRoot: React.FC = () => {
           id="LubangJendelaExplainer"
           component={LubangJendelaExplainer}
           durationInFrames={1545}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="JembatanCelahExplainer"
+          component={JembatanCelahExplainer}
+          durationInFrames={1570}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="KeretaBelokExplainer"
+          component={KeretaBelokExplainer}
+          durationInFrames={1593}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="TolMiringExplainer"
+          component={TolMiringExplainer}
+          durationInFrames={1658}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="KaliMalangExplainer"
+          component={KaliMalangExplainer}
+          durationInFrames={1349}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="KemangPratamaExplainer"
+          component={KemangPratamaExplainer}
+          durationInFrames={1499}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="KrlListrikExplainer"
+          component={KrlListrikExplainer}
+          durationInFrames={1666}
           fps={30}
           width={1080}
           height={1920}
