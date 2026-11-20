@@ -80,7 +80,7 @@ jobs:
             --frames="${{ matrix.range }}" \
             --concurrency="${{ github.event.inputs.concurrency }}" \
             --log=info \
-            --gl=angle
+            --gl=swangle
       - uses: actions/upload-artifact@v4
         with:
           name: chunk-${{ matrix.idx }}
