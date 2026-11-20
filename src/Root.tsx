@@ -133,10 +133,9 @@ import {
   LampuKabinExplainer,
   SayapMelenturExplainer,
   JendelaBulatExplainer,
+  CatPutihExplainer,
+  LubangJendelaExplainer,
 } from "./projects/educational/explainer-reels/explainerData";
-import { JembatanCelahExplainer } from "./projects/educational/video-3d-github/JembatanCelahExplainer";
-import { KeretaBelokExplainer } from "./projects/educational/video-3d-github/KeretaBelokExplainer";
-import { TolMiringExplainer } from "./projects/educational/video-3d-github/TolMiringExplainer";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -1108,7 +1107,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="LampuKabinExplainer"
           component={LampuKabinExplainer}
-          durationInFrames={1560}
+          durationInFrames={1485}
           fps={30}
           width={1080}
           height={1920}
@@ -1130,25 +1129,17 @@ export const RemotionRoot: React.FC = () => {
           height={1920}
         />
         <Composition
-          id="JembatanCelahExplainer"
-          component={JembatanCelahExplainer}
-          durationInFrames={1570}
+          id="CatPutihExplainer"
+          component={CatPutihExplainer}
+          durationInFrames={1695}
           fps={30}
           width={1080}
           height={1920}
         />
         <Composition
-          id="KeretaBelokExplainer"
-          component={KeretaBelokExplainer}
-          durationInFrames={1593}
-          fps={30}
-          width={1080}
-          height={1920}
-        />
-        <Composition
-          id="TolMiringExplainer"
-          component={TolMiringExplainer}
-          durationInFrames={1658}
+          id="LubangJendelaExplainer"
+          component={LubangJendelaExplainer}
+          durationInFrames={1545}
           fps={30}
           width={1080}
           height={1920}

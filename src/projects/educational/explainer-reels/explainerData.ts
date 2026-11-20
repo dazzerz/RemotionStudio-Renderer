@@ -921,7 +921,7 @@ export const LAMPU_KABIN_CONFIG: ExplainerConfig = {
   theme: "editorial_toon",
   channelBadge: "Cerita Teknik",
   audioPath: "audio/lampu-kabin/vo_riko.mp3",
-  durationSec: 52,
+  durationSec: 49.5,
   hookLine1: "LAMPU KABIN DIMATIKAN",
   hookLine1Color: "#FFFFFF",
   hookLine2: "BUKAN BUAT TIDUR",
@@ -931,28 +931,28 @@ export const LAMPU_KABIN_CONFIG: ExplainerConfig = {
   ctaBanner: {
     actionText: "LIKE, KOMEN & FOLLOW!",
     subText: "Lo lebih tenang kabin gelap atau terang pas takeoff?",
-    startSec: 46,
+    startSec: 43.5,
     accentColor: "#FFE600",
   },
   scenes: [
-    { imagePath: "images/lampu-kabin/scene1.jpg", startSec: 0, endSec: 6.5, panDirection: "in", callouts: [{ label: "Lampu Mati Bukan Buat Tidur", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
-    { imagePath: "images/lampu-kabin/scene2.jpg", startSec: 6.5, endSec: 13, panDirection: "right", callouts: [{ label: "Fase Paling Kritis: Takeoff", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#00F2FE" }] },
-    { imagePath: "images/lampu-kabin/scene3.jpg", startSec: 13, endSec: 19.5, panDirection: "in", callouts: [{ label: "Evakuasi Darurat di Landasan Gelap", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FFE600" }] },
-    { imagePath: "images/lampu-kabin/scene4.jpg", startSec: 19.5, endSec: 26, panDirection: "left", callouts: [{ label: "Mata Adaptasi Gelap 5-10 Menit", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#00F2FE" }] },
-    { imagePath: "images/lampu-kabin/scene5.jpg", startSec: 26, endSec: 32.5, panDirection: "in", callouts: [{ label: "Lampu Jalur Lantai Menyala", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
-    { imagePath: "images/lampu-kabin/scene6.jpg", startSec: 32.5, endSec: 39, panDirection: "right", callouts: [{ label: "Kru Cek Api & Puing di Luar", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FF6B6B" }] },
-    { imagePath: "images/lampu-kabin/scene7.jpg", startSec: 39, endSec: 45.5, panDirection: "in", callouts: [{ label: "Tirai Jendela Wajib Dibuka", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
-    { imagePath: "images/lampu-kabin/scene8.jpg", startSec: 45.5, endSec: 52, panDirection: "left", callouts: [{ label: "Terbang Malam dengan Aman", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+    { imagePath: "images/lampu-kabin/scene1.jpg", startSec: 0, endSec: 6.19, panDirection: "in", callouts: [{ label: "Lampu Mati Bukan Buat Tidur", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/lampu-kabin/scene2.jpg", startSec: 6.19, endSec: 12.38, panDirection: "right", callouts: [{ label: "Fase Paling Kritis: Takeoff", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/lampu-kabin/scene3.jpg", startSec: 12.38, endSec: 18.56, panDirection: "in", callouts: [{ label: "Evakuasi Darurat di Landasan Gelap", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/lampu-kabin/scene4.jpg", startSec: 18.56, endSec: 24.75, panDirection: "left", callouts: [{ label: "Mata Adaptasi Gelap 5-10 Menit", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/lampu-kabin/scene5.jpg", startSec: 24.75, endSec: 30.94, panDirection: "in", callouts: [{ label: "Lampu Jalur Lantai Menyala", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+    { imagePath: "images/lampu-kabin/scene6.jpg", startSec: 30.94, endSec: 37.12, panDirection: "right", callouts: [{ label: "Kru Cek Api & Puing di Luar", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FF6B6B" }] },
+    { imagePath: "images/lampu-kabin/scene7.jpg", startSec: 37.12, endSec: 43.31, panDirection: "in", callouts: [{ label: "Tirai Jendela Wajib Dibuka", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/lampu-kabin/scene8.jpg", startSec: 43.31, endSec: 49.5, panDirection: "left", callouts: [{ label: "Terbang Malam dengan Aman", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
   ],
   subtitles: [
-    { startSec: 0, endSec: 6.5, text: "Lampu mati bukan buat tidur.", highlight: "bukan buat tidur" },
-    { startSec: 6.5, endSec: 13, text: "Itu persiapan evakuasi kalau darurat saat lepas landas.", highlight: "evakuasi" },
-    { startSec: 13, endSec: 19.5, text: "Takeoff dan landing adalah fase paling kritis penerbangan.", highlight: "paling kritis" },
-    { startSec: 19.5, endSec: 26, text: "Evakuasi penuh wajib tuntas dalam 90 detik.", highlight: "90 detik" },
-    { startSec: 26, endSec: 32.5, text: "Mata butuh 5 sampai 10 menit beradaptasi dari terang ke gelap.", highlight: "5 sampai 10 menit" },
-    { startSec: 32.5, endSec: 39, text: "Kabin redup bikin tanda EXIT dan lampu jalur lantai jelas terlihat.", highlight: "jelas terlihat" },
-    { startSec: 39, endSec: 45.5, text: "Kru bisa mengintip keluar: ada api atau puing di sisi pesawat?", highlight: "api atau puing" },
-    { startSec: 45.5, endSec: 52, text: "Tirai jendela dibuka biar kondisi luar kelihatan. Like, komen & follow!", highlight: "Like, komen" },
+    { startSec: 0, endSec: 6.19, text: "Lampu mati bukan buat tidur.", highlight: "bukan buat tidur" },
+    { startSec: 6.19, endSec: 12.38, text: "Itu persiapan evakuasi kalau darurat saat lepas landas.", highlight: "evakuasi" },
+    { startSec: 12.38, endSec: 18.56, text: "Takeoff dan landing adalah fase paling kritis penerbangan.", highlight: "paling kritis" },
+    { startSec: 18.56, endSec: 24.75, text: "Evakuasi penuh wajib tuntas dalam 90 detik.", highlight: "90 detik" },
+    { startSec: 24.75, endSec: 30.94, text: "Mata butuh 5 sampai 10 menit beradaptasi dari terang ke gelap.", highlight: "5 sampai 10 menit" },
+    { startSec: 30.94, endSec: 37.12, text: "Kabin redup bikin tanda EXIT dan lampu jalur lantai jelas terlihat.", highlight: "jelas terlihat" },
+    { startSec: 37.12, endSec: 43.31, text: "Kru bisa mengintip keluar: ada api atau puing di sisi pesawat?", highlight: "api atau puing" },
+    { startSec: 43.31, endSec: 49.5, text: "Tirai jendela dibuka biar kondisi luar kelihatan. Like, komen & follow!", highlight: "Like, komen" },
   ],
 };
 
@@ -1087,3 +1087,89 @@ export const MODE_PESAWAT_CONFIG: ExplainerConfig = {
 
 export const ModePesawatExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: MODE_PESAWAT_CONFIG });
+
+export const LUBANG_JENDELA_CONFIG: ExplainerConfig = {
+  id: "LubangJendelaExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/lubang-jendela/vo_riko.mp3",
+  durationSec: 51.5,
+  hookLine1: "JENDELA PESAWAT BOLONG?",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "SENGAJA, BUKAN CACAT!",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "LUBANG KECIL, TUGAS BESAR!",
+  sourceText: "GKN Aerospace / Manual Boeing 737",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo tim periksa jendela dulu atau langsung duduk manis?",
+    startSec: 45.5,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/lubang-jendela/scene1.jpg", startSec: 0, endSec: 6.44, panDirection: "in", callouts: [{ label: "Lubang Mungil di Bawah Jendela", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/lubang-jendela/scene2.jpg", startSec: 6.44, endSec: 12.88, panDirection: "right", callouts: [{ label: "Tiga Panel Akrilik Jendela Kabin", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/lubang-jendela/scene3.jpg", startSec: 12.88, endSec: 19.31, panDirection: "in", callouts: [{ label: "Bleed Hole di Panel Tengah", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/lubang-jendela/scene4.jpg", startSec: 19.31, endSec: 25.75, panDirection: "left", callouts: [{ label: "Panel Luar Menanggung Tekanan Penuh", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/lubang-jendela/scene5.jpg", startSec: 25.75, endSec: 32.19, panDirection: "in", callouts: [{ label: "Panel Tengah: Cadangan Segar", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+    { imagePath: "images/lubang-jendela/scene6.jpg", startSec: 32.19, endSec: 38.62, panDirection: "right", callouts: [{ label: "Uap Air Keluar, Jendela Jernih", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FF6B6B" }] },
+    { imagePath: "images/lubang-jendela/scene7.jpg", startSec: 38.62, endSec: 45.06, panDirection: "in", callouts: [{ label: "Pandangan Jernih di Ketinggian", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/lubang-jendela/scene8.jpg", startSec: 45.06, endSec: 51.5, panDirection: "left", callouts: [{ label: "Jendela Jernih, Terbang Tenang", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 6.44, text: "Jendela pesawat lo bolong, tapi sengaja.", highlight: "sengaja" },
+    { startSec: 6.44, endSec: 12.88, text: "Di bagian bawah jendela ada lubang mungil: bleed hole.", highlight: "bleed hole" },
+    { startSec: 12.88, endSec: 19.31, text: "Jendela kabin sebenarnya tiga lapis akrilik.", highlight: "tiga lapis" },
+    { startSec: 19.31, endSec: 25.75, text: "Lubangnya cuma menembus panel tengah, panel luar tetap rapat.", highlight: "panel tengah" },
+    { startSec: 25.75, endSec: 32.19, text: "Udara kabin masuk pelan ke celah antar panel, tekanan jadi seimbang.", highlight: "seimbang" },
+    { startSec: 32.19, endSec: 38.62, text: "Beban tekanan penuh ditanggung panel luar yang paling kuat.", highlight: "panel luar" },
+    { startSec: 38.62, endSec: 45.06, text: "Panel tengah istirahat jadi cadangan, uap air dibuang biar tidak berembun.", highlight: "cadangan" },
+    { startSec: 45.06, endSec: 51.5, text: "Lo tim periksa jendela dulu atau duduk manis? Like, komen & follow!", highlight: "Like, komen" },
+  ],
+};
+
+export const LubangJendelaExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: LUBANG_JENDELA_CONFIG });
+
+export const CAT_PUTIH_CONFIG: ExplainerConfig = {
+  id: "CatPutihExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/cat-putih/vo_riko.mp3",
+  durationSec: 56.5,
+  hookLine1: "KENAPA PESAWAT DICAT PUTIH?",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "BUKAN BIAR KELIHATAN BERSIH",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "CATNYA SAJA RATUSAN KILOGRAM!",
+  sourceText: "Simple Flying / Aerospace Global News",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo tim putih bersih atau livery warna-warni?",
+    startSec: 50.5,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/cat-putih/scene1.jpg", startSec: 0, endSec: 7.06, panDirection: "in", callouts: [{ label: "Putih Memantulkan Panas Matahari", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/cat-putih/scene2.jpg", startSec: 7.06, endSec: 14.12, panDirection: "right", callouts: [{ label: "Kabin Lebih Adem, AC Ringan", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/cat-putih/scene3.jpg", startSec: 14.12, endSec: 21.19, panDirection: "in", callouts: [{ label: "Retak & Rembesan Jelas Terlihat", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/cat-putih/scene4.jpg", startSec: 21.19, endSec: 28.25, panDirection: "left", callouts: [{ label: "Cat Satu Pesawat: Ratusan Kilogram", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#00F2FE" }] },
+    { imagePath: "images/cat-putih/scene5.jpg", startSec: 28.25, endSec: 35.31, panDirection: "in", callouts: [{ label: "Warna Pudar Kena UV, Putih Awet", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+    { imagePath: "images/cat-putih/scene6.jpg", startSec: 35.31, endSec: 42.38, panDirection: "right", callouts: [{ label: "Burung Menghindar dari Pesawat Terang", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, color: "#FF6B6B" }] },
+    { imagePath: "images/cat-putih/scene7.jpg", startSec: 42.38, endSec: 49.44, panDirection: "in", callouts: [{ label: "Tinggal Ganti Logo Buat Operator Baru", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, color: "#FFE600" }] },
+    { imagePath: "images/cat-putih/scene8.jpg", startSec: 49.44, endSec: 56.5, panDirection: "left", callouts: [{ label: "Terbang Adem, Aman, Ekonomis", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, color: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 7.06, text: "Kenapa hampir semua pesawat dicat putih? Bukan biar kelihatan bersih.", highlight: "putih" },
+    { startSec: 7.06, endSec: 14.12, text: "Putih memantulkan sinar matahari, badan pesawat lebih adem.", highlight: "memantulkan" },
+    { startSec: 14.12, endSec: 21.19, text: "Pendingin kabin tidak perlu kerja terlalu keras.", highlight: "Pendingin kabin" },
+    { startSec: 21.19, endSec: 28.25, text: "Di permukaan putih, retak, korosi, dan rembesan oli gampang terlihat.", highlight: "gampang terlihat" },
+    { startSec: 28.25, endSec: 35.31, text: "Cat warna cepat pudar kena ultraviolet dan butuh lapisan lebih banyak.", highlight: "pudar" },
+    { startSec: 35.31, endSec: 42.38, text: "Cat satu pesawat besar beratnya bisa ratusan kilogram.", highlight: "ratusan kilogram" },
+    { startSec: 42.38, endSec: 49.44, text: "Pesawat putih gampang disewakan lagi, tinggal ganti logo.", highlight: "ganti logo" },
+    { startSec: 49.44, endSec: 56.5, text: "Lo tim putih bersih atau livery warna-warni? Like, komen & follow!", highlight: "Like, komen" },
+  ],
+};
+
+export const CatPutihExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: CAT_PUTIH_CONFIG });
