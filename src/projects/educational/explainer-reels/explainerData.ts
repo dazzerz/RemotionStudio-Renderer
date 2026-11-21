@@ -1173,3 +1173,46 @@ export const CAT_PUTIH_CONFIG: ExplainerConfig = {
 
 export const CatPutihExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: CAT_PUTIH_CONFIG });
+
+export const TURBULENSI_CONFIG: ExplainerConfig = {
+  id: "TurbulensiExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/turbulensi/vo_riko.mp3",
+  durationSec: 55.0,
+  hookLine1: "TURBULENSI PARAH,",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "PESAWAT BAKAL JATUH?",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "FAKTANYA: TIDAK PERNAH!",
+  sourceText: "FAA Part 25 / NTSB SS-21-01 / Uji Statis Boeing 787 (2010)",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo pernah ngalamin turbulensi paling parah di mana?",
+    startSec: 49.0,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/turbulensi/scene1.jpg", videoPath: "videos/turbulensi/scene1.mp4", startSec: 0, endSec: 6.88, panDirection: "in", callouts: [{ label: "Kabin Goyang, Pesawat Tetap Terkendali", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/turbulensi/scene2.jpg", videoPath: "videos/turbulensi/scene2.mp4", startSec: 6.88, endSec: 13.75, panDirection: "right", callouts: [{ label: "Sertifikasi: 2,5x Bobot Sendiri + 50%", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/turbulensi/scene3.jpg", startSec: 13.75, endSec: 20.63, panDirection: "in", callouts: [{ label: "Sayap Melentur = Fitur Keselamatan", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/turbulensi/scene4.jpg", startSec: 20.63, endSec: 27.5, panDirection: "left", callouts: [{ label: "Radar Cuaca: Pilot Menghindari Badai", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/turbulensi/scene5.jpg", videoPath: "videos/turbulensi/scene5.mp4", startSec: 27.5, endSec: 34.38, panDirection: "in", callouts: [{ label: "Uji 787: Ujung Sayap Naik 7,6 Meter", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#70FF00" }] },
+    { imagePath: "images/turbulensi/scene6.jpg", startSec: 34.38, endSec: 41.25, panDirection: "right", callouts: [{ label: "Yang Bahaya: Penumpang Tanpa Sabuk", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#FF6B6B" }] },
+    { imagePath: "images/turbulensi/scene7.jpg", startSec: 41.25, endSec: 48.13, panDirection: "in", callouts: [{ label: "Korban Luka Hampir Semua Tanpa Sabuk", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/turbulensi/scene8.jpg", startSec: 48.13, endSec: 55.0, panDirection: "left", callouts: [{ label: "Turbulensi Tak Menjatuhkan Pesawat Modern", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 6.88, text: "Pesawat goyang keras, lo pikir bakal jatuh.", highlightWord: "jatuh" },
+    { startSec: 6.88, endSec: 13.75, text: "Padahal turbulensi belum pernah menjatuhkan pesawat penumpang modern.", highlightWord: "belum pernah" },
+    { startSec: 13.75, endSec: 20.63, text: "Pesawat disertifikasi menahan dua setengah kali bobotnya, plus margin 50 persen.", highlightWord: "dua setengah kali" },
+    { startSec: 20.63, endSec: 27.5, text: "Sayapnya dirancang melentur: uji 787, ujung sayap naik 7,6 meter tanpa patah.", highlightWord: "7,6 meter" },
+    { startSec: 27.5, endSec: 34.38, text: "Satu-satunya pesawat jatuh karena turbulensi: tahun 1966, sebelum standar sekarang.", highlightWord: "1966" },
+    { startSec: 34.38, endSec: 41.25, text: "Yang bahaya bukan pesawatnya, tapi lo yang nggak pakai sabuk.", highlightWord: "nggak pakai sabuk" },
+    { startSec: 41.25, endSec: 48.13, text: "2009-2018: hampir semua yang luka serius itu penumpang tanpa sabuk.", highlightWord: "tanpa sabuk" },
+    { startSec: 48.13, endSec: 55.0, text: "Kirim ke temen lo yang takut terbang. Turbulensi terparah lo di mana? Like, Komen, Follow!", highlightWord: "Like, Komen" },
+  ],
+};
+
+export const TurbulensiExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: TURBULENSI_CONFIG });

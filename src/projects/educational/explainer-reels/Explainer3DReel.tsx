@@ -4,6 +4,7 @@ import {
   Audio,
   Easing,
   Img,
+  OffthreadVideo,
   Sequence,
   interpolate,
   spring,
@@ -35,6 +36,8 @@ export type DiagramVariant =
 
 export interface ExplainerScene {
   imagePath: string;
+  /** Optional video clip (under public/) played instead of the still image. */
+  videoPath?: string;
   startSec: number;
   endSec: number;
   panDirection: "in" | "out" | "left" | "right";
@@ -280,6 +283,18 @@ const ScenePlate: React.FC<{ scene: ExplainerScene; durationFrames: number }> = 
     <AbsoluteFill style={{ opacity: fadeIn }}>
       {scene.diagramVariant ? (
         <AnimatedDiagramLayer variant={scene.diagramVariant} durationFrames={durationFrames} />
+      ) : scene.videoPath ? (
+        <OffthreadVideo
+          src={staticFile(scene.videoPath)}
+          muted
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            scale: String(scale),
+            translate: `${tx}px ${ty}px`,
+          }}
+        />
       ) : (
         <Img
           src={staticFile(scene.imagePath)}
