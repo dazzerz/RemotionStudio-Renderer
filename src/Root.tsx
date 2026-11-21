@@ -136,6 +136,9 @@ import {
   CatPutihExplainer,
   LubangJendelaExplainer,
 } from "./projects/educational/explainer-reels/explainerData";
+import { PltaListrikExplainer } from "./projects/educational/video-v2-3/PltaListrikExplainer";
+import { MotorMiringExplainer } from "./projects/educational/video-v2-3/MotorMiringExplainer";
+import { AirPamExplainer } from "./projects/educational/video-v2-3/AirPamExplainer";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -1140,6 +1143,30 @@ export const RemotionRoot: React.FC = () => {
           id="LubangJendelaExplainer"
           component={LubangJendelaExplainer}
           durationInFrames={1545}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="PltaListrikExplainer"
+          component={PltaListrikExplainer}
+          durationInFrames={1747}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="MotorMiringExplainer"
+          component={MotorMiringExplainer}
+          durationInFrames={1642}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="AirPamExplainer"
+          component={AirPamExplainer}
+          durationInFrames={1675}
           fps={30}
           width={1080}
           height={1920}
