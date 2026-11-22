@@ -137,6 +137,7 @@ import {
   LubangJendelaExplainer,
   TurbulensiExplainer,
 } from "./projects/educational/explainer-reels/explainerData";
+import { CintaTanpaKataExplainer } from "./projects/educational/video-relate-5/CintaTanpaKataExplainer";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -1149,6 +1150,14 @@ export const RemotionRoot: React.FC = () => {
           id="TurbulensiExplainer"
           component={TurbulensiExplainer}
           durationInFrames={1650}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="CintaTanpaKataExplainer"
+          component={CintaTanpaKataExplainer}
+          durationInFrames={1709}
           fps={30}
           width={1080}
           height={1920}

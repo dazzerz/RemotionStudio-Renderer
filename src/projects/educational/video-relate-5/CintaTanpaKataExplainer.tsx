@@ -811,20 +811,29 @@ const Subtitle: React.FC<{ scene: number; local: number }> = ({ scene, local }) 
         textShadow: SHADOW,
       }}
     >
-      {words.map((w, i) => {
-        const clean = w.toLowerCase().replace(/[^a-z0-9-]/g, "");
-        const isMatch = clean === highlight.toLowerCase();
-        const opacity = interpolate(local, [i * 2, i * 2 + 6], [0, 1], {
-          extrapolateLeft: "clamp",
-          extrapolateRight: "clamp",
-        });
-        return (
-          <span key={i} style={{ opacity, color: isMatch ? AMBER : "#FFFFFF" }}>
-            {w}
-            {i < words.length - 1 ? " " : ""}
-          </span>
-        );
-      })}
+      <span
+        style={{
+          display: "inline-block",
+          backgroundColor: "rgba(0,0,0,0.55)",
+          padding: "10px 28px",
+          borderRadius: 18,
+        }}
+      >
+        {words.map((w, i) => {
+          const clean = w.toLowerCase().replace(/[^a-z0-9-]/g, "");
+          const isMatch = clean === highlight.toLowerCase();
+          const opacity = interpolate(local, [i * 2, i * 2 + 6], [0, 1], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          });
+          return (
+            <span key={i} style={{ opacity, color: isMatch ? AMBER : "#FFFFFF" }}>
+              {w}
+              {i < words.length - 1 ? " " : ""}
+            </span>
+          );
+        })}
+      </span>
     </div>
   );
 };
