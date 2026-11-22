@@ -140,6 +140,7 @@ import {
 import { CintaTanpaKataExplainer } from "./projects/educational/video-relate-5/CintaTanpaKataExplainer";
 import { GajianCepatHabisExplainer } from "./projects/educational/video-relate-5/GajianCepatHabisExplainer";
 import { TemenSaatSusahExplainer } from "./projects/educational/video-relate-5/TemenSaatSusahExplainer";
+import { IbuJanganPulangExplainer } from "./projects/educational/video-relate-5/IbuJanganPulangExplainer";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -1176,6 +1177,14 @@ export const RemotionRoot: React.FC = () => {
           id="TemenSaatSusahExplainer"
           component={TemenSaatSusahExplainer}
           durationInFrames={1487}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="IbuJanganPulangExplainer"
+          component={IbuJanganPulangExplainer}
+          durationInFrames={1504}
           fps={30}
           width={1080}
           height={1920}
