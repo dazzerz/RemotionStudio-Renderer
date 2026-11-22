@@ -320,52 +320,52 @@ const KalimalangDioramaWorld: React.FC<{ frame: number }> = ({ frame }) => {
   let fov = 42;
 
   if (scene === 0) {
-    // Establishing Bekasi Kalimalang diorama: Canal + Arch Bridge + Tol Becakayu + Traffic
+    // Establishing Bekasi Kalimalang diorama from west bank: Canal + Arch Bridge + Tol Becakayu in background!
     const p = local / 149;
-    camPos = [19 - p * 3.5, 13.5 - p * 1.5, 29 - p * 4];
-    camLook = [2, 2.8, 0];
+    camPos = [-16 + p * 2.5, 11.5 - p * 1.2, 24 - p * 4];
+    camLook = [2, 3.0, -2];
   } else if (scene === 1) {
     // Low cutaway close-up: Boat roof hitting the low old bridge!
     const p = local / 149;
-    camPos = [10.5 - p * 1.5, 3.6, 15.5 - p * 2];
-    camLook = [0, 1.5, 2.5];
+    camPos = [-10.2 + p * 1.2, 3.6, 15.0 - p * 2];
+    camLook = [0, 1.6, 2.5];
     fov = 40;
   } else if (scene === 2) {
     // Hero architectural side-3/4 of the new Arch Bridge with 2.5-3m clearance
     const p = local / 149;
-    camPos = [15 - p * 2.5, 6.5, 16 - p * 2];
-    camLook = [0, 2.6, 0];
+    camPos = [-14.5 + p * 2.0, 6.2, 16.5 - p * 2];
+    camLook = [1, 2.6, 0];
   } else if (scene === 3) {
-    // High aerial corridor view showing 5 new arch bridges along Kalimalang
+    // High aerial corridor view from west bank showing 5 new arch bridges + Tol Becakayu in background
     const p = local / 149;
-    camPos = [24, 20, 32 - p * 18];
-    camLook = [0, 2, -26 - p * 12];
+    camPos = [-15.5, 22, 30 - p * 18];
+    camLook = [2, 2, -26 - p * 12];
     fov = 44;
   } else if (scene === 4) {
-    // Side-by-side flood demonstration: Old low bridge (debris) vs New high arch (clear flow)
+    // Side-by-side flood demonstration from west bank: Old low bridge (debris) vs New high arch (clear flow)
     const p = local / 149;
-    camPos = [17, 11.5, 24 - p * 6];
-    camLook = [0, 1.8, 6];
+    camPos = [-15.5, 11.5, 26 - p * 5];
+    camLook = [1, 1.8, 5];
   } else if (scene === 5) {
-    // Clean isometric below blueprint card
+    // Clean isometric below blueprint card (west side, unobstructed!)
     const p = local / 149;
-    camPos = [18 + p * 2, 14, 22];
-    camLook = [1, 1.2, -2];
+    camPos = [-15.5 + p * 2.0, 14.5, 22];
+    camLook = [2, 1.6, -2];
   } else if (scene === 6) {
     // Wide urban traffic flow view (Jl. KH Noer Ali + Tol Becakayu + Arch Bridge)
     const p = local / 149;
-    camPos = [-18 + p * 3, 15, 26 - p * 4];
+    camPos = [-16.0 + p * 2.5, 14.5, 25 - p * 4];
     camLook = [4, 3, -4];
   } else if (scene === 7) {
     // Sweeping hero orbit showing boat + smooth river + flowing cars together
     const p = local / 149;
-    camPos = [16 - p * 5, 9.5, 20];
-    camLook = [0, 2.5, -2];
+    camPos = [-15 + p * 4, 8.5, 20];
+    camLook = [1, 2.5, -2];
   } else {
-    // Grand Bekasi pull-back finale
+    // Grand Bekasi pull-back finale from west bank showing full diorama + Tol Becakayu
     const p = local / 149;
-    camPos = [18 + p * 6, 12 + p * 5, 24 + p * 10];
-    camLook = [2, 3, -4];
+    camPos = [-15.5, 11.5 + p * 6.0, 22 + p * 12];
+    camLook = [3, 3.2, -5];
   }
 
   // Animated traffic along Jl. KH Noer Ali (both sides of canal) & Tol Becakayu
@@ -585,6 +585,20 @@ export const KaliMalangCeritaTeknik: React.FC = () => {
       <ThreeCanvas width={width} height={height} shadows style={{ width: "100%", height: "100%" }}>
         <KalimalangDioramaWorld frame={frame} />
       </ThreeCanvas>
+
+      {/* Soft Cream Paper Top Gradient Scrim (ensures editorial header is always crystal clear) */}
+      <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 360,
+          background:
+            "linear-gradient(180deg, rgba(243,241,234,0.96) 0%, rgba(243,241,234,0.82) 62%, rgba(243,241,234,0) 100%)",
+          pointerEvents: "none",
+        }}
+      />
 
       {/* Top Editorial Header (Cerita Teknik Signature Layout, safe zone top >= 145px) */}
       <div
