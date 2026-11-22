@@ -1259,3 +1259,48 @@ export const KETINGGIAN_CONFIG: ExplainerConfig = {
 
 export const KetinggianExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: KETINGGIAN_CONFIG });
+
+export const BAHANBAKAR_CONFIG: ExplainerConfig = {
+  id: "BahanBakarExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/bahan-bakar-di-sayap/vo_riko.mp3",
+  durationSec: 65.9,
+  hookLine1: "PULUHAN RIBU LITER BENSIN,",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "DI BAWAH KURSI LO?!",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "FAKTANYA: SAYAP = TEMPAT PALING AMAN BUAT BENSIN!",
+  sourceText: "Boeing 737 NG Fuel Capacity / ASTM D1655 Jet A / FAA Fuel Tank Inerting",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo tim duduk di sayap, atau di tengah?",
+    startSec: 59.9,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/bahan-bakar-di-sayap/scene1.jpg", videoPath: "videos/bahan-bakar-di-sayap/scene1.mp4", startSec: 0, endSec: 8.24, panDirection: "in", callouts: [{ label: "Puluhan Ribu Liter, Persis di Bawah Lo", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/bahan-bakar-di-sayap/scene2.jpg", videoPath: "videos/bahan-bakar-di-sayap/scene2.mp4", startSec: 8.24, endSec: 16.48, panDirection: "right", callouts: [{ label: "Sayap: Ruang Kosong yang Nggak Terpakai", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/bahan-bakar-di-sayap/scene3.jpg", videoPath: "videos/bahan-bakar-di-sayap/scene3.mp4", startSec: 16.48, endSec: 24.71, panDirection: "in", callouts: [{ label: "Wet Wing: Dinding Sayap Jadi Tangki", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/bahan-bakar-di-sayap/scene4.jpg", videoPath: "videos/bahan-bakar-di-sayap/scene4.mp4", startSec: 24.71, endSec: 32.95, panDirection: "left", callouts: [{ label: "737 Bawa 26.020 Liter, Sekitar 21 Ton", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/bahan-bakar-di-sayap/scene5.jpg", videoPath: "videos/bahan-bakar-di-sayap/scene5.mp4", startSec: 32.95, endSec: 41.19, panDirection: "in", callouts: [{ label: "Berat Bensin Melawan Gaya Angkat", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/bahan-bakar-di-sayap/scene6.jpg", videoPath: "videos/bahan-bakar-di-sayap/scene6.mp4", startSec: 41.19, endSec: 49.43, panDirection: "right", callouts: [{ label: "Pas di Titik Berat: Seimbang Terus", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#70FF00" }] },
+    { imagePath: "images/bahan-bakar-di-sayap/scene7.jpg", videoPath: "videos/bahan-bakar-di-sayap/scene7.mp4", startSec: 49.43, endSec: 57.66, panDirection: "in", callouts: [{ label: "Jet A: Titik Nyala di Atas 38 Derajat", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/bahan-bakar-di-sayap/scene8.jpg", videoPath: "videos/bahan-bakar-di-sayap/scene8.mp4", startSec: 57.66, endSec: 65.9, panDirection: "left", callouts: [{ label: "Bukan Nekat, Itu Hitungan", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 5.5, text: "Lihat sayap pesawat ini, di dalamnya ada puluhan ribu liter bensin.", highlightWord: "puluhan ribu liter" },
+    { startSec: 5.5, endSec: 11, text: "Iya, bensinnya disimpan di sayap, persis di bawah tempat lo duduk.", highlightWord: "di sayap" },
+    { startSec: 11, endSec: 16.5, text: "Kok nggak dipindah ke tempat yang lebih aman? Justru sayap itu tempat paling amannya.", highlightWord: "paling amannya" },
+    { startSec: 16.5, endSec: 24.7, text: "Pertama, sayap itu ruang kosong, terlalu sempit buat penumpang atau kargo, jadi dinding sayapnya sendiri dibikin jadi tangki.", highlightWord: "dibikin jadi tangki" },
+    { startSec: 24.7, endSec: 31, text: "Kedua, bensin itu berat, satu Boeing 737 bawa sekitar dua puluh enam ribu liter, dua puluh satu ton.", highlightWord: "dua puluh satu ton" },
+    { startSec: 31, endSec: 38, text: "Lift narik sayap ke atas, berat bensin narik ke bawah, jadi tekukan di pangkal sayap malah berkurang.", highlightWord: "malah berkurang" },
+    { startSec: 38, endSec: 45.5, text: "Ketiga, sayap itu pas di titik berat pesawat, jadi keseimbangannya hampir nggak berubah walau bensinnya makin habis.", highlightWord: "titik berat" },
+    { startSec: 45.5, endSec: 54.5, text: "Dan bensin pesawat beda sama bensin mobil, titik nyalanya di atas tiga puluh delapan derajat, plus tangki modern diisi nitrogen biar uapnya susah nyala.", highlightWord: "tiga puluh delapan derajat" },
+    { startSec: 54.5, endSec: 58, text: "Jadi tangki di sayap itu bukan nekat, itu hitungan.", highlightWord: "hitungan" },
+    { startSec: 58, endSec: 65.9, text: "Kirim ke temen lo yang takut duduk di atas sayap. Lo tim sayap atau tengah? Like, Komen, Follow!", highlightWord: "Like, Komen" },
+  ],
+};
+
+export const BahanBakarExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: BAHANBAKAR_CONFIG });
