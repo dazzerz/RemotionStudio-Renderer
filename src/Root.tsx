@@ -4,6 +4,11 @@ import {
   TOL_MIRING_V2_FPS,
   TOL_MIRING_V2_FRAMES,
 } from "./projects/educational/tol-miring-v2/TolMiringAntigravityV2";
+import {
+  KaliMalangCeritaTeknik,
+  KALIMALANG_CT_FPS,
+  KALIMALANG_CT_FRAMES,
+} from "./projects/educational/kalimalang-ct/KaliMalangCeritaTeknik";
 import { HelloWorld } from "./HelloWorld";
 import { Logo } from "./HelloWorld/Logo";
 import { Title } from "./HelloWorld/Title";
@@ -1244,6 +1249,14 @@ export const RemotionRoot: React.FC = () => {
           component={TolMiringAntigravityV2}
           durationInFrames={TOL_MIRING_V2_FRAMES}
           fps={TOL_MIRING_V2_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="KaliMalangCeritaTeknik"
+          component={KaliMalangCeritaTeknik}
+          durationInFrames={KALIMALANG_CT_FRAMES}
+          fps={KALIMALANG_CT_FPS}
           width={1080}
           height={1920}
         />
