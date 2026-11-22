@@ -579,8 +579,9 @@ export const SubtitleText: React.FC<{ text: string; highlight: string; local: nu
         }}
       >
         {words.map((w, i) => {
-          const clean = w.toLowerCase().replace(/[^a-z0-9-.]/g, "");
-          const isMatch = clean === highlight.toLowerCase();
+          const clean = w.toLowerCase().replace(/[^a-z0-9-]/g, "");
+          const hlClean = highlight.toLowerCase().replace(/[^a-z0-9-]/g, "");
+          const isMatch = clean !== "" && clean === hlClean;
           const opacity = interpolate(local, [i * 2, i * 2 + 6], [0, 1], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
