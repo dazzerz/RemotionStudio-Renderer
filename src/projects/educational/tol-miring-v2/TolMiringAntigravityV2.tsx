@@ -74,8 +74,8 @@ function tintCar(group: THREE.Group, hex: string): THREE.Group {
           mat.color.r + mat.color.g + mat.color.b > 0.4
         ) {
           mat.color.set(hex);
-          mat.roughness = 0.35;
-          mat.metalness = 0.25;
+          mat.roughness = 0.32;
+          mat.metalness = 0.22;
         }
         m.material = mat;
       }
@@ -84,11 +84,11 @@ function tintCar(group: THREE.Group, hex: string): THREE.Group {
   return clone;
 }
 
-// Road centerline: straight for z > -30, then curves right smoothly
+// Smooth S-highway curve: straight from z=40 to z=-15, then gentle right curve
 function roadX(z: number): number {
-  if (z >= -20) return 0;
-  const t = (-20 - z) / 80;
-  return 28 * t * t;
+  if (z >= -15) return 0;
+  const t = (-15 - z) / 110;
+  return 26 * t * t;
 }
 
 function roadYaw(z: number): number {
@@ -97,16 +97,67 @@ function roadYaw(z: number): number {
 }
 
 function roadBank(z: number, enableBank: boolean): number {
-  if (!enableBank || z >= -15) return 0;
-  const t = Math.min(1, (-15 - z) / 25);
-  return 0.14 * t; // ~8 deg visual banking
+  if (!enableBank || z >= -10) return 0;
+  const t = Math.min(1, (-10 - z) / 28);
+  // Smooth ease-in banking up to ~9 deg visual tilt (right edge lower, left edge higher)
+  const smooth = t * t * (3 - 2 * t);
+  return 0.16 * smooth;
+}
+
+// Compute a world point on the banked road at longitudinal z, lateral offset u, height v
+function roadPoint(z: number, u: number, v: number, enableBank: boolean): THREE.Vector3 {
+  const cx = roadX(z);
+  const yaw = roadYaw(z);
+  const bank = roadBank(z, enableBank);
+  // Local right vector tilted by banking angle (left side rises, right side drops for right curve)
+  const cosB = Math.cos(bank);
+  const sinB = Math.sin(bank);
+  const rx = Math.cos(yaw);
+  const rz = -Math.sin(yaw);
+  const localRight = new THREE.Vector3(rx * cosB, -sinB, rz * cosB);
+  const localUp = new THREE.Vector3(rx * sinB, cosB, rz * sinB);
+  return new THREE.Vector3(cx, 0.2, z)
+    .addScaledVector(localRight, u)
+    .addScaledVector(localUp, v);
+}
+
+// Build a seamless continuous ribbon mesh along the highway curve
+function buildRoadRibbon(
+  zStart: number,
+  zEnd: number,
+  steps: number,
+  uLeft: number,
+  uRight: number,
+  vOffset: number,
+  enableBank: boolean
+): THREE.BufferGeometry {
+  const positions: number[] = [];
+  const indices: number[] = [];
+  for (let i = 0; i <= steps; i++) {
+    const z = zStart + ((zEnd - zStart) * i) / steps;
+    const pL = roadPoint(z, uLeft, vOffset, enableBank);
+    const pR = roadPoint(z, uRight, vOffset, enableBank);
+    positions.push(pL.x, pL.y, pL.z, pR.x, pR.y, pR.z);
+    if (i < steps) {
+      const a = i * 2;
+      const b = a + 1;
+      const c = a + 2;
+      const d = a + 3;
+      indices.push(a, c, b, b, c, d);
+    }
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+  geo.setIndex(indices);
+  geo.computeVertexNormals();
+  return geo;
 }
 
 const CameraRig: React.FC<{
   pos: [number, number, number];
   lookAt: [number, number, number];
   fov?: number;
-}> = ({ pos, lookAt, fov = 45 }) => {
+}> = ({ pos, lookAt, fov = 44 }) => {
   const { camera } = useThree();
   useEffect(() => {
     camera.position.set(pos[0], pos[1], pos[2]);
@@ -127,12 +178,12 @@ const ForceArrow3D: React.FC<{
 }> = ({ position, rotation, length, color }) => (
   <group position={position} rotation={rotation}>
     <mesh position={[0, length / 2, 0]} castShadow>
-      <cylinderGeometry args={[0.14, 0.14, length, 16]} />
-      <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.25} roughness={0.3} />
+      <cylinderGeometry args={[0.11, 0.11, length, 16]} />
+      <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.28} roughness={0.3} />
     </mesh>
-    <mesh position={[0, length + 0.35, 0]} castShadow>
-      <coneGeometry args={[0.38, 0.75, 16]} />
-      <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.25} roughness={0.3} />
+    <mesh position={[0, length + 0.3, 0]} castShadow>
+      <coneGeometry args={[0.3, 0.62, 16]} />
+      <meshStandardMaterial color={color} emissive={color} emissiveIntensity={0.28} roughness={0.3} />
     </mesh>
   </group>
 );
@@ -145,50 +196,66 @@ const HighwayWorld: React.FC<{
   const isFlatSkidScene = frame >= 360 && frame < 540;
   const enableBank = !isFlatSkidScene;
 
-  // Car travels along negative Z smoothly
-  const carZ = interpolate(frame, [0, TOL_MIRING_V2_FRAMES], [18, -110], {
+  // Hero car moves forward along negative Z
+  const carZ = interpolate(frame, [0, TOL_MIRING_V2_FRAMES], [22, -112], {
     extrapolateRight: "clamp",
   });
-  const cx = roadX(carZ);
-  const cyaw = roadYaw(carZ);
-  const cbank = roadBank(carZ, enableBank);
-  const skidOffset = isFlatSkidScene
-    ? interpolate(frame, [380, 520], [0, -2.4], {
+  const baseLaneU = 2.0; // Right lane
+  const skidU = isFlatSkidScene
+    ? interpolate(frame, [385, 520], [0, -3.1], {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
         easing: Easing.out(Easing.quad),
       })
     : 0;
   const skidYaw = isFlatSkidScene
-    ? interpolate(frame, [380, 520], [0, -0.22], {
+    ? interpolate(frame, [385, 520], [0, -0.26], {
         extrapolateLeft: "clamp",
         extrapolateRight: "clamp",
       })
     : 0;
 
-  // Subtle suspension bounce
-  const bounceY = Math.sin(tSec * 14) * 0.03;
+  const heroU = baseLaneU + skidU;
+  const heroPos = roadPoint(carZ, heroU, 0.05 + Math.sin(tSec * 14) * 0.02, enableBank);
+  const cyaw = roadYaw(carZ);
+  const cbank = roadBank(carZ, enableBank);
 
-  // Build road segments
-  const roadSegments = useMemo(() => {
-    const segs: { z: number; x: number; yaw: number; bank: number; idx: number }[] = [];
-    for (let i = 0; i < 60; i++) {
-      const z = 30 - i * 3;
-      segs.push({
-        z,
-        x: roadX(z),
-        yaw: roadYaw(z),
-        bank: roadBank(z, enableBank),
-        idx: i,
-      });
+  // Seamless continuous highway geometries
+  const { roadGeo, leftYellowGeo, rightYellowGeo, leftRailGeo, rightRailGeo, dashes } =
+    useMemo(() => {
+      const zS = 40;
+      const zE = -145;
+      const steps = 120;
+      const rGeo = buildRoadRibbon(zS, zE, steps, -5.2, 5.2, 0.0, enableBank);
+      const lY = buildRoadRibbon(zS, zE, steps, -4.55, -4.35, 0.03, enableBank);
+      const rY = buildRoadRibbon(zS, zE, steps, 4.35, 4.55, 0.03, enableBank);
+      const lR = buildRoadRibbon(zS, zE, steps, -5.35, -5.15, 0.65, enableBank);
+      const rR = buildRoadRibbon(zS, zE, steps, 5.15, 5.35, 0.65, enableBank);
+
+      const dashGeos: THREE.BufferGeometry[] = [];
+      for (let z = zS; z > zE + 4; z -= 5) {
+        dashGeos.push(buildRoadRibbon(z, z - 2.3, 4, -0.1, 0.1, 0.03, enableBank));
+      }
+      return {
+        roadGeo: rGeo,
+        leftYellowGeo: lY,
+        rightYellowGeo: rY,
+        leftRailGeo: lR,
+        rightRailGeo: rR,
+        dashes: dashGeos,
+      };
+    }, [enableBank]);
+
+  // Roadside lamp & tree placements following the curve cleanly
+  const propsAlongRoad = useMemo(() => {
+    const items: { z: number; idx: number }[] = [];
+    for (let i = 0; i < 36; i++) {
+      items.push({ z: 34 - i * 5, idx: i });
     }
-    return segs;
-  }, [enableBank]);
+    return items;
+  }, []);
 
-  // Traffic cars in opposite/adjacent lane
-  const traffic1Z = 5 - ((frame * 0.24) % 130);
-  const traffic2Z = -35 - ((frame * 0.19) % 100);
-
+  // Cloned tinted GLB cars
   const heroCar = useMemo(
     () => (models.car ? tintCar(models.car, "#f97316") : null),
     [models.car]
@@ -198,190 +265,205 @@ const HighwayWorld: React.FC<{
     [models.car]
   );
   const trafficCar2 = useMemo(
-    () => (models.car ? tintCar(models.car, "#e2e8f0") : null),
+    () => (models.car ? tintCar(models.car, "#f1f5f9") : null),
     [models.car]
   );
 
-  // Dynamic camera choreography across 6 scenes
-  let camPos: [number, number, number] = [cx, 4.2, carZ + 10.5];
-  let camLook: [number, number, number] = [cx, 1.3, carZ - 8];
+  // Traffic cars ahead in left lane moving forward cleanly
+  const t1Z = 10 - ((frame * 0.16) % 140);
+  const t2Z = -48 - ((frame * 0.13) % 100);
+  const t1Pos = roadPoint(t1Z, -2.2, 0.05, enableBank);
+  const t2Pos = roadPoint(t2Z, -2.2, 0.05, enableBank);
+
+  // Dynamic camera choreography — ALWAYS centered on heroPos!
+  let camPos: [number, number, number] = [heroPos.x, heroPos.y + 4.0, heroPos.z + 10.5];
+  let camLook: [number, number, number] = [heroPos.x, heroPos.y + 1.0, heroPos.z - 6];
   let fov = 45;
 
   if (frame < 180) {
-    // Scene 1: Low-angle dynamic chase push-in
+    // Scene 1: Clean rear chase push-in showing full car + curving highway ahead
     const p = frame / 180;
-    camPos = [cx + Math.sin(p * 1.5) * 1.2, 3.6 - p * 0.5, carZ + 9.5 - p * 1.2];
-    camLook = [cx, 1.4, carZ - 12];
+    camPos = [heroPos.x - 1.2 + p * 0.8, heroPos.y + 3.6, heroPos.z + 9.2 - p * 1.0];
+    camLook = [heroPos.x - 0.6, heroPos.y + 1.2, heroPos.z - 10];
     fov = 46;
   } else if (frame < 360) {
-    // Scene 2: Side-tracking shot showing curve vs straight tendency
-    camPos = [cx - 8.5, 3.2, carZ + 3.5];
-    camLook = [cx + 0.5, 1.2, carZ - 2.5];
-    fov = 42;
+    // Scene 2: Wide 3/4 side-front tracking showing car moving forward + red inertia arrow
+    camPos = [heroPos.x - 8.2, heroPos.y + 3.6, heroPos.z + 5.8];
+    camLook = [heroPos.x, heroPos.y + 1.1, heroPos.z - 2.2];
+    fov = 44;
   } else if (frame < 540) {
-    // Scene 3: Elevated 3/4 overhead skid demo
-    camPos = [cx - 4.5, 11.5, carZ + 9.0];
-    camLook = [cx, 0.5, carZ - 2.0];
+    // Scene 3: Clean high 3/4 overhead view of flat-road skid
+    camPos = [heroPos.x - 3.5, heroPos.y + 12.5, heroPos.z + 8.5];
+    camLook = [heroPos.x - 0.5, heroPos.y + 0.6, heroPos.z - 1.5];
     fov = 44;
-  } else if (frame < 930) {
-    // Scene 4: Close-up rear 3/4 with 3D force vectors on banked road
-    const p = (frame - 540) / 390;
-    camPos = [cx - 3.2 + p * 1.8, 3.3, carZ + 8.0];
-    camLook = [cx + 0.5, 1.6, carZ - 2.0];
+  } else if (frame < 900) {
+    // Scene 4: Rear 3/4 view showing banked road tilt + all 3 force vectors clearly
+    const p = (frame - 540) / 360;
+    camPos = [heroPos.x - 2.6 + p * 1.6, heroPos.y + 3.6, heroPos.z + 9.8];
+    camLook = [heroPos.x, heroPos.y + 1.8, heroPos.z - 1.0];
+    fov = 46;
+  } else if (frame < 1380) {
+    // Scene 5: Elevated sweeping drone view for 12% / 6.8 deg stat (no hills blocking!)
+    const p = (frame - 900) / 480;
+    camPos = [heroPos.x - 5.5 + p * 4.0, heroPos.y + 11.0, heroPos.z + 11.5];
+    camLook = [heroPos.x, heroPos.y + 0.8, heroPos.z - 4.0];
     fov = 44;
-  } else if (frame < 1290) {
-    // Scene 5: Sweeping drone orbit for 12% / 6.8 deg stat
-    const a = interpolate(frame, [930, 1290], [0.3, 1.15]);
-    camPos = [cx - Math.sin(a) * 13, 9.5, carZ + Math.cos(a) * 13];
-    camLook = [cx, 1.0, carZ - 3];
-    fov = 42;
   } else {
-    // Scene 6: Elevated sunset hero follow cam
-    const p = (frame - 1290) / (TOL_MIRING_V2_FRAMES - 1290);
-    camPos = [cx + 5.5, 6.2 + p * 2.5, carZ + 11.5];
-    camLook = [cx, 1.2, carZ - 8];
+    // Scene 6: Bright elevated chase finale
+    const p = (frame - 1380) / (TOL_MIRING_V2_FRAMES - 1380);
+    camPos = [heroPos.x - 2.5 + p * 2.0, heroPos.y + 6.2 + p * 1.8, heroPos.z + 11.0];
+    camLook = [heroPos.x, heroPos.y + 1.0, heroPos.z - 8.0];
     fov = 45;
   }
 
   return (
     <>
-      <color attach="background" args={["#cfe7ff"]} />
-      <fog attach="fog" args={["#cfe7ff", 40, 145]} />
+      <color attach="background" args={["#bae6fd"]} />
+      <fog attach="fog" args={["#dbeafe", 55, 175]} />
 
       <CameraRig pos={camPos} lookAt={camLook} fov={fov} />
 
-      {/* Golden-hour warm sunlight + sky hemisphere light */}
-      <hemisphereLight args={["#e0f2fe", "#4d7c0f", 0.95]} />
+      {/* Bright sunny lighting with soft shadows */}
+      <hemisphereLight args={["#f0f9ff", "#65a30d", 1.1]} />
       <directionalLight
-        position={[35, 55, 25]}
-        intensity={1.7}
-        color="#fff7ed"
+        position={[30, 55, 35]}
+        intensity={1.65}
+        color="#fffbeb"
         castShadow
         shadow-mapSize-width={1024}
         shadow-mapSize-height={1024}
       />
 
-      {/* Ground plane + layered rolling hills */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[10, -0.2, -45]} receiveShadow>
-        <planeGeometry args={[400, 400]} />
-        <meshStandardMaterial color="#65a30d" roughness={0.95} />
+      {/* Wide bright green terrain */}
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[15, -0.35, -55]} receiveShadow>
+        <planeGeometry args={[500, 500]} />
+        <meshStandardMaterial color="#84cc16" roughness={0.95} />
       </mesh>
+
+      {/* Distant rolling hills placed FAR away from the road so they NEVER clip */}
       {[
-        [-45, -1, -60, 26, "#4d7c0f"],
-        [55, -2, -85, 34, "#3f6212"],
-        [-25, -2, -135, 42, "#365314"],
-        [75, -1, -35, 22, "#4d7c0f"],
+        [-88, -3, -45, 34, "#65a30d"],
+        [-95, -4, -125, 42, "#4d7c0f"],
+        [108, -3, -35, 32, "#65a30d"],
+        [125, -4, -115, 44, "#4d7c0f"],
+        [20, -5, -210, 52, "#4d7c0f"],
       ].map(([x, y, z, r, col], idx) => (
-        <mesh key={idx} position={[x as number, y as number, z as number]} scale={[1.6, 0.55, 1.4]}>
+        <mesh key={idx} position={[x as number, y as number, z as number]} scale={[1.6, 0.45, 1.3]}>
           <sphereGeometry args={[r as number, 20, 14]} />
           <meshStandardMaterial color={col as string} roughness={0.95} />
         </mesh>
       ))}
 
-      {/* Drifting fluffy clouds */}
+      {/* Fluffy bright clouds */}
       {[
-        [-18, 22, -40],
-        [24, 26, -70],
-        [-8, 24, -105],
-        [38, 28, -120],
+        [-22, 24, -45],
+        [28, 28, -75],
+        [-10, 26, -115],
+        [45, 29, -135],
       ].map(([x, y, z], i) => (
-        <group key={i} position={[(x as number) + tSec * 0.35, y as number, z as number]}>
+        <group key={i} position={[(x as number) + tSec * 0.3, y as number, z as number]}>
           <mesh position={[0, 0, 0]}>
-            <sphereGeometry args={[3.2, 12, 10]} />
+            <sphereGeometry args={[3.4, 12, 10]} />
             <meshStandardMaterial color="#ffffff" roughness={1} />
           </mesh>
-          <mesh position={[2.6, -0.4, 0.3]}>
-            <sphereGeometry args={[2.4, 12, 10]} />
+          <mesh position={[2.8, -0.4, 0.3]}>
+            <sphereGeometry args={[2.5, 12, 10]} />
             <meshStandardMaterial color="#f8fafc" roughness={1} />
           </mesh>
-          <mesh position={[-2.5, -0.5, -0.2]}>
-            <sphereGeometry args={[2.2, 12, 10]} />
+          <mesh position={[-2.6, -0.5, -0.2]}>
+            <sphereGeometry args={[2.3, 12, 10]} />
             <meshStandardMaterial color="#f8fafc" roughness={1} />
           </mesh>
         </group>
       ))}
 
-      {/* Banked multi-lane highway segments + guardrails + streetlamps + trees */}
-      {roadSegments.map((seg) => (
-        <group
-          key={seg.idx}
-          position={[seg.x, 0, seg.z]}
-          rotation={[0, seg.yaw, seg.bank]}
-        >
-          {/* Dark asphalt deck */}
-          <mesh position={[0, 0, 0]} receiveShadow>
-            <boxGeometry args={[10.5, 0.35, 3.25]} />
-            <meshStandardMaterial color="#334155" roughness={0.88} />
-          </mesh>
-          {/* Yellow shoulder lines */}
-          <mesh position={[-4.5, 0.19, 0]}>
-            <boxGeometry args={[0.16, 0.02, 3.25]} />
-            <meshStandardMaterial color="#facc15" />
-          </mesh>
-          <mesh position={[4.5, 0.19, 0]}>
-            <boxGeometry args={[0.16, 0.02, 3.25]} />
-            <meshStandardMaterial color="#facc15" />
-          </mesh>
-          {/* Dashed center white line */}
-          {seg.idx % 2 === 0 && (
-            <mesh position={[0, 0.19, 0]}>
-              <boxGeometry args={[0.18, 0.02, 1.8]} />
-              <meshStandardMaterial color="#f8fafc" />
+      {/* Seamless Curved & Banked Highway */}
+      <mesh geometry={roadGeo} receiveShadow>
+        <meshStandardMaterial color="#334155" roughness={0.86} side={THREE.DoubleSide} />
+      </mesh>
+      <mesh geometry={leftYellowGeo}>
+        <meshStandardMaterial color="#facc15" side={THREE.DoubleSide} />
+      </mesh>
+      <mesh geometry={rightYellowGeo}>
+        <meshStandardMaterial color="#facc15" side={THREE.DoubleSide} />
+      </mesh>
+      <mesh geometry={leftRailGeo} castShadow>
+        <meshStandardMaterial color="#e2e8f0" metalness={0.45} roughness={0.38} side={THREE.DoubleSide} />
+      </mesh>
+      <mesh geometry={rightRailGeo} castShadow>
+        <meshStandardMaterial color="#e2e8f0" metalness={0.45} roughness={0.38} side={THREE.DoubleSide} />
+      </mesh>
+      {dashes.map((geo, idx) => (
+        <mesh key={idx} geometry={geo}>
+          <meshStandardMaterial color="#f8fafc" side={THREE.DoubleSide} />
+        </mesh>
+      ))}
+
+      {/* Roadside Guardrail Posts, Real GLB Streetlamps, and Stylized Trees */}
+      {propsAlongRoad.map(({ z, idx }) => {
+        const pL = roadPoint(z, -5.25, 0.35, enableBank);
+        const pR = roadPoint(z, 5.25, 0.35, enableBank);
+        const lampPos = roadPoint(z, 6.2, 0.0, enableBank);
+        const treeL = roadPoint(z, -10.5 - (idx % 3) * 2.5, -0.2, false);
+        const treeR = roadPoint(z, 11.5 + (idx % 3) * 2.2, -0.2, false);
+        const yaw = roadYaw(z);
+        return (
+          <group key={idx}>
+            <mesh position={[pL.x, pL.y, pL.z]}>
+              <boxGeometry args={[0.14, 0.72, 0.14]} />
+              <meshStandardMaterial color="#94a3b8" />
             </mesh>
-          )}
-          {/* Left & Right metallic guardrails */}
-          <mesh position={[-5.1, 0.7, 0]} castShadow>
-            <boxGeometry args={[0.16, 0.28, 3.25]} />
-            <meshStandardMaterial color="#cbd5e1" metalness={0.5} roughness={0.4} />
-          </mesh>
-          <mesh position={[5.1, 0.7, 0]} castShadow>
-            <boxGeometry args={[0.16, 0.28, 3.25]} />
-            <meshStandardMaterial color="#cbd5e1" metalness={0.5} roughness={0.4} />
-          </mesh>
-          {seg.idx % 2 === 0 && (
-            <>
-              <mesh position={[-5.1, 0.4, 0]}>
-                <boxGeometry args={[0.14, 0.7, 0.14]} />
-                <meshStandardMaterial color="#64748b" />
-              </mesh>
-              <mesh position={[5.1, 0.4, 0]}>
-                <boxGeometry args={[0.14, 0.7, 0.14]} />
-                <meshStandardMaterial color="#64748b" />
-              </mesh>
-            </>
-          )}
-          {/* Real 3D Streetlamps every 5 segments */}
-          {models.lamp && seg.idx % 5 === 0 && (
-            <primitive
-              object={models.lamp.clone(true)}
-              position={[5.7, 0.1, 0]}
-              rotation={[0, -Math.PI / 2, 0]}
-            />
-          )}
-          {/* Layered stylized pine trees along roadside */}
-          {seg.idx % 3 === 0 && (
-            <group position={[-8.8 - (seg.idx % 4) * 1.4, 0, 0]}>
-              <mesh position={[0, 1.0, 0]} castShadow>
-                <cylinderGeometry args={[0.22, 0.3, 2.0, 8]} />
-                <meshStandardMaterial color="#78350f" />
-              </mesh>
-              <mesh position={[0, 2.8, 0]} castShadow>
-                <coneGeometry args={[1.35, 2.6, 10]} />
-                <meshStandardMaterial color="#15803d" />
-              </mesh>
-              <mesh position={[0, 4.1, 0]} castShadow>
-                <coneGeometry args={[0.95, 2.0, 10]} />
-                <meshStandardMaterial color="#16a34a" />
-              </mesh>
-            </group>
-          )}
-        </group>
-      ))}
+            <mesh position={[pR.x, pR.y, pR.z]}>
+              <boxGeometry args={[0.14, 0.72, 0.14]} />
+              <meshStandardMaterial color="#94a3b8" />
+            </mesh>
+            {models.lamp && idx % 3 === 0 && (
+              <primitive
+                object={models.lamp.clone(true)}
+                position={[lampPos.x, lampPos.y, lampPos.z]}
+                rotation={[0, yaw - Math.PI / 2, 0]}
+              />
+            )}
+            {idx % 2 === 0 && (
+              <group position={[treeL.x, treeL.y, treeL.z]}>
+                <mesh position={[0, 1.1, 0]} castShadow>
+                  <cylinderGeometry args={[0.24, 0.34, 2.2, 8]} />
+                  <meshStandardMaterial color="#78350f" />
+                </mesh>
+                <mesh position={[0, 3.0, 0]} castShadow>
+                  <coneGeometry args={[1.5, 2.8, 10]} />
+                  <meshStandardMaterial color="#15803d" />
+                </mesh>
+                <mesh position={[0, 4.4, 0]} castShadow>
+                  <coneGeometry args={[1.05, 2.1, 10]} />
+                  <meshStandardMaterial color="#22c55e" />
+                </mesh>
+              </group>
+            )}
+            {idx % 3 === 1 && (
+              <group position={[treeR.x, treeR.y, treeR.z]}>
+                <mesh position={[0, 1.1, 0]} castShadow>
+                  <cylinderGeometry args={[0.24, 0.34, 2.2, 8]} />
+                  <meshStandardMaterial color="#78350f" />
+                </mesh>
+                <mesh position={[0, 3.0, 0]} castShadow>
+                  <coneGeometry args={[1.45, 2.7, 10]} />
+                  <meshStandardMaterial color="#15803d" />
+                </mesh>
+                <mesh position={[0, 4.3, 0]} castShadow>
+                  <coneGeometry args={[1.0, 2.0, 10]} />
+                  <meshStandardMaterial color="#22c55e" />
+                </mesh>
+              </group>
+            )}
+          </group>
+        );
+      })}
 
-      {/* Hero Car (Real GLB) */}
+      {/* Hero Car (Real GLB facing FORWARD along -Z!) */}
       <group
-        position={[cx + 2.1 + skidOffset, 0.22 + bounceY, carZ]}
-        rotation={[0, cyaw + Math.PI + skidYaw, cbank]}
+        position={[heroPos.x, heroPos.y, heroPos.z]}
+        rotation={[0, cyaw + skidYaw, -cbank]}
       >
         {heroCar ? (
           <primitive object={heroCar} />
@@ -392,69 +474,69 @@ const HighwayWorld: React.FC<{
           </mesh>
         )}
 
-        {/* Scene 2: Red inertia arrow pointing straight ahead */}
+        {/* Scene 2: Red Inertia Arrow pointing straight ahead (-Z) */}
         {frame >= 180 && frame < 360 && (
           <ForceArrow3D
-            position={[0, 1.6, 2.0]}
-            rotation={[Math.PI / 2, 0, 0]}
+            position={[0, 1.4, -2.2]}
+            rotation={[-Math.PI / 2, 0, 0]}
             length={3.2}
             color="#ef4444"
           />
         )}
 
-        {/* Scene 4: 3D Force Vectors (Normal, Gravity, Centripetal) */}
-        {frame >= 540 && frame < 930 && (
+        {/* Scene 4: 3D Force Vectors cleanly positioned around the car */}
+        {frame >= 540 && frame < 900 && (
           <>
-            {/* Gaya Normal (tilted inward with road) */}
+            {/* Gaya Normal (tilted inward with banked road) */}
             <ForceArrow3D
-              position={[0, 2.0, 0]}
+              position={[0, 1.85, 0]}
               rotation={[0, 0, -0.22]}
-              length={3.4}
+              length={2.7}
               color="#f59e0b"
             />
-            {/* Gravitasi (straight down) */}
+            {/* Gravitasi (straight down on left side) */}
             <ForceArrow3D
-              position={[-1.4, 2.2, 0]}
+              position={[-1.45, 2.3, 0]}
               rotation={[0, 0, Math.PI]}
-              length={2.5}
+              length={2.1}
               color="#3b82f6"
             />
-            {/* Gaya Sentripetal (inward toward curve center) */}
+            {/* Gaya Sentripetal (inward toward curve center on right) */}
             <ForceArrow3D
-              position={[1.3, 1.5, 0]}
+              position={[1.3, 1.35, 0]}
               rotation={[0, 0, -Math.PI / 2]}
-              length={3.0}
+              length={2.6}
               color="#22c55e"
             />
           </>
         )}
       </group>
 
-      {/* Skid marks + smoke puffs in Scene 3 */}
+      {/* Skid marks on flat road in Scene 3 */}
       {isFlatSkidScene && (
-        <group position={[cx + 2.1, 0.2, carZ + 3.0]} rotation={[0, cyaw, 0]}>
-          {[-0.7, 0.7].map((lx, i) => (
-            <mesh key={i} position={[lx, 0.02, 0]}>
-              <boxGeometry args={[0.28, 0.02, 6.5]} />
-              <meshStandardMaterial color="#0f172a" transparent opacity={0.75} />
+        <group position={[heroPos.x, heroPos.y + 0.04, heroPos.z + 3.2]} rotation={[0, cyaw, 0]}>
+          {[-0.65, 0.65].map((lx, i) => (
+            <mesh key={i} position={[lx, 0, 0]}>
+              <boxGeometry args={[0.26, 0.02, 6.2]} />
+              <meshStandardMaterial color="#0f172a" transparent opacity={0.78} />
             </mesh>
           ))}
         </group>
       )}
 
-      {/* Traffic cars in left lane for a living highway */}
+      {/* Traffic Cars (also facing FORWARD along -Z) */}
       {trafficCar1 && (
         <group
-          position={[roadX(traffic1Z) - 2.2, 0.22, traffic1Z]}
-          rotation={[0, roadYaw(traffic1Z) + Math.PI, roadBank(traffic1Z, enableBank)]}
+          position={[t1Pos.x, t1Pos.y, t1Pos.z]}
+          rotation={[0, roadYaw(t1Z), -roadBank(t1Z, enableBank)]}
         >
           <primitive object={trafficCar1} />
         </group>
       )}
       {trafficCar2 && (
         <group
-          position={[roadX(traffic2Z) - 2.2, 0.22, traffic2Z]}
-          rotation={[0, roadYaw(traffic2Z) + Math.PI, roadBank(traffic2Z, enableBank)]}
+          position={[t2Pos.x, t2Pos.y, t2Pos.z]}
+          rotation={[0, roadYaw(t2Z), -roadBank(t2Z, enableBank)]}
         >
           <primitive object={trafficCar2} />
         </group>
@@ -471,15 +553,15 @@ interface SubtitleCue {
 }
 
 const SUBTITLES: SubtitleCue[] = [
-  { start: 0, end: 180, text: "Jalan tol lurus, mobil normal. Begitu masuk tikungan, kenapa jalannya dibikin miring?", highlight: "miring?" },
-  { start: 180, end: 360, text: "Soalnya mobil cenderung terus lurus, padahal jalan membelok.", highlight: "lurus," },
+  { start: 0, end: 180, text: "Jalan tol lurus, mobil jalan normal. Begitu masuk tikungan, kenapa jalannya dibikin miring?", highlight: "miring?" },
+  { start: 180, end: 360, text: "Soalnya mobil itu cenderung terus lurus, padahal jalan membelok.", highlight: "lurus," },
   { start: 360, end: 540, text: "Di jalan datar, yang nahan mobil biar nggak selip keluar cuma gesekan ban.", highlight: "gesekan" },
   { start: 540, end: 720, text: "Makanya jalan tol dimiringin, disebut superelevasi.", highlight: "superelevasi." },
-  { start: 720, end: 930, text: "Miringnya bikin gaya dari jalan ikut mendorong mobil ke tengah tikungan.", highlight: "tengah" },
-  { start: 930, end: 1110, text: "Pada kecepatan yang dirancang, gesekan ban hampir nggak kepakai.", highlight: "hampir" },
-  { start: 1110, end: 1290, text: "Maksimal dua belas persen, atau sekitar enam koma delapan derajat.", highlight: "persen," },
-  { start: 1290, end: 1470, text: "Jadi jalan datar bikin gampang selip, jalan miring bikin mobil tetap stabil.", highlight: "stabil." },
-  { start: 1470, end: 1665, text: "Tikungan paling miring yang pernah lo lewatin di mana?", highlight: "mana?" },
+  { start: 720, end: 900, text: "Miringnya bikin gaya dari jalan ikut mendorong mobil ke tengah tikungan.", highlight: "tengah" },
+  { start: 900, end: 1110, text: "Pada kecepatan yang dirancang, gesekan ban hampir nggak kepakai.", highlight: "hampir" },
+  { start: 1110, end: 1380, text: "Maksimal dua belas persen, atau sekitar enam koma delapan derajat.", highlight: "persen," },
+  { start: 1380, end: 1560, text: "Jadi jalan datar bikin gampang selip, jalan miring bikin mobil tetap stabil.", highlight: "stabil." },
+  { start: 1560, end: 1665, text: "Tikungan paling miring yang pernah lo lewatin di mana?", highlight: "mana?" },
 ];
 
 export const TolMiringAntigravityV2: React.FC = () => {
@@ -532,10 +614,10 @@ export const TolMiringAntigravityV2: React.FC = () => {
   });
 
   return (
-    <AbsoluteFill style={{ backgroundColor: "#cfe7ff", fontFamily: "Inter, system-ui, sans-serif" }}>
-      {/* Audio VO + Whoosh SFX at scene transitions */}
+    <AbsoluteFill style={{ backgroundColor: "#bae6fd", fontFamily: "Inter, system-ui, sans-serif" }}>
+      {/* Audio VO + Whoosh SFX */}
       <Audio src={staticFile("audio/tol-miring/vo_sami.mp3")} volume={1.0} />
-      {[180, 360, 540, 930, 1290].map((f) => (
+      {[180, 360, 540, 900, 1380].map((f) => (
         <Sequence key={f} from={f} durationInFrames={30}>
           <Audio src={staticFile("audio/sfx_whoosh.mp3")} volume={0.35} />
         </Sequence>
@@ -592,19 +674,22 @@ export const TolMiringAntigravityV2: React.FC = () => {
       )}
 
       {/* Scene 4 Floating Force Labels */}
-      {frame >= 540 && frame < 930 && (
+      {frame >= 540 && frame < 900 && (
         <div style={{ position: "absolute", top: 210, left: 72, right: 72, display: "flex", justifyContent: "space-between" }}>
-          <div style={{ color: "#f59e0b", fontSize: 32, fontWeight: 900, textShadow: "0 4px 14px rgba(0,0,0,0.85)" }}>
+          <div style={{ color: "#3b82f6", fontSize: 30, fontWeight: 900, textShadow: "0 4px 14px rgba(0,0,0,0.9)" }}>
+            Gravitasi
+          </div>
+          <div style={{ color: "#f59e0b", fontSize: 30, fontWeight: 900, textShadow: "0 4px 14px rgba(0,0,0,0.9)" }}>
             Gaya Normal
           </div>
-          <div style={{ color: "#22c55e", fontSize: 32, fontWeight: 900, textShadow: "0 4px 14px rgba(0,0,0,0.85)" }}>
-            Gaya Sentripetal
+          <div style={{ color: "#22c55e", fontSize: 30, fontWeight: 900, textShadow: "0 4px 14px rgba(0,0,0,0.9)" }}>
+            Sentripetal
           </div>
         </div>
       )}
 
       {/* Scene 5 Big Kinetic Stat (12% / 6.8 deg) */}
-      {frame >= 1080 && frame < 1290 && (
+      {frame >= 1080 && frame < 1380 && (
         <div
           style={{
             position: "absolute",
@@ -628,7 +713,7 @@ export const TolMiringAntigravityV2: React.FC = () => {
           </div>
           <div
             style={{
-              fontSize: 56,
+              fontSize: 54,
               fontWeight: 900,
               color: "#facc15",
               marginTop: 6,
@@ -651,7 +736,7 @@ export const TolMiringAntigravityV2: React.FC = () => {
         </div>
       )}
 
-      {/* Floating Kinetic Subtitle (safe zone bottom >= 250px, NO card) */}
+      {/* Floating Kinetic Subtitle (safe zone bottom >= 270px, NO card) */}
       {activeSub && (
         <div
           style={{
@@ -697,7 +782,7 @@ export const TolMiringAntigravityV2: React.FC = () => {
             textAlign: "center",
             fontSize: 24,
             fontWeight: 700,
-            color: "#e2e8f0",
+            color: "#f8fafc",
             textShadow: "0 2px 10px rgba(0,0,0,0.9)",
           }}
         >
