@@ -9,6 +9,11 @@ import {
   KALIMALANG_CT_FPS,
   KALIMALANG_CT_FRAMES,
 } from "./projects/educational/kalimalang-ct/KaliMalangCeritaTeknik";
+import {
+  SayapMelentur3DPro,
+  SAYAP_3D_PRO_FPS,
+  SAYAP_3D_PRO_FRAMES,
+} from "./projects/educational/sayap-3d-pro/SayapMelentur3DPro";
 import { HelloWorld } from "./HelloWorld";
 import { Logo } from "./HelloWorld/Logo";
 import { Title } from "./HelloWorld/Title";
@@ -1275,6 +1280,14 @@ export const RemotionRoot: React.FC = () => {
           component={KaliMalangCeritaTeknik}
           durationInFrames={KALIMALANG_CT_FRAMES}
           fps={KALIMALANG_CT_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SayapMelentur3DPro"
+          component={SayapMelentur3DPro}
+          durationInFrames={SAYAP_3D_PRO_FRAMES}
+          fps={SAYAP_3D_PRO_FPS}
           width={1080}
           height={1920}
         />
