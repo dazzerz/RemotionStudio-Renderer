@@ -1216,3 +1216,46 @@ export const TURBULENSI_CONFIG: ExplainerConfig = {
 
 export const TurbulensiExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: TURBULENSI_CONFIG });
+
+export const KETINGGIAN_CONFIG: ExplainerConfig = {
+  id: "KetinggianExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/ketinggian-35000/vo_riko.mp3",
+  durationSec: 52.2,
+  hookLine1: "35.000 KAKI: MINUS 54°,",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "KOK MALAH PALING IRIT?",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "FAKTANYA: TITIK PALING IRIT!",
+  sourceText: "FAA Airplane Flying Handbook / 14 CFR 25.841 / FAA AC 61-107B",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo tim terbang tinggi, atau mending rendah biar nggak ngeri?",
+    startSec: 46.2,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/ketinggian-35000/scene2.jpg", videoPath: "videos/ketinggian-35000/scene1.mp4", startSec: 0, endSec: 6.53, panDirection: "in", callouts: [{ label: "35.000 Kaki: Minus 54 Derajat di Luar", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/ketinggian-35000/scene2.jpg", startSec: 6.53, endSec: 13.05, panDirection: "right", callouts: [{ label: "Terbang di Atas Sebagian Besar Cuaca", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/ketinggian-35000/scene3.jpg", startSec: 13.05, endSec: 19.58, panDirection: "in", callouts: [{ label: "Hambatan Turun Sampai Sepertiganya", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/ketinggian-35000/scene4.jpg", startSec: 19.58, endSec: 26.10, panDirection: "left", callouts: [{ label: "Mesin Jet Makin Efisien di Udara Dingin", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/ketinggian-35000/scene5.jpg", startSec: 26.10, endSec: 32.63, panDirection: "in", callouts: [{ label: "Kabin Dijaga Setara 8.000 Kaki", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/ketinggian-35000/scene6.jpg", startSec: 32.63, endSec: 39.15, panDirection: "right", callouts: [{ label: "Telinga Berdenging Pas Naik Itu Normal", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#70FF00" }] },
+    { imagePath: "images/ketinggian-35000/scene8.jpg", videoPath: "videos/ketinggian-35000/scene7.mp4", startSec: 39.15, endSec: 45.68, panDirection: "in", callouts: [{ label: "Step Climb: Naik Bertahap Ikut Berat", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/ketinggian-35000/scene8.jpg", startSec: 45.68, endSec: 52.2, panDirection: "left", callouts: [{ label: "Ketinggian Itu Hitungan Bensin", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 6.53, text: "Di 35.000 kaki, udara di luar minus 54 derajat dan tipis banget.", highlightWord: "minus 54 derajat" },
+    { startSec: 6.53, endSec: 13.05, text: "Tanpa kabin bertekanan, lo cuma punya 30 detik buat mikir jernih.", highlightWord: "30 detik" },
+    { startSec: 13.05, endSec: 19.58, text: "Tapi justru di situlah pesawat paling hemat bensin.", highlightWord: "paling hemat bensin" },
+    { startSec: 19.58, endSec: 26.10, text: "Udara tipis bikin hambatan turun sampai sepertiganya, mesin jet makin efisien di udara dingin.", highlightWord: "sepertiganya" },
+    { startSec: 26.10, endSec: 32.63, text: "Kabin lo dijaga di tekanan setara 8.000 kaki, kayak kota pegunungan tinggi.", highlightWord: "8.000 kaki" },
+    { startSec: 32.63, endSec: 39.15, text: "Pesawat juga naik bertahap, makin ringan makin tinggi, biar iritnya maksimal.", highlightWord: "naik bertahap" },
+    { startSec: 39.15, endSec: 45.68, text: "Jadi ketinggian itu bukan pamer, itu hitungan bensin.", highlightWord: "hitungan bensin" },
+    { startSec: 45.68, endSec: 52.2, text: "Kirim ke temen lo yang takut ketinggian. Tim tinggi atau rendah? Like, Komen, Follow!", highlightWord: "Like, Komen" },
+  ],
+};
+
+export const KetinggianExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: KETINGGIAN_CONFIG });

@@ -146,6 +146,7 @@ import {
   CatPutihExplainer,
   LubangJendelaExplainer,
   TurbulensiExplainer,
+  KetinggianExplainer,
 } from "./projects/educational/explainer-reels/explainerData";
 import { CintaTanpaKataExplainer } from "./projects/educational/video-relate-5/CintaTanpaKataExplainer";
 import { GajianCepatHabisExplainer } from "./projects/educational/video-relate-5/GajianCepatHabisExplainer";
@@ -1168,6 +1169,14 @@ export const RemotionRoot: React.FC = () => {
           id="TurbulensiExplainer"
           component={TurbulensiExplainer}
           durationInFrames={1650}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="KetinggianExplainer"
+          component={KetinggianExplainer}
+          durationInFrames={1566}
           fps={30}
           width={1080}
           height={1920}

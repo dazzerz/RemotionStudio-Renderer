@@ -712,27 +712,7 @@ export const Explainer3DReel: React.FC<{ config: ExplainerConfig }> = ({
               ))}
             </div>
           </div>
-          {config.channelBadge ? (
-            <div
-              style={{
-                position: "absolute",
-                top: 135,
-                right: 70,
-                backgroundColor: "#24352D",
-                color: "#FFFFFF",
-                padding: "10px 20px",
-                borderRadius: 10,
-                fontFamily: "Inter, Montserrat, Arial, sans-serif",
-                fontSize: 22,
-                fontWeight: 800,
-                letterSpacing: "0.02em",
-                boxShadow: "0 4px 12px rgba(0,0,0,0.12)",
-                pointerEvents: "none",
-              }}
-            >
-              {config.channelBadge}
-            </div>
-          ) : null}
+{/* channelBadge ("Cerita Teknik") di kanan atas: DIHAPUS permanen atas perintah user 22 Nov 2026 */}
         </>
       ) : (
         <>
@@ -765,16 +745,14 @@ export const Explainer3DReel: React.FC<{ config: ExplainerConfig }> = ({
               >
                 <div
                   style={{
-                    backgroundColor: "#24352D",
                     color: "#FFFFFF",
-                    padding: "14px 28px",
-                    borderRadius: 14,
                     fontFamily: "Inter, Montserrat, Arial, sans-serif",
-                    fontSize: 38,
+                    fontSize: 40,
                     fontWeight: 800,
                     lineHeight: 1.28,
                     textAlign: "center",
-                    boxShadow: "0 8px 24px rgba(0,0,0,0.28)",
+                    textShadow:
+                      "0 4px 14px rgba(0,0,0,0.85), 0 2px 4px rgba(0,0,0,0.9)",
                   }}
                 >
                   {cue.text}
