@@ -144,6 +144,8 @@ import { IbuJanganPulangExplainer } from "./projects/educational/video-relate-5/
 import { HariIniNgapainExplainer } from "./projects/educational/video-relate-5/HariIniNgapainExplainer";
 import { CpnsFormasiExplainer } from "./projects/educational/video-cpns-2026/CpnsFormasiExplainer";
 import { CpnsPastiExplainer } from "./projects/educational/video-cpns-2026/CpnsPastiExplainer";
+import { CpnsAdaExplainer } from "./projects/educational/video-cpns-2026/CpnsAdaExplainer";
+import { CpnsHoaksExplainer } from "./projects/educational/video-cpns-2026/CpnsHoaksExplainer";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -1212,6 +1214,22 @@ export const RemotionRoot: React.FC = () => {
           id="CpnsPastiExplainer"
           component={CpnsPastiExplainer}
           durationInFrames={1641}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="CpnsAdaExplainer"
+          component={CpnsAdaExplainer}
+          durationInFrames={1732}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="CpnsHoaksExplainer"
+          component={CpnsHoaksExplainer}
+          durationInFrames={1392}
           fps={30}
           width={1080}
           height={1920}
