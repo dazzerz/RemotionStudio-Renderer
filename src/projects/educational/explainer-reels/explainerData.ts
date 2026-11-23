@@ -1584,3 +1584,56 @@ export const JEMBATAN_CONFIG: ExplainerConfig = {
 
 export const JembatanExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: JEMBATAN_CONFIG });
+
+export const PETIR_CONFIG: ExplainerConfig = {
+  id: "PetirExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/petir/vo_riko.mp3",
+  durationSec: 54.4,
+  hookLine1: "DISAMBAR PETIR DI LANGIT",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "PENUMPANGNYA SANTAI AJA",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "FAKTANYA: PESAWAT DIRANCANG KENA PETIR",
+  sourceText: "FAA: rata-rata tiap pesawat komersial tersambar petir sekali setahun, arus sambaran bisa mencapai 200.000 ampere",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo pernah lihat petir nyambar pas lagi terbang?",
+    startSec: 46,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/petir/scene1.jpg", videoPath: "videos/petir/scene1.mp4", startSec: 0, endSec: 7.9, panDirection: "in", callouts: [{ label: "Barusan Disambar Petir", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/petir/scene2.jpg", startSec: 7.9, endSec: 14.2, panDirection: "right", callouts: [{ label: "Sekali Setahun Itu Normal", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/petir/scene3.jpg", startSec: 14.2, endSec: 20.4, panDirection: "in", callouts: [{ label: "Arusnya Nggak Masuk Kabin", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/petir/scene4.jpg", startSec: 20.4, endSec: 25.9, panDirection: "left", callouts: [{ label: "Jalan di Kulit Luar", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/petir/scene5.jpg", videoPath: "videos/petir/scene5.mp4", startSec: 25.9, endSec: 33.8, panDirection: "in", callouts: [{ label: "Masuk Hidung, Keluar Ekor", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/petir/scene6.jpg", startSec: 33.8, endSec: 39.9, panDirection: "right", callouts: [{ label: "Tangki Dilindungi dari Percikan", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#70FF00" }] },
+    { imagePath: "images/petir/scene7.jpg", startSec: 39.9, endSec: 45.7, panDirection: "in", callouts: [{ label: "Bekasnya Cuma Segini", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/petir/scene8.jpg", startSec: 45.7, endSec: 54.4, panDirection: "left", callouts: [{ label: "Pesawatnya Udah Siap", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 2.7, text: "Pesawat ini barusan disambar petir.", highlightWord: "disambar petir" },
+    { startSec: 2.7, endSec: 5.4, text: "Kedengeran kayak akhir penerbangan.", highlightWord: "akhir penerbangan" },
+    { startSec: 5.4, endSec: 8.2, text: "Padahal penumpang di dalamnya santai aja.", highlightWord: "santai aja" },
+    { startSec: 8.2, endSec: 11.6, text: "Rata-rata tiap pesawat komersial disambar petir sekali setahun.", highlightWord: "sekali setahun" },
+    { startSec: 11.6, endSec: 14.2, text: "Arusnya bisa dua ratus ribu ampere.", highlightWord: "dua ratus ribu ampere" },
+    { startSec: 14.2, endSec: 16.8, text: "Tapi arus itu nggak masuk ke kabin.", highlightWord: "nggak masuk" },
+    { startSec: 16.8, endSec: 20.4, text: "Kulit aluminium pesawat ngajak arusnya jalan di permukaan luar.", highlightWord: "permukaan luar" },
+    { startSec: 20.4, endSec: 23.2, text: "Masuk dari hidung, keluar lagi lewat ekor.", highlightWord: "keluar lagi lewat ekor" },
+    { startSec: 23.2, endSec: 25.9, text: "Kayak sangkar logam raksasa di langit.", highlightWord: "sangkar logam" },
+    { startSec: 25.9, endSec: 28.8, text: "Tangki bahan bakarnya juga dilindungi dari percikan.", highlightWord: "dilindungi" },
+    { startSec: 28.8, endSec: 31.9, text: "Jadi yang kerasa cuma kilatan terang sama dentuman sekali.", highlightWord: "kilatan terang" },
+    { startSec: 31.9, endSec: 34.7, text: "Habis mendarat, pesawatnya tetap wajib diperiksa.", highlightWord: "wajib diperiksa" },
+    { startSec: 34.7, endSec: 37.3, text: "Biasanya cuma ketemu bekas kecil di kulitnya.", highlightWord: "bekas kecil" },
+    { startSec: 37.3, endSec: 39.9, text: "Petir itu nyambar, pesawatnya yang udah siap.", highlightWord: "udah siap" },
+    { startSec: 39.9, endSec: 43.2, text: "Kirim video ini ke temen lo yang takut naik pesawat pas hujan.", highlightWord: "takut naik pesawat" },
+    { startSec: 43.2, endSec: 45.7, text: "Simpan dulu, angka arusnya gede banget.", highlightWord: "gede banget" },
+    { startSec: 45.7, endSec: 49, text: "Lo pernah lihat petir nyambar pas lagi terbang? Ceritain di komentar.", highlightWord: "Ceritain" },
+    { startSec: 49, endSec: 51.5, text: "Jangan lupa Like, Komen, dan Follow.", highlightWord: "Like, Komen" },
+  ],
+};
+
+export const PetirExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: PETIR_CONFIG });
