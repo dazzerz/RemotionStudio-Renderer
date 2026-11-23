@@ -19,6 +19,11 @@ import {
   STASIUN_SUMMARECON_FPS,
   STASIUN_SUMMARECON_FRAMES,
 } from "./projects/educational/stasiun-summarecon-3d/StasiunSummarecon3D";
+import {
+  GoogleRustBatteryNews,
+  GOOGLE_RUST_FPS,
+  GOOGLE_RUST_FRAMES,
+} from "./projects/motion-graphics/google-rust-battery/GoogleRustBatteryNews";
 import { HelloWorld } from "./HelloWorld";
 import { Logo } from "./HelloWorld/Logo";
 import { Title } from "./HelloWorld/Title";
@@ -1391,6 +1396,14 @@ export const RemotionRoot: React.FC = () => {
           component={StasiunSummarecon3D}
           durationInFrames={STASIUN_SUMMARECON_FRAMES}
           fps={STASIUN_SUMMARECON_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="GoogleRustBatteryNews"
+          component={GoogleRustBatteryNews}
+          durationInFrames={GOOGLE_RUST_FRAMES}
+          fps={GOOGLE_RUST_FPS}
           width={1080}
           height={1920}
         />
