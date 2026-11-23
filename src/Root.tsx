@@ -1206,6 +1206,14 @@ export const RemotionRoot: React.FC = () => {
           height={1920}
         />
         <Composition
+          id="KapalBajaExplainer"
+          component={KapalBajaExplainer}
+          durationInFrames={1932}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
           id="CintaTanpaKataExplainer"
           component={CintaTanpaKataExplainer}
           durationInFrames={1709}
