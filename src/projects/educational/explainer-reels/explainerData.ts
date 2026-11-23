@@ -1528,3 +1528,59 @@ export const GEDUNG_CONFIG: ExplainerConfig = {
 
 export const GedungExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: GEDUNG_CONFIG });
+
+export const JEMBATAN_CONFIG: ExplainerConfig = {
+  id: "JembatanExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/jembatan/vo_riko.mp3",
+  durationSec: 60.9,
+  hookLine1: "JEMBATAN GANTUNG KOK GOYANG?",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "KAKU JUSTRU YANG BAHAYA",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "FAKTANYA: GOYANG ITU AMAN!",
+  sourceText: "Smithsonian Magazine: Tacoma Narrows 1940, flutter aeroelastik / Guinness World Records: Akashi Kaikyo, bentang utama 1.991 meter",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo berani nggak lewat jembatan gantung pas angin kencang?",
+    startSec: 53,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/jembatan/scene1.jpg", videoPath: "videos/jembatan/scene1.mp4", startSec: 0, endSec: 7.9, panDirection: "in", callouts: [{ label: "Jembatan Gantung Memang Goyang", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/jembatan/scene2.jpg", startSec: 7.9, endSec: 15, panDirection: "right", callouts: [{ label: "Yang Kaku Justru Bahaya", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/jembatan/scene3.jpg", startSec: 15, endSec: 22.8, panDirection: "in", callouts: [{ label: "Tacoma Narrows, 1940", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/jembatan/scene4.jpg", startSec: 22.8, endSec: 29, panDirection: "left", callouts: [{ label: "Kayak Ngayun, Pas di Ketukan", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/jembatan/scene5.jpg", videoPath: "videos/jembatan/scene5.mp4", startSec: 29, endSec: 36.9, panDirection: "in", callouts: [{ label: "Deknya Sengaja Dibikin Berlubang", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/jembatan/scene6.jpg", startSec: 36.9, endSec: 44.8, panDirection: "right", callouts: [{ label: "Didesain Bisa Bergeser Jauh", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#70FF00" }] },
+    { imagePath: "images/jembatan/scene7.jpg", startSec: 44.8, endSec: 52, panDirection: "in", callouts: [{ label: "Goyang Itu Buang Energi Angin", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/jembatan/scene8.jpg", startSec: 52, endSec: 60.9, panDirection: "left", callouts: [{ label: "Goyang Bukan Tanda Lemah", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 2.8, text: "Jembatan gantung itu goyang kalau dilewati.", highlightWord: "goyang" },
+    { startSec: 2.8, endSec: 5.6, text: "Kelihatannya kayak mau roboh pelan-pelan.", highlightWord: "roboh" },
+    { startSec: 5.6, endSec: 8.4, text: "Padahal jembatan kaku justru yang bahaya.", highlightWord: "kaku" },
+    { startSec: 8.4, endSec: 12, text: "Tahun 1940, satu jembatan di Amerika bergelombang kayak pita.", highlightWord: "bergelombang" },
+    { startSec: 12, endSec: 15, text: "Beberapa bulan kemudian dia hancur berkeping-keping.", highlightWord: "hancur" },
+    { startSec: 15, endSec: 16.8, text: "Namanya Tacoma Narrows.", highlightWord: "Tacoma Narrows" },
+    { startSec: 16.8, endSec: 19.3, text: "Sejak itu insinyur belajar satu hal.", highlightWord: "satu hal" },
+    { startSec: 19.3, endSec: 22.8, text: "Angin bisa ngedorong jembatan masuk ke ritmenya sendiri.", highlightWord: "ritmenya sendiri" },
+    { startSec: 22.8, endSec: 26, text: "Dorongannya kecil, tapi selalu pas di ketukan yang sama.", highlightWord: "ketukan yang sama" },
+    { startSec: 26, endSec: 29, text: "Kayak ngedorong ayunan pelan-pelan sampai tinggi.", highlightWord: "ayunan" },
+    { startSec: 29, endSec: 32, text: "Makanya dek jembatan sekarang dibikin berlubang.", highlightWord: "berlubang" },
+    { startSec: 32, endSec: 34.8, text: "Angin lewat, nggak numpuk jadi dorongan.", highlightWord: "nggak numpuk" },
+    { startSec: 34.8, endSec: 37.6, text: "Kabel dan menaranya juga dihitung buat gerak.", highlightWord: "buat gerak" },
+    { startSec: 37.6, endSec: 42.5, text: "Jembatan terpanjang di Jepang didesain bisa bergeser jauh ke samping pas badai besar.", highlightWord: "bergeser jauh" },
+    { startSec: 42.5, endSec: 44.8, text: "Masih di dalam batas amannya.", highlightWord: "batas amannya" },
+    { startSec: 44.8, endSec: 47.3, text: "Jadi goyang itu bukan tanda lemah.", highlightWord: "bukan tanda lemah" },
+    { startSec: 47.3, endSec: 49.8, text: "Itu jembatan lagi buang energi angin.", highlightWord: "buang energi" },
+    { startSec: 49.8, endSec: 53.3, text: "Kirim video ini ke temen lo yang takut lewat jembatan gantung.", highlightWord: "takut lewat jembatan" },
+    { startSec: 53.3, endSec: 56, text: "Simpan dulu, pelajaran mahalnya dari tahun 1940.", highlightWord: "pelajaran mahalnya" },
+    { startSec: 56, endSec: 58.3, text: "Lo berani nggak lewat jembatan gantung pas angin kencang? Ceritain di komentar.", highlightWord: "Ceritain" },
+    { startSec: 58.3, endSec: 59.21, text: "Jangan lupa Like, Komen, dan Follow.", highlightWord: "Like, Komen" },
+  ],
+};
+
+export const JembatanExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: JEMBATAN_CONFIG });
