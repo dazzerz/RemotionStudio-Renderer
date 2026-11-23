@@ -173,6 +173,7 @@ import { CpnsPastiExplainer } from "./projects/educational/video-cpns-2026/CpnsP
 import { CpnsAdaExplainer } from "./projects/educational/video-cpns-2026/CpnsAdaExplainer";
 import { CpnsHoaksExplainer } from "./projects/educational/video-cpns-2026/CpnsHoaksExplainer";
 import { LututMotogpExplainer } from "./projects/educational/video-motogp-lutut/LututMotogpExplainer";
+import { Motogp360Explainer } from "./projects/educational/video-motogp-360/Motogp360Explainer";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -1313,6 +1314,14 @@ export const RemotionRoot: React.FC = () => {
           id="LututMotogpExplainer"
           component={LututMotogpExplainer}
           durationInFrames={1190}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="Motogp360Explainer"
+          component={Motogp360Explainer}
+          durationInFrames={1365}
           fps={30}
           width={1080}
           height={1920}
