@@ -174,6 +174,8 @@ import { CpnsAdaExplainer } from "./projects/educational/video-cpns-2026/CpnsAda
 import { CpnsHoaksExplainer } from "./projects/educational/video-cpns-2026/CpnsHoaksExplainer";
 import { LututMotogpExplainer } from "./projects/educational/video-motogp-lutut/LututMotogpExplainer";
 import { Motogp360Explainer } from "./projects/educational/video-motogp-360/Motogp360Explainer";
+import { BanSlickExplainer } from "./projects/educational/video-ban-slick/BanSlickExplainer";
+import { StandarSampingExplainer } from "./projects/educational/video-standar-samping/StandarSampingExplainer";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -1322,6 +1324,22 @@ export const RemotionRoot: React.FC = () => {
           id="Motogp360Explainer"
           component={Motogp360Explainer}
           durationInFrames={1365}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="BanSlickExplainer"
+          component={BanSlickExplainer}
+          durationInFrames={1260}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="StandarSampingExplainer"
+          component={StandarSampingExplainer}
+          durationInFrames={1260}
           fps={30}
           width={1080}
           height={1920}
