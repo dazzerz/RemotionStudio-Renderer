@@ -14,22 +14,21 @@ import {
 export const EDITORIAL_FONTS = {
   display: "'BarlowEditorial', 'Arial Narrow', sans-serif",
   sans: "'SpaceEditorial', 'Helvetica Neue', sans-serif",
-  mono: "'MonoEditorial', 'DejaVu Sans Mono', monospace",
 };
 
+/**
+ * Anti-Slop R-29 Palette:
+ * 2 core neutrals (Warm Newsprint + Carbon Ink/Steel) + 1 deliberate accent (Iron-Oxide Rust).
+ * Chosen specifically because the story is about iron turning to rust.
+ */
 export const PALETTE = {
-  paper: "#F6F2E9",
-  paperAlt: "#EFE9DC",
-  ink: "#10131A",
-  inkMuted: "#475062",
-  obsidian: "#0D1118",
-  obsidianCard: "#161C27",
-  rust: "#E34F1D",
-  rustDeep: "#B5380F",
-  amber: "#FFB300",
-  cyan: "#00A8E8",
-  emerald: "#0FB981",
-  crimson: "#E63946",
+  paper: "#F3EFE6",
+  paperDim: "#E6E0D3",
+  ink: "#121316",
+  steel: "#5A6270",
+  steelLight: "#9CA3AF",
+  rust: "#D94616",
+  rustDark: "#A8330D",
   white: "#FFFFFF",
 };
 
@@ -48,11 +47,6 @@ function ensureEditorialFonts(): Promise<void> {
       file: "fonts/SpaceGrotesk-Bold.woff2",
       weight: "700",
     },
-    {
-      family: "MonoEditorial",
-      file: "fonts/JetBrainsMono-Bold.woff2",
-      weight: "700",
-    },
   ];
   fontsLoadedPromise = Promise.all(
     specs.map(async (s) => {
@@ -64,7 +58,7 @@ function ensureEditorialFonts(): Promise<void> {
         await face.load();
         document.fonts.add(face);
       } catch {
-        // Fallback silently to system font if unavailable
+        // Silent fallback
       }
     })
   ).then(() => undefined);
@@ -78,133 +72,67 @@ export const useEditorialFonts = () => {
   }, [handle]);
 };
 
-export const EditorialBackdrop: React.FC<{
-  theme: "paper" | "obsidian" | "rust";
-  accent?: string;
+/**
+ * Clean Print-Editorial Surface (ZERO blueprint grids R-07, ZERO radial glow blobs R-01/R-13).
+ * Uses a single thin top progress hairline (inside safe zone >= 148px) and whisper-subtle paper grain.
+ */
+export const EditorialSurface: React.FC<{
+  bgColor: string;
   progress: number;
-  beatTag?: string;
-}> = ({ theme, accent = PALETTE.rust, progress, beatTag }) => {
-  const frame = useCurrentFrame();
-
-  const bg =
-    theme === "paper"
-      ? PALETTE.paper
-      : theme === "rust"
-        ? PALETTE.rust
-        : PALETTE.obsidian;
-
-  const gridColor =
-    theme === "paper"
-      ? "rgba(16, 19, 26, 0.065)"
-      : theme === "rust"
-        ? "rgba(255, 255, 255, 0.10)"
-        : "rgba(255, 255, 255, 0.06)";
-
-  const driftX = (frame * 0.55) % 60;
-  const driftY = (frame * 0.35) % 60;
-  const glowScale = 1 + Math.sin(frame * 0.05) * 0.06;
-
+  progressTrackColor: string;
+  progressFillColor: string;
+}> = ({ bgColor, progress, progressTrackColor, progressFillColor }) => {
   return (
-    <AbsoluteFill style={{ backgroundColor: bg, overflow: "hidden" }}>
-      {/* Soft radial ambient lighting */}
-      <div
-        style={{
-          position: "absolute",
-          inset: -200,
-          background:
-            theme === "paper"
-              ? `radial-gradient(circle at 75% 22%, ${accent}22 0%, transparent 48%), radial-gradient(circle at 20% 78%, ${PALETTE.cyan}18 0%, transparent 50%)`
-              : theme === "rust"
-                ? `radial-gradient(circle at 50% 35%, #FF9F1C40 0%, transparent 55%), radial-gradient(circle at 50% 90%, #10131A60 0%, transparent 60%)`
-                : `radial-gradient(circle at 78% 24%, ${accent}30 0%, transparent 48%), radial-gradient(circle at 22% 76%, ${PALETTE.cyan}24 0%, transparent 52%)`,
-          transform: `scale(${glowScale})`,
-        }}
-      />
-
-      {/* Moving architectural dot + hairline grid */}
+    <AbsoluteFill style={{ backgroundColor: bgColor, overflow: "hidden" }}>
+      {/* Tactile print grain texture (subtle monochrome noise, no tech grid) */}
       <svg
         width="1080"
         height="1920"
-        style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
+        style={{
+          position: "absolute",
+          inset: 0,
+          opacity: 0.032,
+          pointerEvents: "none",
+        }}
       >
-        <defs>
-          <pattern
-            id={`grid-${theme}`}
-            width="60"
-            height="60"
-            patternUnits="userSpaceOnUse"
-            patternTransform={`translate(${driftX}, ${driftY})`}
-          >
-            <path
-              d="M 60 0 L 0 0 0 60"
-              fill="none"
-              stroke={gridColor}
-              strokeWidth="1.2"
-            />
-            <circle cx="0" cy="0" r="2.2" fill={gridColor} />
-          </pattern>
-        </defs>
-        <rect width="1080" height="1920" fill={`url(#grid-${theme})`} />
+        <filter id="print-grain">
+          <feTurbulence
+            type="fractalNoise"
+            baseFrequency="0.85"
+            numOctaves="2"
+            stitchTiles="stitch"
+          />
+          <feColorMatrix type="saturate" values="0" />
+        </filter>
+        <rect width="1080" height="1920" filter="url(#print-grain)" />
       </svg>
 
-      {/* Top safe-zone editorial masthead hairline (y=148, well inside safe zone >=140) */}
+      {/* Minimal structural progress hairline at y=152 (no wide-tracked mono eyebrow R-06) */}
       <div
         style={{
           position: "absolute",
-          top: 146,
+          top: 152,
           left: 74,
           right: 74,
-          display: "flex",
-          flexDirection: "column",
-          gap: 10,
+          height: 3,
+          backgroundColor: progressTrackColor,
+          overflow: "hidden",
         }}
       >
         <div
           style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            fontFamily: EDITORIAL_FONTS.mono,
-            fontSize: 22,
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-            color:
-              theme === "paper"
-                ? PALETTE.inkMuted
-                : "rgba(255, 255, 255, 0.72)",
+            width: `${Math.max(0, Math.min(100, progress * 100))}%`,
+            height: "100%",
+            backgroundColor: progressFillColor,
           }}
-        >
-          <span>{beatTag ?? "GLOBAL TECH BRIEF"}</span>
-          <span>2026 REPORT</span>
-        </div>
-        {/* Progress bar */}
-        <div
-          style={{
-            width: "100%",
-            height: 4,
-            backgroundColor:
-              theme === "paper"
-                ? "rgba(16, 19, 26, 0.14)"
-                : "rgba(255, 255, 255, 0.18)",
-            borderRadius: 2,
-            overflow: "hidden",
-          }}
-        >
-          <div
-            style={{
-              width: `${Math.max(0, Math.min(100, progress * 100))}%`,
-              height: "100%",
-              backgroundColor: theme === "rust" ? PALETTE.amber : accent,
-            }}
-          />
-        </div>
+        />
       </div>
     </AbsoluteFill>
   );
 };
 
 /**
- * Masked Baseline Spring Reveal per word (Kinetic Typography core primitive)
+ * Masked Baseline Spring Reveal per word (iart-ai kinetic typography recipe)
  */
 export const MaskedKineticLine: React.FC<{
   words: string[];
@@ -214,36 +142,39 @@ export const MaskedKineticLine: React.FC<{
   color?: string;
   accentWord?: string;
   accentColor?: string;
-  fontFamily?: string;
-  align?: "left" | "center";
+  align?: "left" | "center" | "right";
   lineHeight?: number;
-  letterSpacing?: string;
   uppercase?: boolean;
 }> = ({
   words,
   startFrame = 0,
   staggerFrames = 3,
-  fontSize = 96,
+  fontSize = 104,
   color = PALETTE.ink,
   accentWord,
   accentColor = PALETTE.rust,
-  fontFamily = EDITORIAL_FONTS.display,
-  align = "center",
-  lineHeight = 1.0,
-  letterSpacing = "-0.01em",
+  align = "left",
+  lineHeight = 0.96,
   uppercase = true,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+
+  const justify =
+    align === "center"
+      ? "center"
+      : align === "right"
+        ? "flex-end"
+        : "flex-start";
 
   return (
     <div
       style={{
         display: "flex",
         flexWrap: "wrap",
-        justifyContent: align === "center" ? "center" : "flex-start",
-        columnGap: Math.round(fontSize * 0.22),
-        rowGap: Math.round(fontSize * 0.08),
+        justifyContent: justify,
+        columnGap: Math.round(fontSize * 0.2),
+        rowGap: Math.round(fontSize * 0.06),
       }}
     >
       {words.map((w, idx) => {
@@ -251,16 +182,16 @@ export const MaskedKineticLine: React.FC<{
         const p = spring({
           frame: local,
           fps,
-          config: { damping: 15, stiffness: 230, mass: 0.7 },
+          config: { damping: 16, stiffness: 250, mass: 0.65 },
         });
-        const ty = interpolate(p, [0, 1], [118, 0]);
-        const op = interpolate(local, [0, 4], [0, 1], {
+        const ty = interpolate(p, [0, 1], [116, 0]);
+        const op = interpolate(local, [0, 3], [0, 1], {
           extrapolateRight: "clamp",
         });
         const isAccent =
           accentWord &&
-          w.replace(/[^a-zA-Z0-9$%-]/g, "").toLowerCase() ===
-            accentWord.replace(/[^a-zA-Z0-9$%-]/g, "").toLowerCase();
+          w.replace(/[^a-zA-Z0-9$%/-]/g, "").toLowerCase() ===
+            accentWord.replace(/[^a-zA-Z0-9$%/-]/g, "").toLowerCase();
 
         return (
           <span
@@ -268,18 +199,18 @@ export const MaskedKineticLine: React.FC<{
             style={{
               display: "inline-block",
               overflow: "hidden",
-              paddingBottom: Math.round(fontSize * 0.06),
-              paddingTop: Math.round(fontSize * 0.03),
+              paddingBottom: Math.round(fontSize * 0.05),
+              paddingTop: Math.round(fontSize * 0.02),
             }}
           >
             <span
               style={{
                 display: "inline-block",
-                fontFamily,
+                fontFamily: EDITORIAL_FONTS.display,
                 fontSize,
                 fontWeight: 800,
                 lineHeight,
-                letterSpacing,
+                letterSpacing: "-0.015em",
                 textTransform: uppercase ? "uppercase" : "none",
                 color: isAccent ? accentColor : color,
                 transform: `translateY(${ty}%)`,
@@ -296,310 +227,63 @@ export const MaskedKineticLine: React.FC<{
 };
 
 /**
- * Animated Editorial Highlighter Sweep behind text
+ * Identity Motif: Solid Iron-Oxide Curtain Wipe linking major structural shifts
  */
-export const HighlighterSweep: React.FC<{
-  children: React.ReactNode;
-  startFrame?: number;
+export const RustCurtainWipe: React.FC<{
+  triggerFrame: number;
   durationFrames?: number;
-  color?: string;
-  textColor?: string;
-  skewDeg?: number;
-}> = ({
-  children,
-  startFrame = 0,
-  durationFrames = 14,
-  color = PALETTE.amber,
-  textColor = PALETTE.ink,
-  skewDeg = -2,
-}) => {
+  direction?: "left-to-right" | "bottom-to-top";
+}> = ({ triggerFrame, durationFrames = 18, direction = "left-to-right" }) => {
   const frame = useCurrentFrame();
-  const sweep = interpolate(
-    frame,
-    [startFrame, startFrame + durationFrames],
-    [0, 1],
-    {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-      easing: Easing.bezier(0.16, 1, 0.3, 1),
-    }
-  );
+  const f = frame - triggerFrame;
+  if (f < 0 || f > durationFrames) return null;
 
-  return (
-    <span
-      style={{
-        position: "relative",
-        display: "inline-block",
-        padding: "2px 16px",
-        color: textColor,
-      }}
-    >
-      <span
+  const half = durationFrames / 2;
+  const inP = interpolate(f, [0, half], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.76, 0, 0.24, 1),
+  });
+  const outP = interpolate(f, [half, durationFrames], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.76, 0, 0.24, 1),
+  });
+
+  if (direction === "bottom-to-top") {
+    const topPct = interpolate(inP, [0, 1], [100, 0]);
+    const botPct = interpolate(outP, [0, 1], [0, 100]);
+    return (
+      <div
         style={{
           position: "absolute",
           left: 0,
-          top: "6%",
-          bottom: "4%",
-          width: `${sweep * 100}%`,
-          backgroundColor: color,
-          transform: `skewX(${skewDeg}deg)`,
-          borderRadius: 6,
-          zIndex: 0,
-        }}
-      />
-      <span style={{ position: "relative", zIndex: 1 }}>{children}</span>
-    </span>
-  );
-};
-
-/**
- * Animated SVG Strikethrough for Evidence + Betrayal Myth Slashing
- */
-export const MythStrike: React.FC<{
-  text: string;
-  startFrame?: number;
-  strikeDelay?: number;
-  fontSize?: number;
-  textColor?: string;
-  strikeColor?: string;
-}> = ({
-  text,
-  startFrame = 0,
-  strikeDelay = 12,
-  fontSize = 104,
-  textColor = PALETTE.inkMuted,
-  strikeColor = PALETTE.crimson,
-}) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-
-  const enter = spring({
-    frame: Math.max(0, frame - startFrame),
-    fps,
-    config: { damping: 16, stiffness: 210 },
-  });
-  const strikeProgress = interpolate(
-    frame,
-    [startFrame + strikeDelay, startFrame + strikeDelay + 12],
-    [0, 1],
-    {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-      easing: Easing.bezier(0.22, 1, 0.36, 1),
-    }
-  );
-  const dimOpacity = interpolate(strikeProgress, [0, 1], [1, 0.42]);
-
-  return (
-    <div
-      style={{
-        position: "relative",
-        display: "inline-block",
-        transform: `scale(${interpolate(enter, [0, 1], [0.88, 1])})`,
-        opacity: enter,
-      }}
-    >
-      <span
-        style={{
-          fontFamily: EDITORIAL_FONTS.display,
-          fontSize,
-          fontWeight: 800,
-          letterSpacing: "0.02em",
-          color: textColor,
-          opacity: dimOpacity,
-          textTransform: "uppercase",
-        }}
-      >
-        {text}
-      </span>
-      <svg
-        viewBox="0 0 400 100"
-        preserveAspectRatio="none"
-        style={{
-          position: "absolute",
-          left: "-5%",
-          top: "-10%",
-          width: "110%",
-          height: "120%",
-          overflow: "visible",
+          right: 0,
+          top: `${topPct}%`,
+          bottom: `${botPct}%`,
+          backgroundColor: PALETTE.rust,
+          zIndex: 50,
           pointerEvents: "none",
         }}
-      >
-        <path
-          d="M 8 68 Q 200 38 392 30"
-          fill="none"
-          stroke={strikeColor}
-          strokeWidth="16"
-          strokeLinecap="round"
-          strokeDasharray="440"
-          strokeDashoffset={440 * (1 - strikeProgress)}
-        />
-      </svg>
-    </div>
-  );
-};
+      />
+    );
+  }
 
-/**
- * Hero Stat Slam with spring punch and optional counter roll-up
- */
-export const HeroStatSlam: React.FC<{
-  valueText: string;
-  label?: string;
-  startFrame?: number;
-  fontSize?: number;
-  color?: string;
-  labelColor?: string;
-}> = ({
-  valueText,
-  label,
-  startFrame = 0,
-  fontSize = 180,
-  color = PALETTE.rust,
-  labelColor = PALETTE.ink,
-}) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-
-  const local = Math.max(0, frame - startFrame);
-  const p = spring({
-    frame: local,
-    fps,
-    config: { damping: 12, stiffness: 250, mass: 0.75 },
-  });
-  const sc = interpolate(p, [0, 1], [1.35, 1]);
-  const op = interpolate(local, [0, 4], [0, 1], { extrapolateRight: "clamp" });
-
+  const leftPct = interpolate(outP, [0, 1], [0, 100]);
+  const rightPct = interpolate(inP, [0, 1], [100, 0]);
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        transform: `scale(${sc})`,
-        opacity: op,
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: `${leftPct}%`,
+        right: `${rightPct}%`,
+        backgroundColor: PALETTE.rust,
+        zIndex: 50,
+        pointerEvents: "none",
       }}
-    >
-      <div
-        style={{
-          fontFamily: EDITORIAL_FONTS.display,
-          fontSize,
-          fontWeight: 800,
-          lineHeight: 0.9,
-          letterSpacing: "-0.02em",
-          color,
-          textTransform: "uppercase",
-        }}
-      >
-        {valueText}
-      </div>
-      {label && (
-        <div
-          style={{
-            marginTop: 14,
-            fontFamily: EDITORIAL_FONTS.mono,
-            fontSize: 30,
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-            color: labelColor,
-          }}
-        >
-          {label}
-        </div>
-      )}
-    </div>
-  );
-};
-
-/**
- * Hairline SVG callout (ZERO card box, pure 2px leader line + dot + mono text)
- */
-export const HairlineCallout: React.FC<{
-  x1: number;
-  y1: number;
-  x2: number;
-  y2: number;
-  label: string;
-  sublabel?: string;
-  startFrame?: number;
-  color?: string;
-  textColor?: string;
-  align?: "left" | "right";
-}> = ({
-  x1,
-  y1,
-  x2,
-  y2,
-  label,
-  sublabel,
-  startFrame = 0,
-  color = PALETTE.rust,
-  textColor = PALETTE.ink,
-  align = "left",
-}) => {
-  const frame = useCurrentFrame();
-  const draw = interpolate(frame, [startFrame, startFrame + 14], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.bezier(0.22, 1, 0.36, 1),
-  });
-  const textOp = interpolate(frame, [startFrame + 8, startFrame + 16], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-
-  const dx = x2 - x1;
-  const dy = y2 - y1;
-  const len = Math.hypot(dx, dy) + 120;
-  const elbowX = align === "left" ? x2 + 90 : x2 - 90;
-
-  return (
-    <g>
-      <circle cx={x1} cy={y1} r={8 * draw} fill={color} />
-      <circle
-        cx={x1}
-        cy={y1}
-        r={16 * draw}
-        fill="none"
-        stroke={color}
-        strokeWidth="2.5"
-        opacity={0.5}
-      />
-      <path
-        d={`M ${x1} ${y1} L ${x2} ${y2} L ${elbowX} ${y2}`}
-        fill="none"
-        stroke={color}
-        strokeWidth="3"
-        strokeDasharray={len}
-        strokeDashoffset={len * (1 - draw)}
-      />
-      <g opacity={textOp}>
-        <text
-          x={align === "left" ? x2 + 8 : x2 - 8}
-          y={y2 - 12}
-          textAnchor={align === "left" ? "start" : "end"}
-          fill={textColor}
-          fontFamily={EDITORIAL_FONTS.mono}
-          fontSize="26"
-          fontWeight="700"
-          letterSpacing="0.06em"
-        >
-          {label}
-        </text>
-        {sublabel && (
-          <text
-            x={align === "left" ? x2 + 8 : x2 - 8}
-            y={y2 + 28}
-            textAnchor={align === "left" ? "start" : "end"}
-            fill={color}
-            fontFamily={EDITORIAL_FONTS.sans}
-            fontSize="24"
-            fontWeight="700"
-          >
-            {sublabel}
-          </text>
-        )}
-      </g>
-    </g>
+    />
   );
 };
 
@@ -617,12 +301,12 @@ export interface SubtitleGroup {
 }
 
 /**
- * Floating Kinetic Subtitle (NO box/card, mobile safe zone bottom >= 235px)
+ * Floating Word-Synced Kinetic Subtitles (NO boxes, mobile safe zone bottom >= 265px, WCAG AAA contrast)
  */
 export const SyncedKineticSubtitle: React.FC<{
   groups: SubtitleGroup[];
-  theme: "paper" | "obsidian" | "rust";
-}> = ({ groups, theme }) => {
+  surface: "paper" | "ink" | "rust";
+}> = ({ groups, surface }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = frame / fps;
@@ -630,17 +314,16 @@ export const SyncedKineticSubtitle: React.FC<{
   const activeGroup = groups.find((g) => t >= g.startSec && t <= g.endSec);
   if (!activeGroup) return null;
 
-  const isLightBg = theme === "paper";
-  const baseTextColor = isLightBg ? PALETTE.ink : PALETTE.white;
+  const isLight = surface === "paper";
+  const baseColor = isLight ? PALETTE.ink : PALETTE.white;
   const activeColor =
-    theme === "rust"
-      ? PALETTE.amber
-      : isLightBg
-        ? PALETTE.rust
-        : PALETTE.amber;
-  const shadow = isLightBg
-    ? "0 3px 10px rgba(246, 242, 233, 0.95), 0 0 2px rgba(246, 242, 233, 1)"
-    : "0 5px 18px rgba(0, 0, 0, 0.92), 0 2px 4px rgba(0, 0, 0, 0.95)";
+    surface === "rust" ? PALETTE.ink : PALETTE.rust;
+
+  const shadow = isLight
+    ? "0 2px 10px rgba(243, 239, 230, 0.96)"
+    : surface === "rust"
+      ? "0 2px 10px rgba(217, 70, 22, 0.55)"
+      : "0 4px 16px rgba(18, 19, 22, 0.92)";
 
   return (
     <div
@@ -648,7 +331,7 @@ export const SyncedKineticSubtitle: React.FC<{
         position: "absolute",
         left: 76,
         right: 76,
-        bottom: 275,
+        bottom: 268,
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "center",
@@ -656,6 +339,7 @@ export const SyncedKineticSubtitle: React.FC<{
         columnGap: 24,
         rowGap: 10,
         pointerEvents: "none",
+        zIndex: 40,
       }}
     >
       {activeGroup.words.map((w, idx) => {
@@ -666,11 +350,11 @@ export const SyncedKineticSubtitle: React.FC<{
           ? spring({
               frame: popLocal,
               fps,
-              config: { damping: 14, stiffness: 280, mass: 0.6 },
+              config: { damping: 16, stiffness: 300, mass: 0.55 },
             })
           : 0;
-        const sc = isCurrent ? interpolate(popSpring, [0, 1], [1.0, 1.07]) : 1;
-        const op = isCurrent ? 1 : isPast ? 0.9 : 0.5;
+        const sc = isCurrent ? interpolate(popSpring, [0, 1], [1.0, 1.06]) : 1;
+        const op = isCurrent ? 1 : isPast ? 0.9 : 0.45;
 
         return (
           <span
@@ -681,18 +365,15 @@ export const SyncedKineticSubtitle: React.FC<{
               fontFamily: EDITORIAL_FONTS.sans,
               fontSize: w.emphasis ? 48 : 44,
               fontWeight: 700,
-              letterSpacing: "-0.01em",
+              letterSpacing: "-0.015em",
               color: isCurrent
                 ? activeColor
                 : w.emphasis && isPast
                   ? activeColor
-                  : baseTextColor,
+                  : baseColor,
               opacity: op,
               transform: `scale(${sc})`,
               textShadow: shadow,
-              WebkitTextStroke: isLightBg
-                ? "0px transparent"
-                : "1.2px rgba(0,0,0,0.45)",
             }}
           >
             {w.word}

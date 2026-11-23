@@ -30,7 +30,7 @@ export const BEAT_SEC: BeatTiming = {
   b3Lithium4h: 7.6, // "Normal grid batteries die in four hours" (7.78s)
   b4Minnesota: 10.3, // "In Minnesota, Google is building a giant..." (10.52s)
   b5Bar100h: 16.85, // "It runs 100 hours straight" (17.08s)
-  b5PayoffCost: 19.35, // "and it costs one-tenth of lithium" (19.48s) — Payoff < 20s!
+  b5PayoffCost: 19.35, // "and it costs one-tenth of lithium" (19.48s): Payoff < 20s!
   b6CutawayDischarge: 21.85, // "How? Reversible rust. Iron breathes oxygen..." (22.00s)
   b7CutawayCharge: 27.35, // "Charging simply turns rust back into iron" (27.40s)
   b8Renewables: 30.75, // "Paired with massive wind and solar farms" (31.00s)

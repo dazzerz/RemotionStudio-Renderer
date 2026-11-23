@@ -4,6 +4,7 @@ import {
   Audio,
   Easing,
   interpolate,
+  interpolateColors,
   Sequence,
   spring,
   staticFile,
@@ -12,23 +13,18 @@ import {
 } from "remotion";
 import {
   EDITORIAL_FONTS,
-  EditorialBackdrop,
-  HeroStatSlam,
-  HighlighterSweep,
+  EditorialSurface,
   MaskedKineticLine,
-  MythStrike,
   PALETTE,
+  RustCurtainWipe,
   SyncedKineticSubtitle,
   useEditorialFonts,
 } from "../editorial-kit/EditorialPrimitives";
 import {
-  AiGridDrainGraphic,
-  DurationComparisonChart,
-  HomesAndTimelineGraphic,
-  IronAirCutawayGraphic,
-  LithiumDrainGraphic,
-  MinnesotaMapGraphic,
-  RenewablesFlowGraphic,
+  ContinuousBusbarToHomesScene,
+  ContinuousIronAirChamber,
+  ContinuousLoadAndCliffScene,
+  MinnesotaToPayoffDiveScene,
 } from "./GoogleRustVisuals";
 import {
   BEAT_SEC,
@@ -42,376 +38,300 @@ export { GOOGLE_RUST_FPS, GOOGLE_RUST_FRAMES };
 const s2f = (sec: number) => Math.round(sec * GOOGLE_RUST_FPS);
 
 /**
- * Beat 1: Evidence + Betrayal Hook ("$1B ON RUST" + Slashing "LITHIUM")
+ * Beat 1 (0.00s - 4.65s): Asymmetric Industrial Editorial Hook ("$1 BILLION ON RUST")
+ * Camera physically pans down to reveal "LITHIUM" which gets sheared diagonally in half!
+ * Zero mono eyebrows, zero generic icons, zero pills.
  */
-const Beat1Hook: React.FC<{ strikeLocalFrame: number }> = ({
-  strikeLocalFrame,
+const Beat1HookEditorial: React.FC<{ strikeFrame: number }> = ({
+  strikeFrame,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const punch = spring({
+  const heroSpring = spring({
     frame,
     fps,
-    config: { damping: 14, stiffness: 260 },
+    config: { damping: 14, stiffness: 250, mass: 0.7 },
   });
-  const drift = interpolate(frame, [0, 140], [1.0, 1.035], {
+
+  // Subtle camera pan down when "Forget expensive lithium batteries" hits
+  const camDown = interpolate(
+    frame,
+    [strikeFrame - 18, strikeFrame + 4],
+    [0, -90],
+    {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+      easing: Easing.bezier(0.22, 1, 0.36, 1),
+    }
+  );
+
+  // Diagonal razor shear progress on "LITHIUM"
+  const shearP = interpolate(frame, [strikeFrame, strikeFrame + 10], [0, 1], {
+    extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
+    easing: Easing.bezier(0.22, 1, 0.36, 1),
   });
-  const rustBurst = interpolate(frame, [0, 18], [0.6, 1.05], {
-    extrapolateRight: "clamp",
-    easing: Easing.bezier(0.16, 1, 0.3, 1),
+  const lithiumReveal = spring({
+    frame: Math.max(0, frame - (strikeFrame - 16)),
+    fps,
+    config: { damping: 16, stiffness: 220 },
   });
 
   return (
     <AbsoluteFill
       style={{
-        justifyContent: "flex-start",
-        alignItems: "center",
-        paddingTop: 430,
+        paddingTop: 340,
         paddingLeft: 74,
         paddingRight: 74,
-        transform: `scale(${drift})`,
+        transform: `translateY(${camDown}px)`,
       }}
     >
-      {/* Subtle kinetic sunburst accent lines behind hero number */}
-      <svg
-        viewBox="0 0 900 420"
-        width="900"
-        height="420"
-        style={{
-          position: "absolute",
-          top: 405,
-          opacity: 0.22,
-          transform: `scale(${rustBurst})`,
-          pointerEvents: "none",
-        }}
-      >
-        {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map((deg) => (
-          <line
-            key={deg}
-            x1="450"
-            y1="210"
-            x2={450 + Math.cos((deg * Math.PI) / 180) * 380}
-            y2={210 + Math.sin((deg * Math.PI) / 180) * 195}
-            stroke={PALETTE.rust}
-            strokeWidth="3"
-            strokeDasharray="16 14"
-          />
-        ))}
-      </svg>
-
-      {/* Editorial Eyebrow */}
+      {/* Massive Left-Aligned Print Headline: "$1 BILLION" */}
       <div
         style={{
-          fontFamily: EDITORIAL_FONTS.mono,
-          fontSize: 26,
-          letterSpacing: "0.18em",
+          fontFamily: EDITORIAL_FONTS.display,
+          fontSize: 236,
+          fontWeight: 800,
+          lineHeight: 0.86,
+          letterSpacing: "-0.025em",
           color: PALETTE.rust,
-          marginBottom: 20,
-          opacity: punch,
+          transform: `translateY(${interpolate(heroSpring, [0, 1], [60, 0])}px)`,
+          opacity: heroSpring,
         }}
       >
-        GOOGLE · ENERGY BET
+        $1 BILLION
       </div>
 
-      {/* Burned-in Hook Text <= 4 words: "$1 BILLION ON RUST" */}
-      <HeroStatSlam
-        valueText="$1 BILLION"
-        startFrame={0}
-        fontSize={214}
-        color={PALETTE.rust}
-      />
-
-      <div style={{ marginTop: 14 }}>
+      <div style={{ marginTop: 12 }}>
         <MaskedKineticLine
           words={["ON", "RUST"]}
-          startFrame={6}
+          startFrame={5}
           staggerFrames={4}
-          fontSize={138}
+          fontSize={164}
           color={PALETTE.ink}
-          accentWord="RUST"
-          accentColor={PALETTE.rustDeep}
+          align="left"
         />
       </div>
 
-      {/* Divider Hairline */}
+      {/* Structural Ink Rule */}
       <div
         style={{
-          width: interpolate(frame, [10, 28], [0, 560], {
+          width: interpolate(frame, [8, 26], [0, 932], {
             extrapolateLeft: "clamp",
             extrapolateRight: "clamp",
             easing: Easing.bezier(0.22, 1, 0.36, 1),
           }),
-          height: 4,
+          height: 5,
           backgroundColor: PALETTE.ink,
-          marginTop: 64,
-          marginBottom: 64,
+          marginTop: 58,
+          marginBottom: 56,
         }}
       />
 
-      {/* Betrayal Visual: LITHIUM slashed with animated red marker */}
+      {/* Betrayal Visual: "LITHIUM" cleanly sheared into two offset halves by an iron-oxide cut */}
       <div
         style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 18,
+          position: "relative",
+          opacity: lithiumReveal,
+          transform: `translateY(${interpolate(lithiumReveal, [0, 1], [40, 0])}px)`,
         }}
       >
         <div
           style={{
-            fontFamily: EDITORIAL_FONTS.mono,
-            fontSize: 24,
-            letterSpacing: "0.16em",
-            color: PALETTE.inkMuted,
-            opacity: interpolate(
-              frame,
-              [Math.max(0, strikeLocalFrame - 12), strikeLocalFrame],
-              [0, 1],
-              { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
-            ),
+            fontFamily: EDITORIAL_FONTS.sans,
+            fontSize: 30,
+            color: PALETTE.steel,
+            marginBottom: 14,
           }}
         >
-          NOT EXPENSIVE
+          Google skipped expensive
         </div>
-        <MythStrike
-          text="LITHIUM"
-          startFrame={Math.max(0, strikeLocalFrame - 10)}
-          strikeDelay={10}
-          fontSize={124}
-          textColor={PALETTE.ink}
-          strikeColor={PALETTE.crimson}
-        />
+
+        <div style={{ position: "relative", height: 150, width: 640 }}>
+          {/* Top sheared half shifts slightly right */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              clipPath: "polygon(0 0, 100% 0, 100% 42%, 0 58%)",
+              transform: `translate(${shearP * 14}px, ${-shearP * 6}px)`,
+              opacity: interpolate(shearP, [0, 1], [1, 0.38]),
+            }}
+          >
+            <span
+              style={{
+                fontFamily: EDITORIAL_FONTS.display,
+                fontSize: 152,
+                fontWeight: 800,
+                lineHeight: 0.92,
+                color: PALETTE.ink,
+              }}
+            >
+              LITHIUM
+            </span>
+          </div>
+          {/* Bottom sheared half shifts slightly left */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              clipPath: "polygon(0 58%, 100% 42%, 100% 100%, 0 100%)",
+              transform: `translate(${-shearP * 14}px, ${shearP * 6}px)`,
+              opacity: interpolate(shearP, [0, 1], [1, 0.38]),
+            }}
+          >
+            <span
+              style={{
+                fontFamily: EDITORIAL_FONTS.display,
+                fontSize: 152,
+                fontWeight: 800,
+                lineHeight: 0.92,
+                color: PALETTE.ink,
+              }}
+            >
+              LITHIUM
+            </span>
+          </div>
+          {/* Crisp diagonal cut line */}
+          <svg
+            viewBox="0 0 640 150"
+            width="640"
+            height="150"
+            style={{ position: "absolute", inset: 0, overflow: "visible" }}
+          >
+            <line
+              x1="-12"
+              y1="90"
+              x2="580"
+              y2="56"
+              stroke={PALETTE.rust}
+              strokeWidth="12"
+              strokeDasharray="620"
+              strokeDashoffset={620 * (1 - shearP)}
+            />
+          </svg>
+        </div>
       </div>
     </AbsoluteFill>
   );
 };
 
 /**
- * Beat 5B: Core Payoff Slam ("1/10TH THE COST") on high-impact Rust canvas
+ * Beat 10 (38.45s - 43.40s): Full-Bleed Architectural Split Shutter ("GENIUS" vs "HYPE")
+ * Zero rounded AI cards/pills (R-11). Two stark edge-to-edge typographic slabs locking into place.
  */
-const Beat5PayoffSlam: React.FC = () => {
+const Beat10FullBleedVerdict: React.FC<{ startFrame: number }> = ({
+  startFrame,
+}) => {
   const frame = useCurrentFrame();
-  const drift = interpolate(frame, [0, 90], [1.0, 1.05], {
+  const f = Math.max(0, frame - startFrame);
+
+  const leftSlide = interpolate(f, [0, 14], [-1080, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.76, 0, 0.24, 1),
+  });
+  const rightSlide = interpolate(f, [6, 20], [1080, 0], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.76, 0, 0.24, 1),
+  });
+  const promptOp = interpolate(f, [18, 28], [0, 1], {
+    extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
 
   return (
-    <AbsoluteFill
-      style={{
-        justifyContent: "flex-start",
-        alignItems: "center",
-        paddingTop: 530,
-        paddingLeft: 74,
-        paddingRight: 74,
-        transform: `scale(${drift})`,
-      }}
-    >
+    <AbsoluteFill style={{ justifyContent: "flex-start", paddingTop: 310 }}>
+      {/* Top Full-Bleed Carbon Ink Slab: GENIUS */}
       <div
         style={{
-          fontFamily: EDITORIAL_FONTS.mono,
-          fontSize: 28,
-          letterSpacing: "0.2em",
-          color: PALETTE.amber,
-          marginBottom: 28,
-        }}
-      >
-        THE REAL BREAKTHROUGH
-      </div>
-
-      <HeroStatSlam
-        valueText="1/10TH"
-        startFrame={0}
-        fontSize={248}
-        color={PALETTE.white}
-      />
-
-      <div style={{ marginTop: 28 }}>
-        <MaskedKineticLine
-          words={["THE", "COST", "OF"]}
-          startFrame={6}
-          staggerFrames={3}
-          fontSize={96}
-          color={PALETTE.white}
-        />
-      </div>
-      <div style={{ marginTop: 14 }}>
-        <HighlighterSweep
-          startFrame={14}
-          durationFrames={12}
-          color={PALETTE.amber}
-          textColor={PALETTE.ink}
-        >
-          <span
-            style={{
-              fontFamily: EDITORIAL_FONTS.display,
-              fontSize: 112,
-              fontWeight: 800,
-              letterSpacing: "0.02em",
-            }}
-          >
-            LITHIUM-ION
-          </span>
-        </HighlighterSweep>
-      </div>
-    </AbsoluteFill>
-  );
-};
-
-/**
- * Beat 10: High-Contrast Split Debate Outro ("GENIUS" vs "HYPE") + Loop Transition
- */
-const Beat10DebateOutro: React.FC<{ totalLocalFrames: number }> = ({
-  totalLocalFrames,
-}) => {
-  const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-
-  const leftSpring = spring({
-    frame,
-    fps,
-    config: { damping: 13, stiffness: 240 },
-  });
-  const rightSpring = spring({
-    frame: Math.max(0, frame - 10),
-    fps,
-    config: { damping: 13, stiffness: 240 },
-  });
-  const vsSpring = spring({
-    frame: Math.max(0, frame - 5),
-    fps,
-    config: { damping: 12, stiffness: 260 },
-  });
-
-  // Seamless zoom flash in the last 10 frames back to Beat 1 paper tone
-  const loopFlash = interpolate(
-    frame,
-    [Math.max(10, totalLocalFrames - 10), totalLocalFrames],
-    [0, 0.85],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp" }
-  );
-
-  return (
-    <AbsoluteFill
-      style={{
-        justifyContent: "flex-start",
-        alignItems: "center",
-        paddingTop: 430,
-        paddingLeft: 74,
-        paddingRight: 74,
-      }}
-    >
-      <div
-        style={{
-          fontFamily: EDITORIAL_FONTS.mono,
-          fontSize: 28,
-          letterSpacing: "0.2em",
-          color: PALETTE.inkMuted,
-          marginBottom: 42,
-        }}
-      >
-        YOUR VERDICT
-      </div>
-
-      {/* Top Split Word: GENIUS */}
-      <div
-        style={{
-          width: "100%",
-          padding: "46px 0",
-          backgroundColor: PALETTE.obsidian,
-          borderRadius: 24,
+          width: 1080,
+          height: 390,
+          backgroundColor: PALETTE.ink,
           display: "flex",
+          flexDirection: "column",
           justifyContent: "center",
-          transform: `translateX(${interpolate(leftSpring, [0, 1], [-120, 0])}px) scale(${interpolate(leftSpring, [0, 1], [0.92, 1])})`,
-          opacity: leftSpring,
+          paddingLeft: 80,
+          transform: `translateX(${leftSlide}px)`,
         }}
       >
-        <span
+        <div
           style={{
             fontFamily: EDITORIAL_FONTS.display,
-            fontSize: 164,
+            fontSize: 214,
             fontWeight: 800,
-            color: PALETTE.emerald,
-            letterSpacing: "0.03em",
-            lineHeight: 0.9,
+            lineHeight: 0.88,
+            color: PALETTE.white,
+            letterSpacing: "-0.02em",
           }}
         >
           GENIUS
-        </span>
+        </div>
+        <div
+          style={{
+            marginTop: 12,
+            fontFamily: EDITORIAL_FONTS.sans,
+            fontSize: 30,
+            color: PALETTE.steelLight,
+          }}
+        >
+          100 hours at 1/10th the cost
+        </div>
       </div>
 
-      {/* Center VS Divider */}
+      {/* Bottom Full-Bleed Iron-Oxide Slab: HYPE */}
       <div
         style={{
-          margin: "-24px 0",
-          zIndex: 5,
-          width: 94,
-          height: 94,
-          borderRadius: 47,
-          backgroundColor: PALETTE.amber,
-          border: `6px solid ${PALETTE.paper}`,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          fontFamily: EDITORIAL_FONTS.display,
-          fontSize: 48,
-          fontWeight: 800,
-          color: PALETTE.ink,
-          transform: `scale(${vsSpring})`,
-        }}
-      >
-        OR
-      </div>
-
-      {/* Bottom Split Word: HYPE */}
-      <div
-        style={{
-          width: "100%",
-          padding: "46px 0",
+          width: 1080,
+          height: 390,
           backgroundColor: PALETTE.rust,
-          borderRadius: 24,
           display: "flex",
+          flexDirection: "column",
           justifyContent: "center",
-          transform: `translateX(${interpolate(rightSpring, [0, 1], [120, 0])}px) scale(${interpolate(rightSpring, [0, 1], [0.92, 1])})`,
-          opacity: rightSpring,
+          alignItems: "flex-end",
+          paddingRight: 80,
+          transform: `translateX(${rightSlide}px)`,
         }}
       >
-        <span
+        <div
           style={{
             fontFamily: EDITORIAL_FONTS.display,
-            fontSize: 164,
+            fontSize: 214,
             fontWeight: 800,
-            color: PALETTE.white,
-            letterSpacing: "0.03em",
-            lineHeight: 0.9,
+            lineHeight: 0.88,
+            color: PALETTE.ink,
+            letterSpacing: "-0.02em",
           }}
         >
           HYPE
-        </span>
+        </div>
+        <div
+          style={{
+            marginTop: 12,
+            fontFamily: EDITORIAL_FONTS.sans,
+            fontSize: 30,
+            color: PALETTE.paper,
+          }}
+        >
+          First modules do not ship until 2028
+        </div>
       </div>
 
       <div
         style={{
-          marginTop: 56,
-          fontFamily: EDITORIAL_FONTS.mono,
+          marginTop: 52,
+          paddingLeft: 80,
+          fontFamily: EDITORIAL_FONTS.sans,
           fontSize: 32,
-          letterSpacing: "0.14em",
+          fontWeight: 700,
           color: PALETTE.ink,
-          textAlign: "center",
+          opacity: promptOp,
         }}
       >
-        COMMENT ONE WORD BELOW
+        Drop one word in the comments: GENIUS or HYPE.
       </div>
-
-      {/* Subtle loop blend into frame 0 */}
-      <AbsoluteFill
-        style={{
-          backgroundColor: PALETTE.paper,
-          opacity: loopFlash,
-          pointerEvents: "none",
-        }}
-      />
     </AbsoluteFill>
   );
 };
@@ -420,54 +340,6 @@ export const GoogleRustBatteryNews: React.FC = () => {
   useEditorialFonts();
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
-  const t = frame / fps;
-
-  // Determine current editorial canvas theme & masthead tag based on real audio beats
-  let theme: "paper" | "obsidian" | "rust" = "paper";
-  let accent = PALETTE.rust;
-  let beatTag = "GLOBAL TECH · ENERGY";
-
-  if (t >= BEAT_SEC.b10DebateOutro) {
-    theme = "paper";
-    accent = PALETTE.rust;
-    beatTag = "VERDICT · 2026";
-  } else if (t >= BEAT_SEC.b9Homes2028) {
-    theme = "obsidian";
-    accent = PALETTE.amber;
-    beatTag = "GRID IMPACT · 2028";
-  } else if (t >= BEAT_SEC.b8Renewables) {
-    theme = "paper";
-    accent = PALETTE.emerald;
-    beatTag = "CLEAN POWER · 1.6 GW";
-  } else if (t >= BEAT_SEC.b7CutawayCharge) {
-    theme = "obsidian";
-    accent = PALETTE.emerald;
-    beatTag = "HOW IT RECHARGES";
-  } else if (t >= BEAT_SEC.b6CutawayDischarge) {
-    theme = "paper";
-    accent = PALETTE.rust;
-    beatTag = "REVERSIBLE RUST TECH";
-  } else if (t >= BEAT_SEC.b5PayoffCost) {
-    theme = "rust";
-    accent = PALETTE.amber;
-    beatTag = "COST BREAKTHROUGH";
-  } else if (t >= BEAT_SEC.b5Bar100h) {
-    theme = "obsidian";
-    accent = PALETTE.amber;
-    beatTag = "DURATION COMPARISON";
-  } else if (t >= BEAT_SEC.b4Minnesota) {
-    theme = "paper";
-    accent = PALETTE.rust;
-    beatTag = "MINNESOTA · USA";
-  } else if (t >= BEAT_SEC.b3Lithium4h) {
-    theme = "paper";
-    accent = PALETTE.crimson;
-    beatTag = "THE LITHIUM LIMIT";
-  } else if (t >= BEAT_SEC.b2AiGrid) {
-    theme = "obsidian";
-    accent = PALETTE.cyan;
-    beatTag = "AI POWER CRISIS";
-  }
 
   const f1 = s2f(BEAT_SEC.b1Hook);
   const f1Strike = s2f(BEAT_SEC.b1Strike);
@@ -482,309 +354,273 @@ export const GoogleRustBatteryNews: React.FC = () => {
   const f9 = s2f(BEAT_SEC.b9Homes2028);
   const f10 = s2f(BEAT_SEC.b10DebateOutro);
 
+  // === CONTINUOUS SMOOTH SURFACE COLOR CHOREOGRAPHY (ZERO 1-frame color jumps!) ===
+  // Paper -> Ink (at whip-pan f2) -> Paper (behind rust curtain at f4) -> Ink (at f5a zoom)
+  // -> Rust (at f5b zoom-dive) -> Paper (behind shutter pull-up at f6)
+  // -> Ink (smooth in-place inversion at f7) -> Paper (whip-pan at f8) -> Paper (f10)
+  const bgColor = interpolateColors(
+    frame,
+    [
+      0,
+      f2 - 6,
+      f2 + 8,
+      f4 - 1,
+      f4 + 1,
+      f5a - 6,
+      f5a + 10,
+      f5b - 4,
+      f5b + 8,
+      f6 - 12,
+      f6 - 10,
+      f7 - 4,
+      f7 + 12,
+      f8 - 6,
+      f8 + 10,
+      durationInFrames,
+    ],
+    [
+      PALETTE.paper,
+      PALETTE.paper,
+      PALETTE.ink,
+      PALETTE.ink,
+      PALETTE.paper,
+      PALETTE.paper,
+      PALETTE.ink,
+      PALETTE.ink,
+      PALETTE.rust,
+      PALETTE.rust,
+      PALETTE.paper,
+      PALETTE.paper,
+      PALETTE.ink,
+      PALETTE.ink,
+      PALETTE.paper,
+      PALETTE.paper,
+    ]
+  );
+
+  // Active subtitle surface contrast mode
+  const t = frame / fps;
+  let subSurface: "paper" | "ink" | "rust" = "paper";
+  if (
+    (t >= BEAT_SEC.b2AiGrid && t < BEAT_SEC.b4Minnesota) ||
+    (t >= BEAT_SEC.b5Bar100h && t < BEAT_SEC.b5PayoffCost) ||
+    (t >= BEAT_SEC.b7CutawayCharge && t < BEAT_SEC.b8Renewables)
+  ) {
+    subSurface = "ink";
+  } else if (t >= BEAT_SEC.b5PayoffCost && t < BEAT_SEC.b6CutawayDischarge) {
+    subSurface = "rust";
+  }
+
+  // === OVERLAPPED PHYSICAL CAMERA TRANSITIONS ===
+  // 1. Beat 1 -> Beat 2+3: Vertical Whip-Pan UP (16 frames overlap)
+  const whip12 = interpolate(frame, [f2 - 8, f2 + 8], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.76, 0, 0.24, 1),
+  });
+
+  // 2. Beat 5B -> Beat 6+7: Rust Payoff Sheet rolls cleanly upward like an editorial shutter
+  const pullUp56 = interpolate(frame, [f6 - 10, f6 + 6], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.76, 0, 0.24, 1),
+  });
+
+  // 3. Beat 6+7 -> Beat 8+9: Horizontal Camera Whip-Pan LEFT (16 frames overlap)
+  const whip78 = interpolate(frame, [f8 - 8, f8 + 8], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.76, 0, 0.24, 1),
+  });
+
+  // 4. Beat 8+9 exit subtle pull-back as Beat 10 full-bleed slabs lock in
+  const exit910 = interpolate(frame, [f10 - 2, f10 + 14], [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+    easing: Easing.bezier(0.76, 0, 0.24, 1),
+  });
+
   return (
     <AbsoluteFill style={{ backgroundColor: PALETTE.paper }}>
-      {/* Continuous Editorial Backdrop + Progress Hairline */}
-      <EditorialBackdrop
-        theme={theme}
-        accent={accent}
+      {/* Clean Print-Editorial Surface (ZERO blueprint grids, ZERO radial glows) */}
+      <EditorialSurface
+        bgColor={bgColor}
         progress={frame / Math.max(1, durationInFrames - 1)}
-        beatTag={beatTag}
+        progressTrackColor={
+          subSurface === "paper"
+            ? "rgba(18, 19, 22, 0.14)"
+            : "rgba(255, 255, 255, 0.2)"
+        }
+        progressFillColor={
+          subSurface === "rust" ? PALETTE.ink : PALETTE.rust
+        }
       />
 
-      {/* Audio Track: Real English Voiceover + Subtle Editorial Underscore + Crisp Beat SFX */}
-      <Audio src={staticFile("audio/google-rust-battery/vo_en.mp3")} volume={1.0} />
+      {/* === ORGANIC STUDIO AUDIO (ZERO synthetic "ctung-ctung" sine chimes!) === */}
       <Audio
-        src={staticFile("audio/google-rust-battery/bgm_editorial.mp3")}
-        volume={0.11}
+        src={staticFile("audio/google-rust-battery/vo_en.mp3")}
+        volume={1.0}
+      />
+      <Audio
+        src={staticFile("audio/google-rust-battery/bgm_doc.mp3")}
+        volume={0.09}
       />
 
+      {/* Restrained, organic SFX on 5 key physical moments only */}
       <Sequence from={f1} durationInFrames={30}>
-        <Audio src={staticFile("audio/google-rust-battery/sfx_slam.mp3")} volume={0.5} />
+        <Audio
+          src={staticFile("audio/google-rust-battery/sfx_thump.mp3")}
+          volume={0.42}
+        />
       </Sequence>
-      <Sequence from={f1Strike} durationInFrames={20}>
-        <Audio src={staticFile("audio/google-rust-battery/sfx_slash.mp3")} volume={0.55} />
+      <Sequence from={f1Strike} durationInFrames={16}>
+        <Audio
+          src={staticFile("audio/google-rust-battery/sfx_cut.mp3")}
+          volume={0.55}
+        />
       </Sequence>
-      <Sequence from={f2} durationInFrames={24}>
-        <Audio src={staticFile("audio/google-rust-battery/sfx_zap.mp3")} volume={0.35} />
+      <Sequence from={f4 - 8} durationInFrames={24}>
+        <Audio
+          src={staticFile("audio/google-rust-battery/sfx_whoosh_soft.mp3")}
+          volume={0.36}
+        />
       </Sequence>
-      <Sequence from={f3} durationInFrames={18}>
-        <Audio src={staticFile("audio/google-rust-battery/sfx_pop.mp3")} volume={0.45} />
+      <Sequence from={f5b - 4} durationInFrames={30}>
+        <Audio
+          src={staticFile("audio/google-rust-battery/sfx_thump.mp3")}
+          volume={0.52}
+        />
       </Sequence>
-      <Sequence from={f4} durationInFrames={24}>
-        <Audio src={staticFile("audio/google-rust-battery/sfx_whoosh.mp3")} volume={0.42} />
-      </Sequence>
-      <Sequence from={f5a} durationInFrames={24}>
-        <Audio src={staticFile("audio/google-rust-battery/sfx_whoosh.mp3")} volume={0.45} />
-      </Sequence>
-      <Sequence from={f5b} durationInFrames={30}>
-        <Audio src={staticFile("audio/google-rust-battery/sfx_slam.mp3")} volume={0.62} />
-      </Sequence>
-      <Sequence from={f6} durationInFrames={24}>
-        <Audio src={staticFile("audio/google-rust-battery/sfx_zap.mp3")} volume={0.38} />
-      </Sequence>
-      <Sequence from={f7} durationInFrames={24}>
-        <Audio src={staticFile("audio/google-rust-battery/sfx_whoosh.mp3")} volume={0.42} />
-      </Sequence>
-      <Sequence from={f8} durationInFrames={18}>
-        <Audio src={staticFile("audio/google-rust-battery/sfx_pop.mp3")} volume={0.42} />
-      </Sequence>
-      <Sequence from={f9} durationInFrames={18}>
-        <Audio src={staticFile("audio/google-rust-battery/sfx_pop.mp3")} volume={0.45} />
-      </Sequence>
-      <Sequence from={f10} durationInFrames={30}>
-        <Audio src={staticFile("audio/google-rust-battery/sfx_slam.mp3")} volume={0.5} />
+      <Sequence from={f10 - 4} durationInFrames={24}>
+        <Audio
+          src={staticFile("audio/google-rust-battery/sfx_whoosh_soft.mp3")}
+          volume={0.34}
+        />
       </Sequence>
 
-      {/* BEAT 1: Evidence + Betrayal Hook */}
-      <Sequence from={f1} durationInFrames={Math.max(1, f2 - f1)}>
-        <Beat1Hook strikeLocalFrame={Math.max(6, f1Strike - f1)} />
-      </Sequence>
-
-      {/* BEAT 2: AI Data Centers Drain Power Grids */}
-      <Sequence from={f2} durationInFrames={Math.max(1, f3 - f2)}>
+      {/* === CHAPTER 1 (Beat 1: Hook) whips UP off screen at f2 === */}
+      {frame < f2 + 10 && (
         <AbsoluteFill
           style={{
-            alignItems: "center",
-            paddingTop: 385,
-            paddingLeft: 74,
-            paddingRight: 74,
+            backgroundColor: PALETTE.paper,
+            transform: `translateY(${interpolate(whip12, [0, 1], [0, -1920])}px)`,
           }}
         >
-          <MaskedKineticLine
-            words={["AI", "DRAINS", "POWER", "GRIDS"]}
-            startFrame={0}
-            staggerFrames={3}
-            fontSize={106}
-            color={PALETTE.white}
-            accentWord="DRAINS"
-            accentColor={PALETTE.amber}
+          <Beat1HookEditorial strikeFrame={f1Strike} />
+        </AbsoluteFill>
+      )}
+
+      {/* === CHAPTER 2 (Beat 2 + 3: Continuous Load -> Cliff Horizontal Chart) === */}
+      {frame >= f2 - 10 && frame < f4 + 2 && (
+        <AbsoluteFill
+          style={{
+            backgroundColor: PALETTE.ink,
+            transform: `translateY(${interpolate(whip12, [0, 1], [1920, 0])}px)`,
+          }}
+        >
+          <ContinuousLoadAndCliffScene
+            beat2StartFrame={f2}
+            beat3StartFrame={f3}
           />
-          <div style={{ marginTop: 64 }}>
-            <AiGridDrainGraphic startFrame={0} />
-          </div>
         </AbsoluteFill>
-      </Sequence>
+      )}
 
-      {/* BEAT 3: Standard Lithium Batteries Die in 4 Hours */}
-      <Sequence from={f3} durationInFrames={Math.max(1, f4 - f3)}>
+      {/* === CHAPTER 4 (Beat 6 + 7: Single Locked Iron-Air Chamber) sits under Chapter 3 shutter === */}
+      {frame >= f6 - 10 && frame < f8 + 10 && (
         <AbsoluteFill
           style={{
-            alignItems: "center",
-            paddingTop: 410,
-            paddingLeft: 74,
-            paddingRight: 74,
+            backgroundColor: frame >= f8 - 10 ? PALETTE.ink : "transparent",
+            transform: `translateX(${interpolate(whip78, [0, 1], [0, -1080])}px)`,
           }}
         >
-          <MaskedKineticLine
-            words={["STANDARD", "BATTERIES"]}
-            startFrame={0}
-            staggerFrames={3}
-            fontSize={98}
-            color={PALETTE.ink}
+          <ContinuousIronAirChamber
+            beat6StartFrame={f6}
+            beat7StartFrame={f7}
           />
-          <div style={{ marginTop: 10 }}>
-            <HighlighterSweep
-              startFrame={8}
-              durationFrames={12}
-              color={PALETTE.crimson}
-              textColor={PALETTE.white}
-            >
-              <span
-                style={{
-                  fontFamily: EDITORIAL_FONTS.display,
-                  fontSize: 104,
-                  fontWeight: 800,
-                }}
-              >
-                DIE IN 4 HOURS
-              </span>
-            </HighlighterSweep>
-          </div>
-          <div style={{ marginTop: 84 }}>
-            <LithiumDrainGraphic startFrame={0} />
-          </div>
         </AbsoluteFill>
-      </Sequence>
+      )}
 
-      {/* BEAT 4: Minnesota Giant — 30 GWh World's Largest */}
-      <Sequence from={f4} durationInFrames={Math.max(1, f5a - f4)}>
+      {/* === CHAPTER 3 (Beat 4 + 5A + 5B: Minnesota -> 100 HRS -> Zoom Dive 1/10TH) === */}
+      {/* Pulls cleanly UP at f6 like a print shutter to unveil Chapter 4 underneath! */}
+      {frame >= f4 - 1 && frame < f6 + 8 && (
         <AbsoluteFill
           style={{
-            alignItems: "center",
-            paddingTop: 350,
-            paddingLeft: 74,
-            paddingRight: 74,
+            backgroundColor:
+              frame >= f5b + 6 ? PALETTE.rust : "transparent",
+            transform: `translateY(${interpolate(pullUp56, [0, 1], [0, -1920])}px)`,
+            zIndex: 10,
           }}
         >
-          <HeroStatSlam
-            valueText="30 GWh"
-            startFrame={0}
-            fontSize={190}
-            color={PALETTE.rust}
+          <MinnesotaToPayoffDiveScene
+            beat4StartFrame={f4}
+            beat5aStartFrame={f5a}
+            beat5bStartFrame={f5b}
           />
-          <div style={{ marginTop: 12 }}>
-            <HighlighterSweep
-              startFrame={10}
-              durationFrames={14}
-              color={PALETTE.amber}
-              textColor={PALETTE.ink}
-            >
-              <span
-                style={{
-                  fontFamily: EDITORIAL_FONTS.display,
-                  fontSize: 66,
-                  fontWeight: 800,
-                  letterSpacing: "0.03em",
-                }}
-              >
-                WORLD&apos;S LARGEST GRID BATTERY
-              </span>
-            </HighlighterSweep>
-          </div>
-          <div style={{ marginTop: 56 }}>
-            <MinnesotaMapGraphic startFrame={0} />
-          </div>
         </AbsoluteFill>
-      </Sequence>
+      )}
 
-      {/* BEAT 5A: 100 Hours vs 4 Hours Animated Bar Chart */}
-      <Sequence from={f5a} durationInFrames={Math.max(1, f5b - f5a)}>
+      {/* === CHAPTER 5 (Beat 8 + 9: Continuous Busbar Wind/Solar -> 200k Homes & 2028) === */}
+      {frame >= f8 - 10 && frame < f10 + 16 && (
         <AbsoluteFill
           style={{
-            alignItems: "center",
-            paddingTop: 345,
-            paddingLeft: 74,
-            paddingRight: 74,
+            backgroundColor: PALETTE.paper,
+            transform: `translateX(${interpolate(whip78, [0, 1], [1080, 0])}px) scale(${interpolate(exit910, [0, 1], [1, 0.94])})`,
+            opacity: interpolate(exit910, [0, 1], [1, 0]),
           }}
         >
-          <MaskedKineticLine
-            words={["100", "HOURS", "NONSTOP"]}
-            startFrame={0}
-            staggerFrames={3}
-            fontSize={114}
-            color={PALETTE.white}
-            accentWord="100"
-            accentColor={PALETTE.amber}
+          <ContinuousBusbarToHomesScene
+            beat8StartFrame={f8}
+            beat9StartFrame={f9}
           />
-          <div
-            style={{
-              marginTop: 10,
-              fontFamily: EDITORIAL_FONTS.mono,
-              fontSize: 26,
-              letterSpacing: "0.14em",
-              color: PALETTE.cyan,
-            }}
-          >
-            OVER 4 FULL DAYS OF CONTINUOUS POWER
-          </div>
-          <div style={{ marginTop: 40 }}>
-            <DurationComparisonChart startFrame={0} />
-          </div>
         </AbsoluteFill>
-      </Sequence>
+      )}
 
-      {/* BEAT 5B: CORE PAYOFF SLAM — 1/10TH COST */}
-      <Sequence from={f5b} durationInFrames={Math.max(1, f6 - f5b)}>
-        <Beat5PayoffSlam />
-      </Sequence>
+      {/* === CHAPTER 6 (Beat 10: Full-Bleed Split Shutter Verdict) === */}
+      {frame >= f10 - 2 && <Beat10FullBleedVerdict startFrame={f10} />}
 
-      {/* BEAT 6: 2D Cutaway Mechanism — Reversible Rust Discharge */}
-      <Sequence from={f6} durationInFrames={Math.max(1, f7 - f6)}>
-        <AbsoluteFill
+      {/* === IDENTITY MOTIF: Physical Iron-Oxide Curtain Wipes === */}
+      {/* Sweep left-to-right bridging Beat 3 cliff -> Beat 4 Minnesota */}
+      <RustCurtainWipe
+        triggerFrame={f4 - 9}
+        durationFrames={18}
+        direction="left-to-right"
+      />
+      {/* Continuous loop sweep bottom-to-top in final 12 frames back into frame 0 */}
+      <RustCurtainWipe
+        triggerFrame={durationInFrames - 12}
+        durationFrames={14}
+        direction="bottom-to-top"
+      />
+
+      {/* Minimal top progress hairline kept above solid whip-pan sheets (y=152) */}
+      <div
+        style={{
+          position: "absolute",
+          top: 152,
+          left: 74,
+          right: 74,
+          height: 3,
+          backgroundColor:
+            subSurface === "paper"
+              ? "rgba(18, 19, 22, 0.14)"
+              : "rgba(255, 255, 255, 0.2)",
+          overflow: "hidden",
+          zIndex: 35,
+          pointerEvents: "none",
+        }}
+      >
+        <div
           style={{
-            alignItems: "center",
-            paddingTop: 375,
-            paddingLeft: 74,
-            paddingRight: 74,
+            width: `${Math.max(0, Math.min(100, (frame / Math.max(1, durationInFrames - 1)) * 100))}%`,
+            height: "100%",
+            backgroundColor:
+              subSurface === "rust" ? PALETTE.ink : PALETTE.rust,
           }}
-        >
-          <MaskedKineticLine
-            words={["HOW?", "REVERSIBLE", "RUST"]}
-            startFrame={0}
-            staggerFrames={3}
-            fontSize={106}
-            color={PALETTE.ink}
-            accentWord="RUST"
-            accentColor={PALETTE.rust}
-          />
-          <div style={{ marginTop: 54 }}>
-            <IronAirCutawayGraphic mode="discharge" startFrame={0} />
-          </div>
-        </AbsoluteFill>
-      </Sequence>
+        />
+      </div>
 
-      {/* BEAT 7: 2D Cutaway Reversal — Charging Turns Rust Back to Iron */}
-      <Sequence from={f7} durationInFrames={Math.max(1, f8 - f7)}>
-        <AbsoluteFill
-          style={{
-            alignItems: "center",
-            paddingTop: 365,
-            paddingLeft: 74,
-            paddingRight: 74,
-          }}
-        >
-          <MaskedKineticLine
-            words={["RECHARGING", "REVERSES", "RUST"]}
-            startFrame={0}
-            staggerFrames={3}
-            fontSize={98}
-            color={PALETTE.white}
-            accentWord="REVERSES"
-            accentColor={PALETTE.emerald}
-          />
-          <div style={{ marginTop: 54 }}>
-            <IronAirCutawayGraphic mode="charge" startFrame={0} />
-          </div>
-        </AbsoluteFill>
-      </Sequence>
-
-      {/* BEAT 8: 1.6 GW Wind + Solar Clean Ecosystem */}
-      <Sequence from={f8} durationInFrames={Math.max(1, f9 - f8)}>
-        <AbsoluteFill
-          style={{
-            alignItems: "center",
-            paddingTop: 380,
-            paddingLeft: 74,
-            paddingRight: 74,
-          }}
-        >
-          <MaskedKineticLine
-            words={["1.6 GW", "CLEAN", "POWER"]}
-            startFrame={0}
-            staggerFrames={3}
-            fontSize={112}
-            color={PALETTE.ink}
-            accentWord="1.6 GW"
-            accentColor={PALETTE.emerald}
-          />
-          <div style={{ marginTop: 48 }}>
-            <RenewablesFlowGraphic startFrame={0} />
-          </div>
-        </AbsoluteFill>
-      </Sequence>
-
-      {/* BEAT 9: 200,000+ Homes & 2028 Delivery Timeline + Verified Sources */}
-      <Sequence from={f9} durationInFrames={Math.max(1, f10 - f9)}>
-        <AbsoluteFill
-          style={{
-            alignItems: "center",
-            paddingTop: 430,
-            paddingLeft: 74,
-            paddingRight: 74,
-          }}
-        >
-          <HomesAndTimelineGraphic startFrame={0} />
-        </AbsoluteFill>
-      </Sequence>
-
-      {/* BEAT 10: Split Debate Outro + Seamless Loop */}
-      <Sequence from={f10} durationInFrames={Math.max(1, durationInFrames - f10)}>
-        <Beat10DebateOutro totalLocalFrames={Math.max(1, durationInFrames - f10)} />
-      </Sequence>
-
-      {/* Floating Word-Synced Kinetic Subtitles (NO box, safe zone bottom >= 248px) */}
-      <SyncedKineticSubtitle groups={SUBTITLE_GROUPS} theme={theme} />
+      {/* Floating Word-Synced Kinetic Subtitles (NO box, safe zone bottom >= 268px) */}
+      <SyncedKineticSubtitle groups={SUBTITLE_GROUPS} surface={subSurface} />
     </AbsoluteFill>
   );
 };
