@@ -817,8 +817,8 @@ const Headline: React.FC = () => (
 
 const SUBTITLES: { text: string; highlight: string }[] = [
   { text: "Motor matic lo pernah mati sendiri pas standar samping diturunin? Bukan rusak. Itu sengaja.", highlight: "sengaja" },
-  { text: "Di pangkal standar samping ada saklar kecil. Begitu standar turun, saklar itu memutus pengapian.", highlight: "saklar" },
-  { text: "Busi nggak dapat api, mesin langsung mati.", highlight: "mati" },
+  { text: "Di pangkal standar samping ada saklar kecil.", highlight: "saklar" },
+  { text: "Begitu standar turun, saklar itu memutus pengapian. Busi nggak dapat api, mesin langsung mati.", highlight: "mati" },
   { text: "Kalau standar naik lagi, saklar nyambung, motor bisa distarter normal.", highlight: "nyambung" },
   { text: "Kenapa dibikin begitu? Bayangin lo jalan sambil standar samping masih turun.", highlight: "turun" },
   { text: "Pas belok kiri, standar itu bisa nyangkut aspal. Motor bisa oleng, lo bisa jatuh.", highlight: "nyangkut" },
@@ -1177,25 +1177,25 @@ export const StandarSampingExplainer: React.FC = () => {
       {scene === 0 && <Headline />}
       <Subtitle scene={scene} local={local} />
       {scene === 1 && (
-        <HairlineLabel top={820} left={70} right={70} text="saklar kecil di pangkal standar" />
+        <HairlineLabel top={957} left={70} right={150} text="saklar kecil di pangkal standar" />
       )}
       {scene === 2 && (
-        <HairlineLabel top={820} left={70} right={70} text="busi nggak dapat api, mesin mati" />
+        <HairlineLabel top={857} left={250} right={70} text="busi nggak dapat api, mesin mati" />
       )}
       {scene === 3 && (
-        <HairlineLabel top={700} left={70} right={70} text="standar naik = saklar nyambung" />
+        <HairlineLabel top={1057} left={70} right={150} text="standar naik = saklar nyambung" />
       )}
       {scene === 4 && (
-        <HairlineLabel top={700} left={70} right={70} text="jalan sambil standar masih turun" />
+        <HairlineLabel top={1087} left={70} right={70} text="jalan sambil standar masih turun" />
       )}
       {scene === 5 && (
-        <HairlineLabel top={780} left={70} right={70} text="standar nyangkut aspal" />
+        <HairlineLabel top={957} left={70} right={70} text="standar nyangkut aspal" />
       )}
       {scene === 6 && (
-        <HairlineLabel top={700} left={70} right={70} text="pengaman pabrikan" />
+        <HairlineLabel top={1032} left={70} right={150} text="pengaman pabrikan" />
       )}
       {scene === 7 && (
-        <HairlineLabel top={700} left={70} right={70} text="naikin standar, starter lagi, jalan" />
+        <HairlineLabel top={897} left={260} right={70} text="naikin standar, starter lagi, jalan" />
       )}
       {scene === 8 && <SourceLine />}
       <WatermarkText />

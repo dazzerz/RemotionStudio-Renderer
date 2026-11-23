@@ -905,9 +905,9 @@ const TireStudio: React.FC<{
   const rain = useMemo(() => {
     if (scene !== 6) return [];
     const out: { pos: [number, number, number] }[] = [];
-    for (let i = 0; i < 36; i++) {
-      const x = (pseudo(i) - 0.5) * 16;
-      const z = (pseudo(i + 100) - 0.5) * 8;
+    for (let i = 0; i < 48; i++) {
+      const x = (pseudo(i) - 0.5) * 6;
+      const z = (pseudo(i + 100) - 0.5) * 5;
       const y = 8 - ((frame * 0.35 + i * 0.53) % 8);
       out.push({ pos: [x, y, z] });
     }
@@ -960,14 +960,14 @@ const TireStudio: React.FC<{
       {scene === 2 ? (
         <>
           {/* S3 split: treaded (kiri) vs slick (kanan) */}
-          <Tire variant="treaded" spin={spinSlow} position={[-2.3, TIRE_Y, 0]} scale={0.8} />
-          <Tire variant="slick" spin={spinSlow} position={[2.3, TIRE_Y, 0]} scale={0.8} />
+          <Tire variant="treaded" spin={spinSlow} position={[-2.0, TIRE_Y, 0]} scale={0.8} />
+          <Tire variant="slick" spin={spinSlow} position={[2.0, TIRE_Y, 0]} scale={0.8} />
           {/* contact patch: alur = kecil, slick = lebar */}
-          <mesh position={[-2.3, 0.03, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <mesh position={[-2.0, 0.03, 0]} rotation={[-Math.PI / 2, 0, 0]}>
             <planeGeometry args={[0.45, 0.3]} />
             <meshStandardMaterial color={AMBER} transparent opacity={0.55} roughness={0.6} />
           </mesh>
-          <mesh position={[2.3, 0.03, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <mesh position={[2.0, 0.03, 0]} rotation={[-Math.PI / 2, 0, 0]}>
             <planeGeometry args={[0.45, 0.7]} />
             <meshStandardMaterial color={AMBER} transparent opacity={0.55} roughness={0.6} />
           </mesh>
@@ -984,8 +984,8 @@ const TireStudio: React.FC<{
       {/* hujan S7 */}
       {rain.map((r, i) => (
         <mesh key={`r-${i}`} position={r.pos}>
-          <boxGeometry args={[0.04, 0.7, 0.04]} />
-          <meshStandardMaterial color="#BFD9E8" transparent opacity={0.7} roughness={0.4} />
+          <boxGeometry args={[0.06, 0.9, 0.06]} />
+          <meshStandardMaterial color="#EAF6FF" transparent opacity={0.85} roughness={0.4} />
         </mesh>
       ))}
       {/* uap panas S5 */}
@@ -995,11 +995,13 @@ const TireStudio: React.FC<{
           <meshStandardMaterial color={CREAM} transparent opacity={sv.opacity} roughness={1} />
         </mesh>
       ))}
-      {/* bayangan kontak lembut */}
-      <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[1.1, 24]} />
-        <meshStandardMaterial color="#000000" transparent opacity={0.14} roughness={1} />
-      </mesh>
+      {/* bayangan kontak lembut — BUKAN di S3 split (di sana sudah ada contact patch amber; bayangan tengah jadi bayangan yatim) */}
+      {scene !== 2 && (
+        <mesh position={[0, 0.02, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+          <circleGeometry args={[1.1, 24]} />
+          <meshStandardMaterial color="#000000" transparent opacity={0.14} roughness={1} />
+        </mesh>
+      )}
     </>
   );
 };
@@ -1386,8 +1388,8 @@ export const BanSlickExplainer: React.FC = () => {
     camPos = [lerpE(7, 6.2), lerpE(2.5, 2.2), lerpE(4, 3.2)];
     camTarget = [0, 1.2, 0];
   } else if (scene === 2) {
-    // S3 SPLIT: depan, lebar (dua ban utuh).
-    camPos = [0, lerpE(3.2, 2.9), lerpE(14, 12.5)];
+    // S3 SPLIT: depan, lebar (dua ban utuh) — kamera agak jauh supaya kedua ban utuh di frame.
+    camPos = [0, lerpE(3.2, 2.9), lerpE(15, 14)];
     camTarget = [0, 1.2, 0];
   } else if (scene === 3) {
     // S4 PANAS: orbit pelan depan (ban memanas, emissive naik).
@@ -1446,8 +1448,8 @@ export const BanSlickExplainer: React.FC = () => {
       )}
       {scene === 2 && (
         <>
-          <HairlineLabel top={620} left={70} text="ban biasa: alur = karet lebih sedikit" />
-          <HairlineLabel top={620} right={70} text="slick: karet maksimal" />
+          <HairlineLabel top={755} left={70} text="ban biasa: alur = karet lebih sedikit" />
+          <HairlineLabel top={755} right={70} text="slick: karet maksimal" />
         </>
       )}
       {scene === 3 && (
@@ -1456,11 +1458,11 @@ export const BanSlickExplainer: React.FC = () => {
       {scene === 4 && (
         <>
           <BigNumber value="90°C" caption="pemanas ban, sebelum balapan" top={520} local={local} />
-          <HairlineLabel top={820} left={70} right={70} text="selama 1 jam" />
+          <HairlineLabel top={1108} left={70} right={70} text="selama 1 jam" />
         </>
       )}
       {scene === 5 && (
-        <HairlineLabel top={700} left={70} right={70} text="dingin = licin banget" />
+        <HairlineLabel top={1107} left={70} right={470} text="dingin = licin banget" />
       )}
       {scene === 6 && (
         <HairlineLabel top={700} left={70} right={70} text="ban basah = ada alur, buang air" />
