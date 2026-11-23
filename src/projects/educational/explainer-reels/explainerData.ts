@@ -1412,3 +1412,62 @@ export const KAPALBAJA_CONFIG: ExplainerConfig = {
 
 export const KapalBajaExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: KAPALBAJA_CONFIG });
+
+export const RELKERETA_CONFIG: ExplainerConfig = {
+  id: "RelKeretaExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/rel-kereta/vo_riko.mp3",
+  durationSec: 68,
+  hookLine1: "RELNYA KOK NGGAK RAPAT?",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "CELAH ITU DISENGAJA",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "FAKTANYA: CELAH ITU PENGAMAN!",
+  sourceText: "PT KAI: rumus celah sambungan G = L x lambda x (40 - t) + 2, maks 16 mm / UIC 720: rel las menerus",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo tim jedag-jedug klasik atau rel senyap?",
+    startSec: 61,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/rel-kereta/scene1.jpg", videoPath: "videos/rel-kereta/scene1.mp4", startSec: 0, endSec: 7.9, panDirection: "in", callouts: [{ label: "Bunyi Jedag-Jedug Tiap Beberapa Detik", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/rel-kereta/scene2.jpg", startSec: 7.9, endSec: 16.9, panDirection: "right", callouts: [{ label: "Celah Kecil Itu Disengaja", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/rel-kereta/scene3.jpg", startSec: 16.9, endSec: 25.3, panDirection: "in", callouts: [{ label: "Satu Batang Memanjang Satu Sentimeter", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/rel-kereta/scene4.jpg", videoPath: "videos/rel-kereta/scene4.mp4", startSec: 25.3, endSec: 33.2, panDirection: "left", callouts: [{ label: "Gaya Tekan Setara Seratus Ton Lebih", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/rel-kereta/scene5.jpg", startSec: 33.2, endSec: 41.7, panDirection: "in", callouts: [{ label: "Celah Maksimal Enam Belas Milimeter", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/rel-kereta/scene6.jpg", startSec: 41.7, endSec: 49.1, panDirection: "right", callouts: [{ label: "Rel Las Menerus Ratusan Meter", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#70FF00" }] },
+    { imagePath: "images/rel-kereta/scene7.jpg", startSec: 49.1, endSec: 58.3, panDirection: "in", callouts: [{ label: "Dijepit Kuat ke Bantalan Beton", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/rel-kereta/scene8.jpg", startSec: 58.3, endSec: 68, panDirection: "left", callouts: [{ label: "Senyap Bukan Berarti Tanpa Hitungan", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 2.3, text: "Naik kereta kok bunyi jedag-jedug?", highlightWord: "jedag-jedug" },
+    { startSec: 2.3, endSec: 4.8, text: "Kedengarannya kayak relnya nggak rapat.", highlightWord: "nggak rapat" },
+    { startSec: 4.8, endSec: 6.6, text: "Kayak masangnya asal-asalan.", highlightWord: "asal-asalan" },
+    { startSec: 6.6, endSec: 8.9, text: "Padahal celah itu disengaja.", highlightWord: "disengaja" },
+    { startSec: 8.9, endSec: 11.2, text: "Celah itu yang jagain relnya.", highlightWord: "jagain relnya" },
+    { startSec: 11.2, endSec: 13.7, text: "Baja memuai kalau kena panas.", highlightWord: "memuai" },
+    { startSec: 13.7, endSec: 16.9, text: "Tiap meter, per derajat, dua belas mikrometer.", highlightWord: "dua belas mikrometer" },
+    { startSec: 16.9, endSec: 19.7, text: "Rel standar panjangnya dua puluh lima meter.", highlightWord: "dua puluh lima meter" },
+    { startSec: 19.7, endSec: 22.5, text: "Dari pagi ke siang naik tiga puluh derajat.", highlightWord: "tiga puluh derajat" },
+    { startSec: 22.5, endSec: 25.3, text: "Satu batang memanjang sekitar satu sentimeter.", highlightWord: "satu sentimeter" },
+    { startSec: 25.3, endSec: 28.4, text: "Tanpa celah, panjang itu nggak punya jalan keluar.", highlightWord: "jalan keluar" },
+    { startSec: 28.4, endSec: 30.8, text: "Gaya tekannya setara seratus ton lebih.", highlightWord: "seratus ton" },
+    { startSec: 30.8, endSec: 33.3, text: "Rel bisa terdorong menyamping keluar jalur.", highlightWord: "menyamping" },
+    { startSec: 33.3, endSec: 36.1, text: "Makanya celah dihitung pakai rumus suhu pasang.", highlightWord: "rumus suhu pasang" },
+    { startSec: 36.1, endSec: 38.9, text: "Umumnya beberapa milimeter, maksimal enam belas.", highlightWord: "enam belas" },
+    { startSec: 38.9, endSec: 41.7, text: "Bunyi jedag-jedug itu roda ngelewatin celahnya.", highlightWord: "celahnya" },
+    { startSec: 41.7, endSec: 44.5, text: "Jalur modern dilas menerus ratusan meter.", highlightWord: "dilas menerus" },
+    { startSec: 44.5, endSec: 46.8, text: "Relnya ditegangkan di suhu netral.", highlightWord: "suhu netral" },
+    { startSec: 46.8, endSec: 49.1, text: "Dijepit kuat ke bantalan beton.", highlightWord: "bantalan beton" },
+    { startSec: 49.1, endSec: 51.9, text: "Gaya muainya ditahan di dalam baja.", highlightWord: "di dalam baja" },
+    { startSec: 51.9, endSec: 54.7, text: "Makanya rel las senyap, tanpa jedag-jedug.", highlightWord: "senyap" },
+    { startSec: 54.7, endSec: 58.3, text: "Kirim video ini ke temen lo yang sering naik kereta.", highlightWord: "sering naik kereta" },
+    { startSec: 58.3, endSec: 62.5, text: "Lo tim jedag-jedug klasik atau rel senyap? Ceritain di komentar.", highlightWord: "Ceritain" },
+    { startSec: 62.5, endSec: 66.52, text: "Jangan lupa Like, Komen, dan Follow.", highlightWord: "Like, Komen" },
+  ],
+};
+
+export const RelKeretaExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: RELKERETA_CONFIG });

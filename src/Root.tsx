@@ -155,6 +155,7 @@ import {
   BahanBakarExplainer,
   SuaraMesinExplainer,
   KapalBajaExplainer,
+  RelKeretaExplainer,
 } from "./projects/educational/explainer-reels/explainerData";
 import { CintaTanpaKataExplainer } from "./projects/educational/video-relate-5/CintaTanpaKataExplainer";
 import { GajianCepatHabisExplainer } from "./projects/educational/video-relate-5/GajianCepatHabisExplainer";
@@ -1210,6 +1211,14 @@ export const RemotionRoot: React.FC = () => {
           id="KapalBajaExplainer"
           component={KapalBajaExplainer}
           durationInFrames={1932}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="RelKeretaExplainer"
+          component={RelKeretaExplainer}
+          durationInFrames={2040}
           fps={30}
           width={1080}
           height={1920}
