@@ -957,9 +957,9 @@ const WatermarkText: React.FC = () => (
 );
 
 // ================= Scene / kamera =================
-export const TOTAL_FRAMES = 1260; // ESTIMASI awal 42 detik @ 30fps — DIKUNCI ke durasi VO asli via ffprobe setelah VO selesai
+export const TOTAL_FRAMES = 1346; // VO asli 44.856s @ 30fps (ffprobe) — retime dari estimasi 1260f
 
-const SCENE_BOUNDS = [0, 185, 346, 432, 556, 680, 841, 1002, 1175, 1260]; // proporsional kata per scene (total 102 kata)
+const SCENE_BOUNDS = [0, 182, 281, 461, 583, 741, 898, 1070, 1264, 1346]; // retime 2026-11-23: skala proporsional + jangkar jeda VO asli (silencedetect -40dB): S1->S2 182f (akhir "Itu sengaja." ~6.06 dtk), S2->S3 281f (jeda 9.37 dtk), S4->S5 583f (jeda 19.44 dtk), S5->S6 741f (jeda 24.71 dtk), S8->S9 1264f (jeda 42.12 dtk)
 const S_RANGES: [number, number][] = [
   [0, 1], // S1 hook (studio — s tidak dipakai)
   [0, 1], // S2 saklar (studio)
@@ -1206,7 +1206,7 @@ export const StandarSampingExplainer: React.FC = () => {
       {/* BGM chill 230.56s > durasi video — diputar dari frame 0, tanpa loop */}
       <Audio src={staticFile("audio/sudut-ganjil/bgm_chill.mp3")} volume={0.15} />
       {/* Whoosh 0.5s (15 frame) di tiap hard cut: awal tiap scene */}
-      {[0, 185, 346, 432, 556, 680, 841, 1002, 1175].map((f) => (
+      {[0, 182, 281, 461, 583, 741, 898, 1070, 1264].map((f) => (
         <Sequence key={`whoosh-${f}`} from={f} durationInFrames={15}>
           <Audio src={staticFile("audio/sfx_whoosh.mp3")} volume={0.5} />
         </Sequence>

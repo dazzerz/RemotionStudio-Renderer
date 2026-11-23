@@ -1244,9 +1244,9 @@ const WatermarkText: React.FC = () => (
 );
 
 // ================= Scene / kamera =================
-export const TOTAL_FRAMES = 1260; // ESTIMASI awal 42 detik @ 30fps — DIKUNCI ke durasi VO asli via ffprobe setelah VO selesai
+export const TOTAL_FRAMES = 1272; // VO asli 42.384s @ 30fps (ffprobe) — retime dari estimasi 1260f
 
-const SCENE_BOUNDS = [0, 64, 180, 399, 553, 720, 797, 990, 1170, 1260]; // proporsional kata per scene (total 98 kata)
+const SCENE_BOUNDS = [0, 65, 182, 434, 619, 798, 886, 1031, 1210, 1272]; // retime 2026-11-23: skala proporsional + jangkar jeda VO asli (silencedetect -40dB): S3->S4 434f (jeda 14.45 dtk), S4->S5 619f + S5->S6 798f (laju ukur 0.455 dtk/kata antar jangkar 14.66-29.35 dtk), S6->S7 886f (jeda 29.52 dtk), S7->S8 1031f (jeda 34.38 dtk), S8->S9 1210f (jeda 40.33 dtk)
 const S_RANGES: [number, number][] = [
   [0, 2], // S1 hook (studio — s tidak dipakai)
   [2, 4], // S2 slick close-up (studio)
@@ -1477,19 +1477,19 @@ export const BanSlickExplainer: React.FC = () => {
       {/* BGM chill 230.56s > durasi video — diputar dari frame 0, tanpa loop */}
       <Audio src={staticFile("audio/sudut-ganjil/bgm_chill.mp3")} volume={0.15} />
       {/* Whoosh 0.5s (15 frame) di tiap hard cut: awal tiap scene */}
-      {[0, 64, 180, 399, 553, 720, 797, 990, 1170].map((f) => (
+      {[0, 65, 182, 434, 619, 798, 886, 1031, 1210].map((f) => (
         <Sequence key={`whoosh-${f}`} from={f} durationInFrames={15}>
           <Audio src={staticFile("audio/sfx_whoosh.mp3")} volume={0.5} />
         </Sequence>
       ))}
-      {/* Chirp 0.15s (5 frame) saat BigNumber muncul — S4 (399), S5 (553), S8 (990) */}
-      <Sequence from={399} durationInFrames={5}>
+      {/* Chirp 0.15s (5 frame) saat BigNumber muncul — S4 (434), S5 (619), S8 (1031) */}
+      <Sequence from={434} durationInFrames={5}>
         <Audio src={staticFile("audio/jarvis-sage/sfx_digital_chirp.wav")} volume={0.6} />
       </Sequence>
-      <Sequence from={553} durationInFrames={5}>
+      <Sequence from={619} durationInFrames={5}>
         <Audio src={staticFile("audio/jarvis-sage/sfx_digital_chirp.wav")} volume={0.6} />
       </Sequence>
-      <Sequence from={990} durationInFrames={5}>
+      <Sequence from={1031} durationInFrames={5}>
         <Audio src={staticFile("audio/jarvis-sage/sfx_digital_chirp.wav")} volume={0.6} />
       </Sequence>
     </AbsoluteFill>

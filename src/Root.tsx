@@ -1340,7 +1340,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="BanSlickExplainer"
           component={BanSlickExplainer}
-          durationInFrames={1260}
+          durationInFrames={1272}
           fps={30}
           width={1080}
           height={1920}
@@ -1348,7 +1348,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="StandarSampingExplainer"
           component={StandarSampingExplainer}
-          durationInFrames={1260}
+          durationInFrames={1346}
           fps={30}
           width={1080}
           height={1920}
