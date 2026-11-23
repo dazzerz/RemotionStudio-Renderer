@@ -1358,3 +1358,57 @@ export const SUARAMESIN_CONFIG: ExplainerConfig = {
 export const SuaraMesinExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: SUARAMESIN_CONFIG });
 
+export const KAPALBAJA_CONFIG: ExplainerConfig = {
+  id: "KapalBajaExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/kapal-baja/vo_riko.mp3",
+  durationSec: 64.4,
+  hookLine1: "KAPAL BAJA KOK NGAMBANG?",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "PADAHAL BAJA TENGGELAM",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "FAKTANYA: HUKUM ARCHIMEDES!",
+  sourceText: "Archimedes principle / Encyclopaedia Britannica: massa jenis baja / Guinness World Records: Ever Given",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo pernah naik kapal gede? Ceritain!",
+    startSec: 57.5,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/kapal-baja/scene1.jpg", videoPath: "videos/kapal-baja/scene1.mp4", startSec: 0, endSec: 6, panDirection: "in", callouts: [{ label: "Ratusan Ribu Ton Baja", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/kapal-baja/scene2.jpg", videoPath: "videos/kapal-baja/scene2.mp4", startSec: 6, endSec: 13, panDirection: "right", callouts: [{ label: "Baja Delapan Kali Lebih Berat dari Air", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/kapal-baja/scene3.jpg", videoPath: "videos/kapal-baja/scene3.mp4", startSec: 13, endSec: 17.5, panDirection: "in", callouts: [{ label: "Bukan Balok Padat, Lambungnya Berongga", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/kapal-baja/scene4.jpg", videoPath: "videos/kapal-baja/scene4.mp4", startSec: 17.5, endSec: 22.5, panDirection: "left", callouts: [{ label: "Rata-Rata Lebih Ringan dari Air", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/kapal-baja/scene5.jpg", videoPath: "videos/kapal-baja/scene5.mp4", startSec: 22.5, endSec: 28.5, panDirection: "in", callouts: [{ label: "Berat Kalah dari Air yang Dipindahkan", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/kapal-baja/scene6.jpg", videoPath: "videos/kapal-baja/scene6.mp4", startSec: 28.5, endSec: 34.5, panDirection: "right", callouts: [{ label: "Air Masuk Lambung, Kapal Makin Berat", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#70FF00" }] },
+    { imagePath: "images/kapal-baja/scene7.jpg", videoPath: "videos/kapal-baja/scene7.mp4", startSec: 34.5, endSec: 40.5, panDirection: "in", callouts: [{ label: "Pintu Kedap Air, Kompartemen Terpisah", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/kapal-baja/scene8.jpg", videoPath: "videos/kapal-baja/scene8.mp4", startSec: 40.5, endSec: 64.4, panDirection: "left", callouts: [{ label: "Bentuknya yang Bikin Dia Ngambang", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 2.5, text: "Kapal baja raksasa kok ngambang?", highlightWord: "ngambang" },
+    { startSec: 2.5, endSec: 6, text: "Baja tenggelam di air. Itu pelajaran SD.", highlightWord: "tenggelam" },
+    { startSec: 6, endSec: 9.5, text: "Satu kubus baja satu meter beratnya delapan ton.", highlightWord: "delapan ton" },
+    { startSec: 9.5, endSec: 13, text: "Air yang dipindahkannya cuma satu ton.", highlightWord: "satu ton" },
+    { startSec: 13, endSec: 15.5, text: "Kapal bukan balok baja padat.", highlightWord: "bukan balok baja padat" },
+    { startSec: 15.5, endSec: 17.5, text: "Lambungnya berongga, isinya udara.", highlightWord: "berongga" },
+    { startSec: 17.5, endSec: 20, text: "Berat totalnya dibagi volume lambungnya.", highlightWord: "volume lambungnya" },
+    { startSec: 20, endSec: 22.5, text: "Hasilnya lebih ringan dari air.", highlightWord: "lebih ringan dari air" },
+    { startSec: 22.5, endSec: 24.2, text: "Itulah hukum Archimedes.", highlightWord: "Archimedes" },
+    { startSec: 24.2, endSec: 28.5, text: "Benda mengapung saat beratnya kalah dari air yang dipindahkan.", highlightWord: "air yang dipindahkan" },
+    { startSec: 28.5, endSec: 31.5, text: "Bahaya cuma kalau air masuk lambung.", highlightWord: "air masuk lambung" },
+    { startSec: 31.5, endSec: 34.5, text: "Ruang kosongnya terisi, kapal makin berat.", highlightWord: "makin berat" },
+    { startSec: 34.5, endSec: 37.5, text: "Pintu kedap air ditutup rapat.", highlightWord: "kedap air" },
+    { startSec: 37.5, endSec: 40.5, text: "Satu ruang bocor, ruang lain tetap kering.", highlightWord: "tetap kering" },
+    { startSec: 40.5, endSec: 43.5, text: "Ever Given panjangnya empat ratus meter.", highlightWord: "empat ratus meter" },
+    { startSec: 43.5, endSec: 48, text: "Beratnya dua ratus enam puluh lima ribu ton, tetap mengapung.", highlightWord: "tetap mengapung" },
+    { startSec: 48, endSec: 50.5, text: "Bentuknya yang bikin dia ngambang.", highlightWord: "Bentuknya" },
+    { startSec: 50.5, endSec: 55, text: "Kirim video ini ke temen lo yang takut naik kapal.", highlightWord: "takut naik kapal" },
+    { startSec: 55, endSec: 59, text: "Lo pernah naik kapal gede? Ceritain di komentar.", highlightWord: "Ceritain" },
+    { startSec: 59, endSec: 62.92, text: "Jangan lupa Like, Komen, dan Follow.", highlightWord: "Like, Komen" },
+  ],
+};
+
+export const KapalBajaExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: KAPALBAJA_CONFIG });

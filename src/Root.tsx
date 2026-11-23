@@ -154,6 +154,7 @@ import {
   KetinggianExplainer,
   BahanBakarExplainer,
   SuaraMesinExplainer,
+  KapalBajaExplainer,
 } from "./projects/educational/explainer-reels/explainerData";
 import { CintaTanpaKataExplainer } from "./projects/educational/video-relate-5/CintaTanpaKataExplainer";
 import { GajianCepatHabisExplainer } from "./projects/educational/video-relate-5/GajianCepatHabisExplainer";
