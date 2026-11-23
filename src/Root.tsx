@@ -14,6 +14,11 @@ import {
   SAYAP_3D_PRO_FPS,
   SAYAP_3D_PRO_FRAMES,
 } from "./projects/educational/sayap-3d-pro/SayapMelentur3DPro";
+import {
+  StasiunSummarecon3D,
+  STASIUN_SUMMARECON_FPS,
+  STASIUN_SUMMARECON_FRAMES,
+} from "./projects/educational/stasiun-summarecon-3d/StasiunSummarecon3D";
 import { HelloWorld } from "./HelloWorld";
 import { Logo } from "./HelloWorld/Logo";
 import { Title } from "./HelloWorld/Title";
@@ -1333,6 +1338,14 @@ export const RemotionRoot: React.FC = () => {
           component={SayapMelentur3DPro}
           durationInFrames={SAYAP_3D_PRO_FRAMES}
           fps={SAYAP_3D_PRO_FPS}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="StasiunSummarecon3D"
+          component={StasiunSummarecon3D}
+          durationInFrames={STASIUN_SUMMARECON_FRAMES}
+          fps={STASIUN_SUMMARECON_FPS}
           width={1080}
           height={1920}
         />
