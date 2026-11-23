@@ -1304,3 +1304,57 @@ export const BAHANBAKAR_CONFIG: ExplainerConfig = {
 
 export const BahanBakarExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: BAHANBAKAR_CONFIG });
+
+export const SUARAMESIN_CONFIG: ExplainerConfig = {
+  id: "SuaraMesinExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/suara-mesin/vo_riko.mp3",
+  durationSec: 57,
+  hookLine1: "MESIN PELAN, JATUH?",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "BUKAN MATI — SENGAJA",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "FAKTANYA: PROSEDUR HEMAT MESIN!",
+  sourceText: "Boeing 737 NG FCTM / FAA AC 91-53A / ICAO PANS-OPS Doc 8168",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo pernah ngerasa jatuh setelah takeoff? Ceritain!",
+    startSec: 50.5,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/suara-mesin/scene1.jpg", videoPath: "videos/suara-mesin/scene1.mp4", startSec: 0, endSec: 4.93, panDirection: "in", callouts: [{ label: "Mesin Pelan Bukan Berarti Mati", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/suara-mesin/scene2.jpg", startSec: 4.93, endSec: 11.09, panDirection: "right", callouts: [{ label: "Sembilan Puluh Detik Setelah Lepas Landas", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/suara-mesin/scene3.jpg", startSec: 11.09, endSec: 17.66, panDirection: "in", callouts: [{ label: "Tenaga Penuh: Maksimal Lima Menit", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/suara-mesin/scene4.jpg", startSec: 17.66, endSec: 24.23, panDirection: "left", callouts: [{ label: "Tenaga Turun: 92 ke 84 Persen", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/suara-mesin/scene5.jpg", videoPath: "videos/suara-mesin/scene5.mp4", startSec: 24.23, endSec: 31.62, panDirection: "in", callouts: [{ label: "Tetap Naik, Cuma Lebih Pelan", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/suara-mesin/scene6.jpg", startSec: 31.62, endSec: 40.65, panDirection: "right", callouts: [{ label: "Satu Mesin Mati Pun Tetap Naik", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#70FF00" }] },
+    { imagePath: "images/suara-mesin/scene7.jpg", startSec: 40.65, endSec: 45.58, panDirection: "in", callouts: [{ label: "Rumah di Bawah Tidak Kena Bising", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/suara-mesin/scene8.jpg", startSec: 45.58, endSec: 57, panDirection: "left", callouts: [{ label: "Rasa Jatuh Itu Cuma Ilusi", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 2.46, text: "Mesin mendadak pelan. Perut serasa jatuh.", highlightWord: "Perut serasa jatuh" },
+    { startSec: 2.46, endSec: 4.93, text: "Bukan mesin mati. Itu memang disengaja.", highlightWord: "disengaja" },
+    { startSec: 4.93, endSec: 9.03, text: "Sembilan puluh detik setelah lepas landas, pilot menurunkan tenaga mesin.", highlightWord: "menurunkan tenaga" },
+    { startSec: 9.03, endSec: 11.09, text: "Sesuai rencana sebelum pesawat berangkat.", highlightWord: "rencana" },
+    { startSec: 11.09, endSec: 15.19, text: "Tenaga penuh cuma dipakai sebentar. Batas sertifikasinya sekitar lima menit.", highlightWord: "lima menit" },
+    { startSec: 15.19, endSec: 17.66, text: "Fase itu paling panas buat mesin.", highlightWord: "paling panas" },
+    { startSec: 17.66, endSec: 20.12, text: "Di sekitar seribu kaki, tenaga turun.", highlightWord: "seribu kaki" },
+    { startSec: 20.12, endSec: 24.23, text: "Dari sembilan puluh dua persen ke delapan puluh empat persen.", highlightWord: "delapan puluh empat persen" },
+    { startSec: 24.23, endSec: 26.69, text: "Pesawat tetap naik, cuma lebih pelan.", highlightWord: "tetap naik" },
+    { startSec: 26.69, endSec: 31.62, text: "Alasannya dua: mesin lebih awet, dan rumah di bawah tidak kena bising.", highlightWord: "lebih awet" },
+    { startSec: 31.62, endSec: 33.67, text: "Tenaga sisanya masih sangat cukup.", highlightWord: "sangat cukup" },
+    { startSec: 33.67, endSec: 36.55, text: "Satu mesin mati pun pesawat tetap naik.", highlightWord: "tetap naik" },
+    { startSec: 36.55, endSec: 40.65, text: "Lalu flap masuk bertahap, dengung pelan terdengar di bawah lantai.", highlightWord: "flap masuk" },
+    { startSec: 40.65, endSec: 43.52, text: "Rasa jatuh itu cuma ilusi telinga dalam.", highlightWord: "ilusi" },
+    { startSec: 43.52, endSec: 45.58, text: "Otak lo ketipu perubahan kecepatan.", highlightWord: "ketipu" },
+    { startSec: 45.58, endSec: 49.68, text: "Kirim video ini ke temen lo yang takut pas takeoff.", highlightWord: "takut pas takeoff" },
+    { startSec: 49.68, endSec: 53.38, text: "Lo pernah ngerasa jatuh setelah takeoff? Ceritain di komentar.", highlightWord: "Ceritain" },
+    { startSec: 53.38, endSec: 55.84, text: "Jangan lupa Like, Komen, dan Follow.", highlightWord: "Like, Komen" },
+  ],
+};
+
+export const SuaraMesinExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: SUARAMESIN_CONFIG });
+
