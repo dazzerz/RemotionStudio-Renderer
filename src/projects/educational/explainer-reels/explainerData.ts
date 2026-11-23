@@ -1471,3 +1471,60 @@ export const RELKERETA_CONFIG: ExplainerConfig = {
 
 export const RelKeretaExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: RELKERETA_CONFIG });
+
+export const GEDUNG_CONFIG: ExplainerConfig = {
+  id: "GedungExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/gedung/vo_riko.mp3",
+  durationSec: 61.5,
+  hookLine1: "GEDUNG TINGGI KOK GOYANG?",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "SENGAJA DIBIKIN LENTUR",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "FAKTANYA: LENTUR ITU AMAN!",
+  sourceText: "Taipei 101 Observatory: bola peredam 660 ton / Access Engineering: periode 6,8 detik, reduksi akselerasi sekitar 40%",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo pernah ngerasain gedung goyang pas gempa? Di lantai berapa?",
+    startSec: 54,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/gedung/scene1.jpg", videoPath: "videos/gedung/scene1.mp4", startSec: 0, endSec: 7.5, panDirection: "in", callouts: [{ label: "Gedung Tinggi Sengaja Dibikin Goyang", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/gedung/scene2.jpg", videoPath: "videos/gedung/scene2.mp4", startSec: 7.5, endSec: 15, panDirection: "right", callouts: [{ label: "Gedung Kaku Justru yang Kalah", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/gedung/scene3.jpg", videoPath: "videos/gedung/scene3.mp4", startSec: 15, endSec: 23.8, panDirection: "in", callouts: [{ label: "Satu Goyangan Hampir Tujuh Detik", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/gedung/scene4.jpg", videoPath: "videos/gedung/scene4.mp4", startSec: 23.8, endSec: 31.6, panDirection: "left", callouts: [{ label: "Bola Baja Enam Ratus Enam Puluh Ton", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/gedung/scene5.jpg", videoPath: "videos/gedung/scene5.mp4", startSec: 31.6, endSec: 39.5, panDirection: "in", callouts: [{ label: "Goyangan Kepotong Empat Puluh Persen", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/gedung/scene6.jpg", videoPath: "videos/gedung/scene6.mp4", startSec: 39.5, endSec: 47, panDirection: "right", callouts: [{ label: "Berdiri di Atas Bantalan Karet", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#70FF00" }] },
+    { imagePath: "images/gedung/scene7.jpg", videoPath: "videos/gedung/scene7.mp4", startSec: 47, endSec: 54.5, panDirection: "in", callouts: [{ label: "Goyang Itu Tandanya Lagi Kerja", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/gedung/scene8.jpg", videoPath: "videos/gedung/scene8.mp4", startSec: 54.5, endSec: 61.5, panDirection: "left", callouts: [{ label: "Lentur Itu Hasil Hitungan", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 2.5, text: "Pas gempa, gedung tinggi kok goyang?", highlightWord: "goyang" },
+    { startSec: 2.5, endSec: 4.8, text: "Kelihatannya kayak mau ambruk.", highlightWord: "ambruk" },
+    { startSec: 4.8, endSec: 7.5, text: "Padahal memang sengaja dibikin lentur.", highlightWord: "lentur" },
+    { startSec: 7.5, endSec: 9.8, text: "Gedung kaku justru yang kalah.", highlightWord: "kaku" },
+    { startSec: 9.8, endSec: 12.8, text: "Energi guncangannya nggak punya jalan keluar.", highlightWord: "jalan keluar" },
+    { startSec: 12.8, endSec: 15, text: "Yang kalah strukturnya sendiri.", highlightWord: "strukturnya" },
+    { startSec: 15, endSec: 18.3, text: "Makanya insinyur nggak bikin gedung sekeras mungkin.", highlightWord: "sekeras mungkin" },
+    { startSec: 18.3, endSec: 21.3, text: "Satu goyangan penuh butuh hampir tujuh detik.", highlightWord: "tujuh detik" },
+    { startSec: 21.3, endSec: 23.8, text: "Jauh lebih lambat dari ritme gempa.", highlightWord: "ritme gempa" },
+    { startSec: 23.8, endSec: 26.8, text: "Makin lentur, makin kecil gaya yang narik gedungnya.", highlightWord: "makin kecil" },
+    { startSec: 26.8, endSec: 29.3, text: "Di Taipei 101, ada bola baja raksasa.", highlightWord: "bola baja raksasa" },
+    { startSec: 29.3, endSec: 31.8, text: "Beratnya enam ratus enam puluh ton.", highlightWord: "enam puluh ton" },
+    { startSec: 31.8, endSec: 34, text: "Digantung di lantai paling atas.", highlightWord: "paling atas" },
+    { startSec: 34, endSec: 37, text: "Gedung goyang ke kiri, bola ngelawan ke kanan.", highlightWord: "ngelawan" },
+    { startSec: 37, endSec: 39.8, text: "Goyangannya kepotong sampai empat puluh persen.", highlightWord: "empat puluh persen" },
+    { startSec: 39.8, endSec: 42.3, text: "Ada juga gedung berkaki bantalan karet.", highlightWord: "bantalan karet" },
+    { startSec: 42.3, endSec: 45.5, text: "Tanahnya bergerak, gedungnya melayang pelan di atasnya.", highlightWord: "melayang pelan" },
+    { startSec: 45.5, endSec: 48.3, text: "Goyang itu tandanya gedung lagi kerja.", highlightWord: "lagi kerja" },
+    { startSec: 48.3, endSec: 51.8, text: "Kirim video ini ke temen lo yang takut pas gempa.", highlightWord: "takut pas gempa" },
+    { startSec: 51.8, endSec: 54.5, text: "Simpan dulu, angka bolanya di tengah video.", highlightWord: "angka bolanya" },
+    { startSec: 54.5, endSec: 58.5, text: "Lo pernah ngerasain gedung goyang pas gempa? Di lantai berapa? Ceritain di komentar.", highlightWord: "Ceritain" },
+    { startSec: 58.5, endSec: 59.88, text: "Jangan lupa Like, Komen, dan Follow.", highlightWord: "Like, Komen" },
+  ],
+};
+
+export const GedungExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: GEDUNG_CONFIG });
