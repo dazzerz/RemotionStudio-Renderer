@@ -4,6 +4,7 @@ import {
   Audio,
   Easing,
   Img,
+  Loop,
   OffthreadVideo,
   Sequence,
   interpolate,
@@ -284,18 +285,19 @@ const ScenePlate: React.FC<{ scene: ExplainerScene; durationFrames: number }> = 
       {scene.diagramVariant ? (
         <AnimatedDiagramLayer variant={scene.diagramVariant} durationFrames={durationFrames} />
       ) : scene.videoPath ? (
-        <OffthreadVideo
-          src={staticFile(scene.videoPath)}
-          muted
-          loop
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            scale: String(scale),
-            translate: `${tx}px ${ty}px`,
-          }}
-        />
+        <Loop durationInFrames={240} times={Infinity}>
+          <OffthreadVideo
+            src={staticFile(scene.videoPath)}
+            muted
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              scale: String(scale),
+              translate: `${tx}px ${ty}px`,
+            }}
+          />
+        </Loop>
       ) : (
         <Img
           src={staticFile(scene.imagePath)}
