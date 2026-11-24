@@ -1637,3 +1637,62 @@ export const PETIR_CONFIG: ExplainerConfig = {
 
 export const PetirExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: PETIR_CONFIG });
+export const MESINMATI_CONFIG: ExplainerConfig = {
+  id: "MesinMatiExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/mesin-mati/vo_riko.mp3",
+  durationSec: 72.9,
+  hookLine1: "SATU MESIN MATI",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "PESAWATNYA NGGAK JATUH",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "FAKTANYA: MEMANG DIRANCANG AMAN!",
+  sourceText: "FAA Part 25: sertifikasi terbang satu mesin / FAA ETOPS: 180 menit umum, Boeing 787 sampai 330 menit",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo pernah ngerasa pesawat miring pas takeoff?",
+    startSec: 65,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/mesin-mati/scene1.jpg", videoPath: "videos/mesin-mati/scene1.mp4", startSec: 0, endSec: 7.9, panDirection: "in", callouts: [{ label: "Satu Mesin Mati di Tengah Laut", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/mesin-mati/scene2.jpg", startSec: 7.9, endSec: 16, panDirection: "right", callouts: [{ label: "Aturannya Tertulis: FAA Part 25", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/mesin-mati/scene4.jpg", startSec: 16, endSec: 25, panDirection: "in", callouts: [{ label: "Lewat V1, Nggak Ada Kata Batal", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/mesin-mati/scene3.jpg", startSec: 25, endSec: 29, panDirection: "left", callouts: [{ label: "Naik Pakai Satu Mesin", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/mesin-mati/scene5.jpg", videoPath: "videos/mesin-mati/scene5.mp4", startSec: 29, endSec: 36.9, panDirection: "in", callouts: [{ label: "Drift Down ke 20.000 Kaki", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/mesin-mati/scene6.jpg", startSec: 36.9, endSec: 53, panDirection: "right", callouts: [{ label: "ETOPS: 3 Jam dari Bandara Terdekat", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#70FF00" }] },
+    { imagePath: "images/mesin-mati/scene7.jpg", startSec: 53, endSec: 60, panDirection: "in", callouts: [{ label: "Dilatih di Simulator Tiap 6 Bulan", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/mesin-mati/scene8.jpg", startSec: 60, endSec: 72.9, panDirection: "left", callouts: [{ label: "Satu Mesin Mati Bukan Darurat", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 3, text: "Satu mesin mati di tengah laut.", highlightWord: "mesin mati" },
+    { startSec: 3, endSec: 4, text: "Pesawatnya jatuh? Nggak.", highlightWord: "jatuh" },
+    { startSec: 4, endSec: 7, text: "Pesawat dua mesin memang dirancang terbang pakai satu mesin.", highlightWord: "satu mesin" },
+    { startSec: 7, endSec: 11, text: "Aturannya tertulis di sertifikasi FAA Part 25.", highlightWord: "FAA Part 25" },
+    { startSec: 11, endSec: 16, text: "Lepas landas, naik, jelajah, sampai mendarat, semua harus bisa dengan satu mesin.", highlightWord: "satu mesin" },
+    { startSec: 16, endSec: 20, text: "Kalau mesin mati pas lepas landas, pilot tetap lanjut terbang.", highlightWord: "tetap lanjut terbang" },
+    { startSec: 20, endSec: 22, text: "Kecepatan keputusan itu namanya V satu.", highlightWord: "V satu" },
+    { startSec: 22, endSec: 25, text: "Lewat V satu, nggak ada kata batal.", highlightWord: "nggak ada kata batal" },
+    { startSec: 25, endSec: 27, text: "Pesawat naik pakai satu mesin.", highlightWord: "satu mesin" },
+    { startSec: 27, endSec: 29, text: "Lalu turun pelan ke ketinggian yang sanggup ditahan satu mesin.", highlightWord: "turun pelan" },
+    { startSec: 29, endSec: 31, text: "Turunnya bukan jatuh.", highlightWord: "bukan jatuh" },
+    { startSec: 31, endSec: 33, text: "Ini drift down yang sudah dihitung.", highlightWord: "drift down" },
+    { startSec: 33, endSec: 37, text: "Dari 37 ribu kaki, pesawat turun ke sekitar 20 ribu kaki.", highlightWord: "37 ribu kaki" },
+    { startSec: 37, endSec: 39, text: "Lalu terbang stabil berjam-jam.", highlightWord: "stabil berjam-jam" },
+    { startSec: 39, endSec: 43, text: "Aturan ETOPS ngizinin pesawat dua mesin terbang tiga jam dari bandara terdekat.", highlightWord: "ETOPS" },
+    { startSec: 43, endSec: 45, text: "Cuma pakai satu mesin.", highlightWord: "satu mesin" },
+    { startSec: 45, endSec: 48, text: "Boeing 787 malah sampai lima setengah jam.", highlightWord: "lima setengah jam" },
+    { startSec: 48, endSec: 51, text: "Tiap tahun, puluhan pesawat dialihkan gara-gara mesin.", highlightWord: "dialihkan" },
+    { startSec: 51, endSec: 53, text: "Dan semuanya mendarat aman.", highlightWord: "mendarat aman" },
+    { startSec: 53, endSec: 56, text: "Jadi satu mesin mati itu bukan darurat yang bikin jatuh.", highlightWord: "bukan darurat" },
+    { startSec: 56, endSec: 60, text: "Itu skenario yang sudah dilatih tiap enam bulan di simulator.", highlightWord: "simulator" },
+    { startSec: 60, endSec: 62, text: "Kirim video ini ke temen lo yang takut naik pesawat.", highlightWord: "takut naik pesawat" },
+    { startSec: 62, endSec: 65, text: "Simpan dulu, angka ETOPS-nya ada di tengah video.", highlightWord: "angka ETOPS-nya" },
+    { startSec: 65, endSec: 69, text: "Lo pernah ngerasa pesawat miring pas takeoff? Ceritain di komentar.", highlightWord: "miring pas takeoff" },
+    { startSec: 69, endSec: 71, text: "Jangan lupa Like, Komen, dan Follow.", highlightWord: "Like, Komen" },
+  ],
+};
+
+export const MesinMatiExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: MESINMATI_CONFIG });
