@@ -188,6 +188,7 @@ import { StandarSampingExplainer } from "./projects/educational/video-standar-sa
 import { BanBotakExplainer } from "./projects/educational/video-ban-botak/BanBotakExplainer";
 import { CvtMaticExplainer } from "./projects/educational/video-cvt-matic/CvtMaticExplainer";
 import { SoalSkdExplainer } from "./projects/educational/video-soal-skd/SoalSkdExplainer";
+import { JalanRusakExplainer } from "./projects/educational/video-jalan-rusak/JalanRusakExplainer";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -1408,6 +1409,14 @@ export const RemotionRoot: React.FC = () => {
           id="SoalSkdExplainer"
           component={SoalSkdExplainer}
           durationInFrames={1552}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="JalanRusakExplainer"
+          component={JalanRusakExplainer}
+          durationInFrames={1684}
           fps={30}
           width={1080}
           height={1920}
