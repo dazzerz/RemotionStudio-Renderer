@@ -1697,7 +1697,7 @@ export const MesinMatiExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: MESINMATI_CONFIG });
 
 export const MASKER_CONFIG: ExplainerConfig = {
-  id: "MaskerOksigenExplainer",
+  id: "MaskerOksigenRikoExplainer",
   theme: "editorial_toon",
   channelBadge: "Cerita Teknik",
   audioPath: "audio/masker-oksigen/vo_riko.mp3",
@@ -1751,5 +1751,5 @@ export const MASKER_CONFIG: ExplainerConfig = {
   ],
 };
 
-export const MaskerOksigenExplainer: React.FC = () =>
+export const MaskerOksigenRikoExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: MASKER_CONFIG });

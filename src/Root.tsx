@@ -170,7 +170,7 @@ import {
   JembatanExplainer,
   PetirExplainer,
   MesinMatiExplainer,
-  MaskerOksigenExplainer,
+  MaskerOksigenRikoExplainer,
 } from "./projects/educational/explainer-reels/explainerData";
 import { CintaTanpaKataExplainer } from "./projects/educational/video-relate-5/CintaTanpaKataExplainer";
 import { GajianCepatHabisExplainer } from "./projects/educational/video-relate-5/GajianCepatHabisExplainer";
@@ -1277,8 +1277,8 @@ export const RemotionRoot: React.FC = () => {
           height={1920}
         />
         <Composition
-          id="MaskerOksigenExplainer"
-          component={MaskerOksigenExplainer}
+          id="MaskerOksigenRikoExplainer"
+          component={MaskerOksigenRikoExplainer}
           durationInFrames={1980}
           fps={30}
           width={1080}
