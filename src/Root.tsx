@@ -184,6 +184,7 @@ import { LututMotogpExplainer } from "./projects/educational/video-motogp-lutut/
 import { Motogp360Explainer } from "./projects/educational/video-motogp-360/Motogp360Explainer";
 import { BanSlickExplainer } from "./projects/educational/video-ban-slick/BanSlickExplainer";
 import { StandarSampingExplainer } from "./projects/educational/video-standar-samping/StandarSampingExplainer";
+import { BanBotakExplainer } from "./projects/educational/video-ban-botak/BanBotakExplainer";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -1372,6 +1373,14 @@ export const RemotionRoot: React.FC = () => {
           id="StandarSampingExplainer"
           component={StandarSampingExplainer}
           durationInFrames={1346}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="BanBotakExplainer"
+          component={BanBotakExplainer}
+          durationInFrames={1544}
           fps={30}
           width={1080}
           height={1920}
