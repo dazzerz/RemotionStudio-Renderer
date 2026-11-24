@@ -1695,3 +1695,61 @@ export const MESINMATI_CONFIG: ExplainerConfig = {
 
 export const MesinMatiExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: MESINMATI_CONFIG });
+
+export const MASKER_CONFIG: ExplainerConfig = {
+  id: "MaskerOksigenExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/masker-oksigen/vo_riko.mp3",
+  durationSec: 66.0,
+  hookLine1: "MASKER CUMA 15 MENIT",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "KOK BISA CUKUP?",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "FAKTANYA: MEMANG DIHITUNG PAS!",
+  sourceText: "Sumber: FAA CAMI DOT/FAA/AM-21/11 (generator oksigen kimia 12-20 menit) & 14 CFR 121.333(b) (turun ke 10.000 kaki)",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo dulu pernah lihat masker jatuh pas demo keselamatan?",
+    startSec: 57.5,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/masker-oksigen/scene1.jpg", videoPath: "videos/masker-oksigen/scene1.mp4", startSec: 0, endSec: 7.9, panDirection: "in", callouts: [{ label: "Masker Cuma Bertahan 15 Menit", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/masker-oksigen/scene2.jpg", startSec: 7.9, endSec: 18.0, panDirection: "right", callouts: [{ label: "Generator Kimia, Bukan Tabung", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/masker-oksigen/scene3.jpg", startSec: 18.0, endSec: 26.0, panDirection: "in", callouts: [{ label: "15 Menit Itu Sengaja", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/masker-oksigen/scene4.jpg", startSec: 26.0, endSec: 36.8, panDirection: "left", callouts: [{ label: "Di 35.000 Kaki: Sadar 15-30 Detik", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/masker-oksigen/scene6.jpg", startSec: 36.8, endSec: 42.1, panDirection: "right", callouts: [{ label: "Pasang Masker Lo Dulu", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/masker-oksigen/scene5.jpg", videoPath: "videos/masker-oksigen/scene5.mp4", startSec: 42.1, endSec: 50.0, panDirection: "in", callouts: [{ label: "Pilot Turun ke 10.000 Kaki", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#70FF00" }] },
+    { imagePath: "images/masker-oksigen/scene7.jpg", startSec: 50.0, endSec: 57.5, panDirection: "in", callouts: [{ label: "15 Menit Itu Hitungan yang Pas", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/masker-oksigen/scene8.jpg", startSec: 57.5, endSec: 66.0, panDirection: "left", callouts: [{ label: "Bukan Kekurangan, Itu Presisi", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 2.96, text: "Masker oksigen cuma bertahan lima belas menit.", highlightWord: "lima belas menit" },
+    { startSec: 2.96, endSec: 5.20, text: "Pesawatnya kehabisan udara? Nggak.", highlightWord: "kehabisan udara" },
+    { startSec: 5.20, endSec: 6.28, text: "Masker itu bukan tabung oksigen.", highlightWord: "bukan tabung oksigen" },
+    { startSec: 6.28, endSec: 8.44, text: "Di dalamnya ada generator kimia kecil.", highlightWord: "generator kimia" },
+    { startSec: 8.44, endSec: 10.92, text: "Sekali ditarik, dia bikin oksigen sendiri.", highlightWord: "bikin oksigen sendiri" },
+    { startSec: 10.92, endSec: 13.52, text: "Waktunya dua belas sampai dua puluh menit.", highlightWord: "dua belas sampai dua puluh menit" },
+    { startSec: 13.52, endSec: 16.16, text: "Rata-rata lima belas menit.", highlightWord: "lima belas menit" },
+    { startSec: 16.16, endSec: 17.96, text: "Kok cuma segitu?", highlightWord: "cuma segitu" },
+    { startSec: 17.96, endSec: 19.40, text: "Karena masker itu bukan buat hidup di ketinggian.", highlightWord: "bukan buat hidup di ketinggian" },
+    { startSec: 19.40, endSec: 22.20, text: "Lima belas menit itu sengaja.", highlightWord: "sengaja" },
+    { startSec: 22.20, endSec: 24.16, text: "Cukup buat pilot turun.", highlightWord: "pilot turun" },
+    { startSec: 24.16, endSec: 26.00, text: "Di 35 ribu kaki,", highlightWord: "35 ribu kaki" },
+    { startSec: 26.28, endSec: 31.52, text: "Orang cuma sadar 15 sampai 30 detik tanpa oksigen.", highlightWord: "15 sampai 30 detik" },
+    { startSec: 31.52, endSec: 36.80, text: "Makanya masker jatuh duluan, otomatis, pas kabin di atas 14 ribu kaki.", highlightWord: "14 ribu kaki" },
+    { startSec: 36.80, endSec: 39.50, text: "Tugas lo cuma satu. Pasang masker lo sendiri dulu.", highlightWord: "masker lo sendiri dulu" },
+    { startSec: 39.50, endSec: 42.12, text: "Baru tolong orang di sebelah lo.", highlightWord: "orang di sebelah lo" },
+    { startSec: 42.12, endSec: 45.20, text: "Sementara itu pilot nurunin pesawat ke 10 ribu kaki.", highlightWord: "10 ribu kaki" },
+    { startSec: 45.20, endSec: 47.84, text: "Di sana udara udah bisa dihirup normal.", highlightWord: "dihirup normal" },
+    { startSec: 47.84, endSec: 50.16, text: "Turunnya cuma butuh sekitar sepuluh menit.", highlightWord: "sepuluh menit" },
+    { startSec: 50.16, endSec: 54.44, text: "Jadi 15 menit itu bukan kekurangan. Itu hitungan yang pas.", highlightWord: "hitungan yang pas" },
+    { startSec: 54.72, endSec: 57.52, text: "Masker oksigen cuma bertahan lima belas menit.", highlightWord: "lima belas menit" },
+    { startSec: 57.52, endSec: 61.96, text: "Lo dulu pernah lihat masker jatuh pas demo keselamatan? Ceritain di komentar.", highlightWord: "demo keselamatan" },
+    { startSec: 61.96, endSec: 64.60, text: "Jangan lupa Like, Komen, dan Follow.", highlightWord: "Like, Komen" },
+  ],
+};
+
+export const MaskerOksigenExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: MASKER_CONFIG });
