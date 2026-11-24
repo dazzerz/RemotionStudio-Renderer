@@ -814,17 +814,24 @@ const Scene: React.FC<{
   }, []);
   // Hujan S1 hook: 48 strip tipis putih UNLIT yang jatuh (bukan abu-abu
   // tebal statis — pelajaran ban-botak: strip statis terbaca tiang).
+  // BUG AUDIT RONDE 1: posisi strip di sekitar world origin (0,0) — jalan
+  // adalah busur R=20, motor di arcPos(s) ~20 unit dari origin, jadi hujan
+  // jatuh di luar frame. Volume hujan HARUS mengikuti motor (mx,mz).
+  // RONDE 2: strip 0,7 unit terbaca TIANG putih (terlalu panjang + tegak,
+  // apalagi yang dekat kamera). Pendekkan 0,45 + miring 0,28 rad (hujan
+  // miring = ada angin/kecepatan, saran Antigravity) + volume digeser
+  // ke depan motor supaya strip tidak mengintip tepat di depan lensa.
   const rain = useMemo(() => {
     if (scene !== 0) return [];
     const out: { pos: [number, number, number] }[] = [];
     for (let i = 0; i < 48; i++) {
-      const x = (pseudo(i) - 0.5) * 6;
-      const z = (pseudo(i + 100) - 0.5) * 5;
+      const x = mx + 1.5 + (pseudo(i) - 0.5) * 4;
+      const z = mz + (pseudo(i + 100) - 0.5) * 4;
       const y = 8 - ((frame * 0.35 + i * 0.53) % 8);
       out.push({ pos: [x, y, z] });
     }
     return out;
-  }, [scene, frame]);
+  }, [scene, frame, mx, mz]);
   // Retakan S3: segmen gelap bergerigi di aspal, muncul bertahap
   // mengikuti motor (terungkap 10–90 frame lokal).
   const crackSegs = useMemo(() => {
@@ -863,17 +870,24 @@ const Scene: React.FC<{
   });
   // Drainase + tambalan S7: grate di tepi jalan, strip tar hitam di atas
   // retakan, cone oranye.
+  // BUG AUDIT RONDE 1: posisi dulu relatif ke motor (s+3/s+1/s+4) — grate
+  // + cone selalu 3–4 unit di depan motor, di luar frame kamera (target
+  // cuma 1,5 unit di depan); strip tar menempel 1 unit di depan motor
+  // sepanjang scene sehingga terbaca alas hitam yang mengikuti motor,
+  // bukan tambalan di jalan. Posisi HARUS tetap di dunia (s tetap 12,0–
+  // 13,2): motor melewatinya selama scene, kamera menangkapnya di
+  // tengah scene.
   const drain = useMemo(() => {
     if (scene !== 6) return null;
-    const [gx, gz] = arcPos(s + 3, R + 4.4);
-    const [tx, tz] = arcPos(s + 1);
-    const [cx, cz] = arcPos(s + 4, R + 3.6);
+    const [gx, gz] = arcPos(12.6, R + 4.0);
+    const [tx, tz] = arcPos(12.0);
+    const [cx, cz] = arcPos(13.2, R + 3.3);
     return {
-      grate: { pos: [gx, 0.1, gz] as [number, number, number], yaw: arcYaw(s + 3) },
-      tar: { pos: [tx, 0.09, tz] as [number, number, number], yaw: arcYaw(s + 1) },
+      grate: { pos: [gx, 0.1, gz] as [number, number, number], yaw: arcYaw(12.6) },
+      tar: { pos: [tx, 0.09, tz] as [number, number, number], yaw: arcYaw(12.0) },
       cone: { pos: [cx, 0, cz] as [number, number, number] },
     };
-  }, [scene, s]);
+  }, [scene]);
   // GLB jalan: lampu di tepi jalan + rumah/mobil/orang (background).
   const lampClones = useMemo(() => {
     if (!models?.lamp) return [];
@@ -1017,9 +1031,9 @@ const Scene: React.FC<{
       {rain.map((r, i) => {
         const y = (((r.pos[1] - frame * 0.09) % 11) + 11) % 11 - 0.5;
         return (
-          <mesh key={`r-${i}`} position={[r.pos[0], y, r.pos[2]]} rotation={[0.12, 0, 0.12]}>
-            <boxGeometry args={[0.035, 0.7, 0.035]} />
-            <meshBasicMaterial color="#FFFFFF" transparent opacity={0.65} />
+          <mesh key={`r-${i}`} position={[r.pos[0], y, r.pos[2]]} rotation={[0.12, 0, 0.28]}>
+            <boxGeometry args={[0.04, 0.45, 0.04]} />
+            <meshBasicMaterial color="#FFFFFF" transparent opacity={0.7} />
           </mesh>
         );
       })}
@@ -1103,13 +1117,19 @@ const CutawayScene: React.FC<{
     extrapolateRight: "clamp",
   });
   // Tetes hujan di atas jalan (S4): jatuh berulang, deterministik.
+  // BUG AUDIT RONDE 1: y dulu 340–430 (di DALAM lapisan tanah, tertutup
+  // rect fondasi/subbase yang di-render sesudahnya) — tetes tak terlihat.
+  // Zona benar: langit SVG y 0–90, di atas aspal (y=100).
   const rainDrops = [0, 1, 2, 3, 4, 5, 6, 7].map((i) => ({
     x: 120 + i * 105 + pseudo(i + 7) * 40,
-    y: 340 + ((local * 4 + i * 53) % 90),
+    y: ((local * 4 + i * 53) % 90),
   }));
   // Tetes air merembes lewat retakan (S4): turun menyusuri celah x=480.
+  // BUG AUDIT RONDE 1: y dulu 470–770 (di DALAM tanah / luar viewport,
+  // tertutup rect tanah) — tetes tak terlihat. Zona benar: celah retakan
+  // SVG y 100–210 lalu fondasi y 210–340.
   const seepDrops = [0, 1, 2, 3].map((i) => ({
-    y: 470 + ((local * 2.2 + i * 90) % 300),
+    y: 100 + ((local * 2.2 + i * 90) % 240),
     x: 480 + Math.sin((local * 0.05 + i) * 1.7) * 6,
   }));
   // Basah di fondasi (S4): wash biru membesar + fondasi menggelap.
@@ -1122,12 +1142,15 @@ const CutawayScene: React.FC<{
   const pumpY = 34 + Math.sin(local * 0.21) * 10;
   const pumpPress = 0.5 + 0.5 * Math.sin(local * 0.21);
   // Partikel air+tanah menyembur keluar dari retakan (S5).
+  // BUG AUDIT RONDE 1: y dulu 340–430 (di DALAM fondasi/subbase, tertutup
+  // rect subbase yang di-render sesudahnya) — semprotan tak terlihat.
+  // Zona benar: busur keluar dari puncak retakan (SVG y=100) ke langit.
   const spray = [0, 1, 2, 3, 4, 5].map((i) => {
     const t = ((local * 1.4 + i * 24) % 60) / 60; // 0..1 per partikel
     const dir = i % 2 === 0 ? -1 : 1;
     return {
       x: 480 + dir * (20 + t * 130),
-      y: 430 - t * 120 + t * t * 90,
+      y: 100 - t * 120 + t * t * 90,
       o: 1 - t,
     };
   });
