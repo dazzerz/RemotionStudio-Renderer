@@ -186,6 +186,7 @@ import { BanSlickExplainer } from "./projects/educational/video-ban-slick/BanSli
 import { StandarSampingExplainer } from "./projects/educational/video-standar-samping/StandarSampingExplainer";
 import { BanBotakExplainer } from "./projects/educational/video-ban-botak/BanBotakExplainer";
 import { CvtMaticExplainer } from "./projects/educational/video-cvt-matic/CvtMaticExplainer";
+import { SoalSkdExplainer } from "./projects/educational/video-soal-skd/SoalSkdExplainer";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -1390,6 +1391,14 @@ export const RemotionRoot: React.FC = () => {
           id="CvtMaticExplainer"
           component={CvtMaticExplainer}
           durationInFrames={1339}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="SoalSkdExplainer"
+          component={SoalSkdExplainer}
+          durationInFrames={1552}
           fps={30}
           width={1080}
           height={1920}
