@@ -65,6 +65,8 @@ export interface ExplainerConfig {
   theme?: "default" | "editorial_toon";
   channelBadge?: string;
   audioPath: string;
+  bgmPath?: string;
+  bgmVolume?: number;
   durationSec: number;
   hookLine1: string;
   hookLine1Color: string;
@@ -647,6 +649,9 @@ export const Explainer3DReel: React.FC<{ config: ExplainerConfig }> = ({
   return (
     <AbsoluteFill style={{ backgroundColor: isEditorial ? "#F4F2EC" : "#090D16" }}>
       <Audio src={staticFile(config.audioPath)} />
+      {config.bgmPath ? (
+        <Audio src={staticFile(config.bgmPath)} volume={config.bgmVolume ?? 0.12} loop />
+      ) : null}
 
       {config.scenes.map((scene, idx) => {
         const from = Math.round(scene.startSec * fps);
