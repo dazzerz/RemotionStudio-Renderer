@@ -1815,3 +1815,62 @@ export const FUELDUMP_CONFIG: ExplainerConfig = {
 export const FuelDumpExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: FUELDUMP_CONFIG });
 
+export const KURSITEGAK_CONFIG: ExplainerConfig = {
+  id: "KursiTegakExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/kursi-tegak/vo_riko.mp3",
+  bgmPath: "audio/bgm_ambient_bed.mp3",
+  bgmVolume: 0.5,
+  durationSec: 59.448,
+  hookLine1: "KURSI TEGAK 90 DETIK",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "BUKAN SOAL SOPAN",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "FAKTANYA: 90 DETIK BATAS HIDUP MATI!",
+  sourceText: "FAA; 14 CFR 121.577; Boeing 2017",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo tim jendela atau lorong pas takeoff?",
+    startSec: 53.28,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/kursi-tegak/scene1.jpg", startSec: 0, endSec: 5.12, panDirection: "in", callouts: [{ label: "Kursi Tegak Bukan Soal Sopan", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/kursi-tegak/scene2.jpg", startSec: 5.12, endSec: 12.68, panDirection: "right", callouts: [{ label: "Kabin Penuh Kosong Dalam 90 Detik", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/kursi-tegak/scene3.jpg", startSec: 12.68, endSec: 19.22, panDirection: "in", callouts: [{ label: "Cuma Setengah Pintu Darurat", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/kursi-tegak/scene4.jpg", startSec: 19.22, endSec: 26.86, panDirection: "left", callouts: [{ label: "Kursi Tegak, Meja Lipat, Tirai Dibuka", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/kursi-tegak/scene5.jpg", startSec: 26.86, endSec: 33.58, panDirection: "right", callouts: [{ label: "Tirai Dibuka, Lampu Diredupin", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#70FF00" }] },
+    { imagePath: "images/kursi-tegak/scene6.jpg", startSec: 33.58, endSec: 41.74, panDirection: "in", callouts: [{ label: "61% Kecelakaan Fatal di Fase Ini", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#FF6B6B" }] },
+    { imagePath: "images/kursi-tegak/scene7.jpg", startSec: 41.74, endSec: 50.86, panDirection: "in", callouts: [{ label: "Pas Cruise, Kursi Boleh Rebah Lagi", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/kursi-tegak/scene8.jpg", startSec: 50.86, endSec: 59.448, panDirection: "left", callouts: [{ label: "90 Detik, Itu Alasannya", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 1.98, text: "Kursi tegak itu bukan soal sopan.", highlightWord: "sopan" },
+    { startSec: 2.62, endSec: 5.12, text: "Sembilan puluh detik itu batas hidup mati.", highlightWord: "detik" },
+    { startSec: 5.64, endSec: 9.16, text: "Sebelum pesawat baru boleh bawa penumpang, pabriknya harus buktiin satu hal.", highlightWord: "satu" },
+    { startSec: 9.72, endSec: 12.68, text: "Kabin penuh harus kosong dalam 90 detik.", highlightWord: "90" },
+    { startSec: 12.96, endSec: 14.7, text: "Cuma pakai setengah pintu darurat.", highlightWord: "darurat" },
+    { startSec: 15.38, endSec: 15.94, text: "Kenapa setengah?", highlightWord: "setengah" },
+    { startSec: 16.5, endSec: 19.22, text: "Karena pas keadaan darurat, separuh pintu bisa aja keblokir.", highlightWord: "keblokir" },
+    { startSec: 19.76, endSec: 21.86, text: "Aturannya dihitung mundur dari angka itu.", highlightWord: "mundur" },
+    { startSec: 22.36, endSec: 24.28, text: "Kursi tegak, biar orang belakang bisa lewat.", highlightWord: "lewat" },
+    { startSec: 24.78, endSec: 26.86, text: "Meja lipat, biar nggak ada yang kesandung di gelap.", highlightWord: "kesandung" },
+    { startSec: 26.86, endSec: 30.6, text: "Tirai dibuka, biar awak lihat luar dulu sebelum buka pintu.", highlightWord: "tirai" },
+    { startSec: 31.12, endSec: 33.58, text: "Lampu kabin diredupin, biar mata lo siap gelap.", highlightWord: "gelap" },
+    { startSec: 34.14, endSec: 35.38, text: "Ini bukan aturan iseng.", highlightWord: "iseng" },
+    { startSec: 35.82, endSec: 39.28, text: "Enam puluh satu persen kecelakaan fatal terjadi pas takeoff dan landing.", highlightWord: "persen" },
+    { startSec: 39.88, endSec: 41.74, text: "Fase paling kritis itu cuma beberapa menit.", highlightWord: "kritis" },
+    { startSec: 42.22, endSec: 44.02, text: "Makanya semua aturan ini cuma berlaku di situ.", highlightWord: "situ" },
+    { startSec: 44.58, endSec: 46.84, text: "Pas udah cruise, kursi boleh rebah lagi.", highlightWord: "rebah" },
+    { startSec: 47.64, endSec: 50.86, text: "Jadi lain kali pramugari minta kursi tegak, lo udah tau alasannya.", highlightWord: "alasannya" },
+    { startSec: 51.48, endSec: 52.62, text: "Sembilan puluh detik.", highlightWord: "detik" },
+    { startSec: 53.28, endSec: 56.68, text: "Lo tim jendela atau lorong pas takeoff? Ceritain di komentar.", highlightWord: "jendela" },
+    { startSec: 57.1, endSec: 58.98, text: "Jangan lupa Like, Komen, dan Follow.", highlightWord: "Like" },
+  ],
+};
+
+export const KursiTegakExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: KURSITEGAK_CONFIG });
+
+
