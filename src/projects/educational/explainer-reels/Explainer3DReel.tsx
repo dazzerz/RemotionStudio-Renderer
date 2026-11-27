@@ -763,7 +763,20 @@ export const Explainer3DReel: React.FC<{ config: ExplainerConfig }> = ({
                       "0 4px 14px rgba(0,0,0,0.85), 0 2px 4px rgba(0,0,0,0.9)",
                   }}
                 >
-                  {cue.text}
+                  {cue.text.split(" ").map((w, i, arr) => {
+                    const target = cue.highlightWord?.toLowerCase();
+                    const clean = w.toLowerCase().replace(/[^a-z0-9]/g, "");
+                    const isMatch = target ? clean.includes(target) : false;
+                    return (
+                      <span
+                        key={i}
+                        style={{ color: isMatch ? "#FFE600" : "#FFFFFF" }}
+                      >
+                        {w}
+                        {i < arr.length - 1 ? " " : ""}
+                      </span>
+                    );
+                  })}
                 </div>
               </div>
             </Sequence>
