@@ -256,10 +256,18 @@ const ScenePlate: React.FC<{ scene: ExplainerScene; durationFrames: number }> = 
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const fadeIn = interpolate(frame, [0, Math.round(0.4 * fps)], [0, 1], {
+  // Fast entrance: 6-frame fade (was 12) + a scale punch that settles
+  // in the first ~15 frames, so every scene lands instead of drifting in.
+  const fadeIn = interpolate(frame, [0, Math.round(0.2 * fps)], [0, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
+  const punch = spring({
+    frame,
+    fps,
+    config: { damping: 14, stiffness: 200 },
+  });
+  const enterScale = 1.1 - 0.1 * punch;
 
   const progress = interpolate(frame, [0, durationFrames], [0, 1], {
     extrapolateLeft: "clamp",
@@ -281,6 +289,7 @@ const ScenePlate: React.FC<{ scene: ExplainerScene; durationFrames: number }> = 
     scale = 1.06;
     tx = -18 + 36 * progress;
   }
+  scale = scale * enterScale;
 
   return (
     <AbsoluteFill style={{ opacity: fadeIn }}>
@@ -492,6 +501,78 @@ const BottomPunchBadge: React.FC<{ text: string }> = ({ text }) => {
       }}
     >
       {text}
+    </div>
+  );
+};
+
+// Editorial subtitles with real kinetic typography: each word slides up
+// out of a mask with a spring, staggered 3 frames per word, keyword
+// highlight in yellow. (The old editorial branch rendered static white
+// text; highlightWord was dead code there.)
+const EditorialSubtitle: React.FC<{ cue: SubtitleCue }> = ({ cue }) => {
+  const frame = useCurrentFrame();
+  const { fps } = useVideoConfig();
+  const words = cue.text.split(" ");
+  const target = cue.highlightWord?.toLowerCase();
+
+  return (
+    <div
+      style={{
+        position: "absolute",
+        bottom: 245,
+        left: 72,
+        right: 72,
+        display: "flex",
+        justifyContent: "center",
+        pointerEvents: "none",
+      }}
+    >
+      <div
+        style={{
+          color: "#FFFFFF",
+          fontFamily: "Inter, Montserrat, Arial, sans-serif",
+          fontSize: 40,
+          fontWeight: 800,
+          lineHeight: 1.28,
+          textAlign: "center",
+          textShadow:
+            "0 4px 14px rgba(0,0,0,0.85), 0 2px 4px rgba(0,0,0,0.9)",
+        }}
+      >
+        {words.map((w, i) => {
+          const reveal = spring({
+            frame: frame - i * 3,
+            fps,
+            config: { damping: 16, stiffness: 300 },
+          });
+          const clean = w.toLowerCase().replace(/[^a-z0-9]/g, "");
+          const isMatch = target ? clean.includes(target) : false;
+          return (
+            <span
+              key={i}
+              style={{
+                display: "inline-block",
+                overflow: "hidden",
+                verticalAlign: "top",
+                paddingBottom: "0.08em",
+                marginBottom: "-0.08em",
+              }}
+            >
+              <span
+                style={{
+                  display: "inline-block",
+                  color: isMatch ? "#FFE600" : "#FFFFFF",
+                  opacity: reveal,
+                  translate: `0 ${interpolate(reveal, [0, 1], [110, 0])}%`,
+                }}
+              >
+                {w}
+              </span>
+              {i < words.length - 1 ? " " : ""}
+            </span>
+          );
+        })}
+      </div>
     </div>
   );
 };
@@ -740,45 +821,7 @@ export const Explainer3DReel: React.FC<{ config: ExplainerConfig }> = ({
         if (isEditorial) {
           return (
             <Sequence key={idx} from={from} durationInFrames={dur}>
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: 245,
-                  left: 72,
-                  right: 72,
-                  display: "flex",
-                  justifyContent: "center",
-                  pointerEvents: "none",
-                }}
-              >
-                <div
-                  style={{
-                    color: "#FFFFFF",
-                    fontFamily: "Inter, Montserrat, Arial, sans-serif",
-                    fontSize: 40,
-                    fontWeight: 800,
-                    lineHeight: 1.28,
-                    textAlign: "center",
-                    textShadow:
-                      "0 4px 14px rgba(0,0,0,0.85), 0 2px 4px rgba(0,0,0,0.9)",
-                  }}
-                >
-                  {cue.text.split(" ").map((w, i, arr) => {
-                    const target = cue.highlightWord?.toLowerCase();
-                    const clean = w.toLowerCase().replace(/[^a-z0-9]/g, "");
-                    const isMatch = target ? clean.includes(target) : false;
-                    return (
-                      <span
-                        key={i}
-                        style={{ color: isMatch ? "#FFE600" : "#FFFFFF" }}
-                      >
-                        {w}
-                        {i < arr.length - 1 ? " " : ""}
-                      </span>
-                    );
-                  })}
-                </div>
-              </div>
+              <EditorialSubtitle cue={cue} />
             </Sequence>
           );
         }
