@@ -265,9 +265,9 @@ const ScenePlate: React.FC<{ scene: ExplainerScene; durationFrames: number }> = 
   const punch = spring({
     frame,
     fps,
-    config: { damping: 14, stiffness: 200 },
+    config: { damping: 12, stiffness: 220 },
   });
-  const enterScale = 1.1 - 0.1 * punch;
+  const enterScale = 1.14 - 0.14 * punch;
 
   const progress = interpolate(frame, [0, durationFrames], [0, 1], {
     extrapolateLeft: "clamp",
@@ -506,10 +506,16 @@ const BottomPunchBadge: React.FC<{ text: string }> = ({ text }) => {
 };
 
 // Editorial subtitles with real kinetic typography: each word slides up
-// out of a mask with a spring, staggered 3 frames per word, keyword
-// highlight in yellow. (The old editorial branch rendered static white
+// out of a mask with a spring, keyword highlight in yellow. The reveal
+// is SPREAD ACROSS the whole cue duration (karaoke-style, roughly in
+// sync with the spoken words) — a fixed 3-frame stagger made the full
+// sentence appear in ~0.5s and then sit frozen for seconds, which still
+// read as boring. (The original editorial branch rendered static white
 // text; highlightWord was dead code there.)
-const EditorialSubtitle: React.FC<{ cue: SubtitleCue }> = ({ cue }) => {
+const EditorialSubtitle: React.FC<{
+  cue: SubtitleCue;
+  durationFrames: number;
+}> = ({ cue, durationFrames }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const words = cue.text.split(" ");
@@ -540,10 +546,13 @@ const EditorialSubtitle: React.FC<{ cue: SubtitleCue }> = ({ cue }) => {
         }}
       >
         {words.map((w, i) => {
+          // Word i starts revealing at its share of the cue duration,
+          // so words keep arriving while the VO speaks the sentence.
+          const startF = (i / words.length) * durationFrames * 0.9;
           const reveal = spring({
-            frame: frame - i * 3,
+            frame: frame - startF,
             fps,
-            config: { damping: 16, stiffness: 300 },
+            config: { damping: 12, stiffness: 280 },
           });
           const clean = w.toLowerCase().replace(/[^a-z0-9]/g, "");
           const isMatch = target ? clean.includes(target) : false;
@@ -569,6 +578,7 @@ const EditorialSubtitle: React.FC<{ cue: SubtitleCue }> = ({ cue }) => {
                   color: isMatch ? "#FFE600" : "#FFFFFF",
                   opacity: reveal,
                   translate: `0 ${interpolate(reveal, [0, 1], [110, 0])}%`,
+                  scale: String(interpolate(reveal, [0, 1], [0.85, 1])),
                 }}
               >
                 {w}
@@ -825,7 +835,7 @@ export const Explainer3DReel: React.FC<{ config: ExplainerConfig }> = ({
         if (isEditorial) {
           return (
             <Sequence key={idx} from={from} durationInFrames={dur}>
-              <EditorialSubtitle cue={cue} />
+              <EditorialSubtitle cue={cue} durationFrames={dur} />
             </Sequence>
           );
         }
