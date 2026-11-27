@@ -556,6 +556,11 @@ const EditorialSubtitle: React.FC<{ cue: SubtitleCue }> = ({ cue }) => {
                 verticalAlign: "top",
                 paddingBottom: "0.08em",
                 marginBottom: "-0.08em",
+                // Word gap as margin, NOT a text space: a trailing space
+                // inside an inline-block gets collapsed, jamming words
+                // together ("Kursitegakitubukansoalsopan." in the first
+                // kinetic render).
+                marginRight: i < words.length - 1 ? "0.28em" : "0",
               }}
             >
               <span
@@ -568,7 +573,6 @@ const EditorialSubtitle: React.FC<{ cue: SubtitleCue }> = ({ cue }) => {
               >
                 {w}
               </span>
-              {i < words.length - 1 ? " " : ""}
             </span>
           );
         })}
