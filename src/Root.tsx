@@ -171,6 +171,7 @@ import {
   PetirExplainer,
   MesinMatiExplainer,
   MaskerOksigenRikoExplainer,
+  FuelDumpExplainer,
 } from "./projects/educational/explainer-reels/explainerData";
 import { CintaTanpaKataExplainer } from "./projects/educational/video-relate-5/CintaTanpaKataExplainer";
 import { GajianCepatHabisExplainer } from "./projects/educational/video-relate-5/GajianCepatHabisExplainer";
@@ -1281,6 +1282,14 @@ export const RemotionRoot: React.FC = () => {
           id="MaskerOksigenRikoExplainer"
           component={MaskerOksigenRikoExplainer}
           durationInFrames={1980}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="FuelDumpExplainer"
+          component={FuelDumpExplainer}
+          durationInFrames={2209}
           fps={30}
           width={1080}
           height={1920}

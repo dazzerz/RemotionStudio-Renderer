@@ -1755,3 +1755,63 @@ export const MASKER_CONFIG: ExplainerConfig = {
 
 export const MaskerOksigenRikoExplainer: React.FC = () =>
   React.createElement(Explainer3DReel, { config: MASKER_CONFIG });
+
+export const FUELDUMP_CONFIG: ExplainerConfig = {
+  id: "FuelDumpExplainer",
+  theme: "editorial_toon",
+  channelBadge: "Cerita Teknik",
+  audioPath: "audio/fuel-dump/vo_riko.mp3",
+  bgmPath: "audio/bgm_ambient_bed.mp3",
+  bgmVolume: 0.5,
+  durationSec: 73.63,
+  hookLine1: "BUANG BBM DI UDARA",
+  hookLine1Color: "#FFFFFF",
+  hookLine2: "BUKAN BOCOR, BUKAN BUANG-BUANG",
+  hookLine2Color: "#FFE600",
+  bottomBadge: "FAKTANYA: BERAT MENDARAT ADA BATASNYA!",
+  sourceText: "Sumber: FlightRadar24 (berat mendarat vs lepas landas, penguapan di atas 5.000 kaki); Boeing via SlashGear (737-800: 174.200 vs 146.300 pon); Jalopnik (737 tidak punya sistem buang BBM)",
+  ctaBanner: {
+    actionText: "LIKE, KOMEN & FOLLOW!",
+    subText: "Lo pernah lihat pesawat muter-muter lama sebelum mendarat?",
+    startSec: 64.36,
+    accentColor: "#FFE600",
+  },
+  scenes: [
+    { imagePath: "images/fuel-dump/scene1.jpg", startSec: 0, endSec: 5.38, panDirection: "in", callouts: [{ label: "Pesawat Buang BBM, Sengaja", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/fuel-dump/scene2.jpg", startSec: 5.38, endSec: 12.14, panDirection: "right", callouts: [{ label: "Tangki Masih Penuh 11 Jam", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/fuel-dump/scene3.jpg", startSec: 12.14, endSec: 21.5, panDirection: "in", callouts: [{ label: "Mendarat Tak Boleh Seberat Lepas Landas", labelX: 38, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/fuel-dump/scene4.jpg", startSec: 21.5, endSec: 36.86, panDirection: "left", callouts: [{ label: "Selisih 28 Ribu Pon Harus Hilang", labelX: 62, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#00F2FE" }] },
+    { imagePath: "images/fuel-dump/scene5.jpg", startSec: 36.86, endSec: 52.02, panDirection: "right", callouts: [{ label: "BBM Menguap di 5.000 Kaki", labelX: 38, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#70FF00" }] },
+    { imagePath: "images/fuel-dump/scene6.jpg", startSec: 52.02, endSec: 58.82, panDirection: "in", callouts: [{ label: "737 Tak Punya Sistem Buang BBM", labelX: 62, labelY: 40, anchorX: 50, anchorY: 58, delaySec: 0.6, accentColor: "#FF6B6B" }] },
+    { imagePath: "images/fuel-dump/scene7.jpg", startSec: 58.82, endSec: 64.36, panDirection: "in", callouts: [{ label: "Muter-Muter Sampai BBM Habis", labelX: 38, labelY: 38, anchorX: 50, anchorY: 56, delaySec: 0.6, accentColor: "#FFE600" }] },
+    { imagePath: "images/fuel-dump/scene8.jpg", startSec: 64.36, endSec: 73.63, panDirection: "left", callouts: [{ label: "Bukan Pemborosan, Itu Hitungan Aman", labelX: 62, labelY: 39, anchorX: 50, anchorY: 57, delaySec: 0.6, accentColor: "#70FF00" }] },
+  ],
+  subtitles: [
+    { startSec: 0, endSec: 2.8, text: "Pesawat buang BBM di udara, sengaja.", highlightWord: "buang BBM" },
+    { startSec: 2.8, endSec: 5.08, text: "Bukan bocor, bukan buang-buang.", highlightWord: "bukan bocor" },
+    { startSec: 5.38, endSec: 8.8, text: "Pesawat baru lepas landas, terus harus balik cepat.", highlightWord: "balik cepat" },
+    { startSec: 8.8, endSec: 11.46, text: "Tangkinya masih penuh buat terbang sebelas jam.", highlightWord: "sebelas jam" },
+    { startSec: 12.14, endSec: 16.4, text: "Masalahnya, pesawat boleh lebih berat pas lepas landas daripada pas mendarat.", highlightWord: "lebih berat" },
+    { startSec: 17.06, endSec: 20.66, text: "Roda dan sayapnya nggak kuat nahan hentakan kalau mendarat seberat itu.", highlightWord: "nggak kuat" },
+    { startSec: 21.5, endSec: 23.6, text: "Boeing 737-800 contohnya.", highlightWord: "737-800" },
+    { startSec: 23.6, endSec: 27.74, text: "Berat lepas landas maksimalnya 174 ribu pon.", highlightWord: "174 ribu pon" },
+    { startSec: 27.74, endSec: 31.58, text: "Berat mendarat maksimalnya cuma 146 ribu pon.", highlightWord: "146 ribu pon" },
+    { startSec: 32.1, endSec: 36.32, text: "Selisihnya 28 ribu pon, itu BBM yang harus hilang dulu.", highlightWord: "28 ribu pon" },
+    { startSec: 36.86, endSec: 38.38, text: "Pesawat gede punya solusinya.", highlightWord: "solusinya" },
+    { startSec: 38.98, endSec: 42.32, text: "Katup di ujung sayap dibuka, BBM disemprot keluar.", highlightWord: "disemprot keluar" },
+    { startSec: 42.72, endSec: 43.78, text: "Beberapa ton per menit.", highlightWord: "ton per menit" },
+    { startSec: 44.34, endSec: 48.1, text: "Di atas sekitar 5.000 kaki, BBM itu menguap sebelum sampai ke tanah.", highlightWord: "5.000 kaki" },
+    { startSec: 48.8, endSec: 51.2, text: "Pilot juga milih daerah sepi, jauh dari kota.", highlightWord: "daerah sepi" },
+    { startSec: 52.02, endSec: 54.98, text: "Pesawat kecil kayak 737 malah nggak punya sistem ini.", highlightWord: "nggak punya sistem" },
+    { startSec: 54.98, endSec: 58.24, text: "Dia muter-muter di udara sampai BBM-nya habis terbakar.", highlightWord: "muter-muter" },
+    { startSec: 58.82, endSec: 61.46, text: "Jadi buang BBM itu bukan pemborosan.", highlightWord: "bukan pemborosan" },
+    { startSec: 61.92, endSec: 63.72, text: "Itu cara pesawat mendarat dengan aman.", highlightWord: "mendarat dengan aman" },
+    { startSec: 64.36, endSec: 66.82, text: "Pesawat buang BBM di udara, sengaja.", highlightWord: "buang BBM" },
+    { startSec: 67.4, endSec: 71.08, text: "Lo pernah lihat pesawat muter-muter lama sebelum mendarat? Ceritain di komentar.", highlightWord: "muter-muter lama" },
+    { startSec: 71.66, endSec: 73.2, text: "Jangan lupa Like, Komen, dan Follow.", highlightWord: "Like, Komen" },
+  ],
+};
+
+export const FuelDumpExplainer: React.FC = () =>
+  React.createElement(Explainer3DReel, { config: FUELDUMP_CONFIG });
+
