@@ -191,6 +191,7 @@ import { BanBotakExplainer } from "./projects/educational/video-ban-botak/BanBot
 import { CvtMaticExplainer } from "./projects/educational/video-cvt-matic/CvtMaticExplainer";
 import { SoalSkdExplainer } from "./projects/educational/video-soal-skd/SoalSkdExplainer";
 import { JalanRusakExplainer } from "./projects/educational/video-jalan-rusak/JalanRusakExplainer";
+import { LampuRemKetigaExplainer } from "./projects/educational/video-lampu-rem-ketiga/LampuRemKetigaExplainer";
 
 // Each <Composition> is an entry in the sidebar!
 
@@ -1435,6 +1436,14 @@ export const RemotionRoot: React.FC = () => {
           id="JalanRusakExplainer"
           component={JalanRusakExplainer}
           durationInFrames={1684}
+          fps={30}
+          width={1080}
+          height={1920}
+        />
+        <Composition
+          id="LampuRemKetigaExplainer"
+          component={LampuRemKetigaExplainer}
+          durationInFrames={1666}
           fps={30}
           width={1080}
           height={1920}
