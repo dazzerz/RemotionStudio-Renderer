@@ -1769,7 +1769,7 @@ export const FUELDUMP_CONFIG: ExplainerConfig = {
   hookLine2: "BUKAN BOCOR, BUKAN BUANG-BUANG",
   hookLine2Color: "#FFE600",
   bottomBadge: "FAKTANYA: BERAT MENDARAT ADA BATASNYA!",
-  sourceText: "Sumber: FlightRadar24 (berat mendarat vs lepas landas, penguapan di atas 5.000 kaki); Boeing via SlashGear (737-800: 174.200 vs 146.300 pon); Jalopnik (737 tidak punya sistem buang BBM)",
+  sourceText: "FlightRadar24; Boeing via SlashGear; Jalopnik",
   ctaBanner: {
     actionText: "LIKE, KOMEN & FOLLOW!",
     subText: "Lo pernah lihat pesawat muter-muter lama sebelum mendarat?",
